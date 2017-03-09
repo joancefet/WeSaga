@@ -1,0 +1,102 @@
+<!-- 
+#
+# TEMPLATE: chats
+#
+# -->
+<template name="chats">
+
+	{{> preloader}}
+	
+	<body class="fixed-sidebar">
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">
+			<div class="content animate-panel">		
+				<div class="row">
+				
+					<div class="col-md-12">
+					
+						<!-- CHAT CONTAINER -->
+						<div class="hpanel">
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#tab-zzzzxc" aria-expanded="true"> ID zzzxc</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-as98d7as" aria-expanded="false">ID as98</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-4234234234" aria-expanded="false">Colleagues</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-4z" aria-expanded="false">Groups</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab-zzzzxc" class="tab-pane active">
+									<div class="panel-body">
+									
+										<div class="chat-discussion" >
+											{{#each chatMessages}}	
+
+												<div class="chat-message left" id="chatMessage_{{_id}}">
+													<div id="owner_id" style="display:none;">{{owner_id}}</div>
+													<a class="message-author" href="/people/{{owner_username}}">
+														<img class="message-avatar" src="{{owner_avatar}}" alt="">
+													</a>
+													<div class="message">
+														<a class="message-author" href="/people/{{owner_username}}">{{title}}</a>
+														<span class="message-date"><time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></span>
+														
+															<span class="message-content">
+															{{content}}
+															</span>
+													</div>
+												</div>
+												
+											{{/each}}					
+										</div>
+										
+										<form class="input-group">
+											<input type="text" class="form-control" placeholder="Type your message here...">
+											<span class="input-group-btn">
+												<button class="btn btn-success">
+													Send</button>
+											</span>
+										</form>
+										
+									</div>
+								</div>
+								<div id="tab-as98d7as" class="tab-pane">
+									<div class="panel-body">
+										Hey I need more stuf fon the website
+									</div>
+								</div>
+								<div id="tab-4234234234" class="tab-pane">
+									<div class="panel-body">
+										Adam
+										<br />
+										Lawrence
+										<br />
+										Acacia
+									</div>
+								</div>
+								<div id="tab-4z" class="tab-pane">
+									<div class="panel-body">
+										{{#each groups}}	
+											<p>{{content}}</p>
+										{{/each}}
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+						<!-- CHAT CONTAINER -->
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+	
+	</body>
+
+</template>

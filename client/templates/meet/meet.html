@@ -1,0 +1,164 @@
+
+<!-- 
+#
+# TEMPLATE: SKYROOM
+#
+# -->
+<template name="meet">
+
+	{{> preloader}}
+	
+	<body class="fixed-navbar fixed-sidebar">
+
+		
+		<!-- Header -->
+		<div id="header">
+			<div class="color-line">
+			</div>
+			<div id="logo" class="light-version">
+				<span>
+					<a href="/">
+						<img class="" src="/images/skyrooms-logo.png" width="100%" />
+					</a>
+				</span>
+			</div>
+			<nav role="navigation">
+				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+				<div class="small-logo">
+					<img class="" src="/images/skyrooms-logo.png" width="100%" />
+				</div>
+			</nav>
+		</div>
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					<div class="content animate-panel">		
+					
+						<div class="col-md-12">
+						
+							<div class="hpanel hgreen">
+								<div class="panel-body">
+								
+									
+									{{#if meeting}}
+										{{#with meeting}}
+										
+											<div id="skyroom_meeting" name="skyroom_meeting" class="skyroom_meeting">
+											</div>
+								
+											<script src="https://jitsi.skyrooms.io/external_api.js"></script>
+											<script>
+											
+												// RUN ON CHROME ONLY
+												//if(DetectRTC.browser.name == "Edge" || DetectRTC.browser.name == "IE" || DetectRTC.browser.name == "Opera" || DetectRTC.browser.name == "Safari"){
+													
+												//	start_meeting = false;
+													
+												//	if(!ignore_chrome_warning){
+														
+												//		$(".skyroom_connecting_loader").hide();
+												//		$("#skyrooms_requires_chrome").show();
+														
+														//Edge
+												//		if(DetectRTC.browser.name == "Edge" || DetectRTC.browser.name == "IE"){
+												//			$("#skyrooms_switch_browser").attr('src', '/wp-content/themes/inspirebook/images/help/browser_ie_chrome.jpg');
+												//		}
+														
+												//	}
+												//}
+												
+												//if(start_meeting || ignore_chrome_warning){
+												setTimeout(function(){
+													var domain = "jitsi.skyrooms.io";
+													var room = "{{_id}}"; 
+													var width = "100%";
+													var height = 800;
+													var htmlElement = document.getElementById("skyroom_meeting"); 
+													var api = new JitsiMeetExternalAPI(domain, room, width, height, htmlElement);
+												},2000);
+													//$(".skyroom_connecting_loader").hide();
+													//$(".skyrooms_room_found").show();
+													
+													setTimeout(function(){
+														api.executeCommand('displayName', '{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}');
+														api.executeCommand('avatarUrl', 'https://www.skyrooms.io/profileImages/{{currentUser.profile.avatar}}');
+													},4000);
+												//}
+												
+											</script>
+											
+										{{/with}}
+									{{else}}
+										Meeting Not Found
+									{{/if}}
+									
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		
+
+	</body>
+
+</template> 
+
+
+
+
+<!-- 
+#
+# TEMPLATE: SKYROOM
+#
+# -->
+<template name="skyroom_not_found">
+
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	
+	<div class="skyrooms_room_not_found">
+	
+		<div class="col-lg-4 col-lg-offset-4">
+			<div class="hpanel hred">
+				<div class="panel-heading hbuilt">
+					SkyRoom Not Found
+				</div>
+				<div class="panel-body">
+					<p>
+						<center>
+						
+							<img src="/images/page-not-found.png" width="50%" height="50%" />
+						
+							<h3>This SkyRoom doesn't exist! Maybe you spelled it wrong?</h3>
+							<br />
+							
+							<div>
+								<a href="/join" class="btn btn-info">Enter SkyRoom Name Again?</a>
+							</div>
+							
+							<p>- or -</p>
+							
+							<div>
+								<a href="/account" class="btn btn-success">Create this SkyRoom for Free</a>
+							</div>
+							
+						</center>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</template>

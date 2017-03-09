@@ -1,0 +1,151 @@
+<!-- 
+#
+# TEMPLATE: SKYROOM
+#
+# -->
+<template name="skyrooms">
+
+	{{> preloader}}
+	
+	<body class="fixed-sidebar">
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">
+			
+			<div class="content animate-panel">
+				
+				<!-- SKYROOM LIST MANAGER -->
+				<div class="col-lg-12">
+					<div class="hpanel">
+						<div class="panel-body">
+
+							<p class="">
+								<a href="/skyrooms/create" class="btn btn-primary"><i class="fa fa-file-o" aria-hidden="true"></i> Create a new SkyRoom</a>
+							</p>
+
+							<div class="dd" id="nestable2">
+								<ol class="dd-list">
+									
+									<li class="dd-item">
+										<div class="dd-handle">
+										
+											<div class="row" style="margin:0px 4px;">
+												
+												<div class="col-lg-2">
+													<div class="row">
+												
+														<a href="/join/{{currentUser.profile.username}}" class="btn btn-block btn-info"><i class="fa fa-share" aria-hidden="true"></i> Join: {{currentUser.profile.username}}</a>
+														
+													</div>
+												</div>
+												
+												<div class="col-lg-4">
+													<div class="row">
+													
+														&nbsp;&nbsp;<i class="fa fa-user-circle" aria-hidden="true"></i> 0 Particiapants
+														| <i class="fa fa-eye" aria-hidden="true"></i> 0 Views
+														
+													</div>
+												</div>
+												
+												<div class="col-lg-6">
+													<div class="row">
+													
+														<div class="pull-right">
+														
+															<div class="btn btn-primary a2a_dd" data-a2a-url="https://www.skyrooms.io/join/{{currentUser.profile.username}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
+																<i class="fa fa-share-alt" aria-hidden="true"></i> Share
+															</div>
+															<script async src="https://static.addtoany.com/menu/page.js"></script>
+															<a href="/skyrooms/settings/{{_id}}" class="btn btn-warning2">
+																<i class="fa fa-cogs" aria-hidden="true"></i> Settings
+															</a>
+															
+														</div>
+													
+													</div>
+												</div>
+												
+											</div>
+											
+										</div>
+									</li>
+										
+										<ol class="dd-list">
+										
+											<!-- SKYROOMs -->
+											{{#each skyrooms}}
+												<li class="dd-item">
+													<div class="dd-handle">
+													
+														<div class="row" style="margin:0px 4px;">
+															
+															<div class="col-lg-2">
+																<div class="row">
+															
+																	<a href="/join/{{slug}}" class="btn btn-block btn-info"><i class="fa fa-share" aria-hidden="true"></i> Join: {{name}}</a>
+																	
+																</div>
+															</div>
+															
+															<div class="col-lg-4">
+																<div class="row">
+																
+																	&nbsp;&nbsp;<i class="fa fa-user-circle" aria-hidden="true"></i> 0 Particiapants
+																	| <i class="fa fa-eye" aria-hidden="true"></i> 0 Views
+																	
+																</div>
+															</div>
+															
+															<div class="col-lg-6">
+																<div class="row">
+																
+																	<div class="pull-right">
+																	
+																		<div class="btn btn-primary a2a_dd" data-a2a-url="https://www.skyrooms.io/join/{{slug}}" data-a2a-title="{{name}} - SkyRooms">
+																			<i class="fa fa-share-alt" aria-hidden="true"></i> Share
+																		</div>
+																		<script async src="https://static.addtoany.com/menu/page.js"></script>
+																		<a href="/skyrooms/settings/{{_id}}" class="btn btn-warning2">
+																			<i class="fa fa-cogs" aria-hidden="true"></i> Settings
+																		</a>
+																		
+																	</div>
+																
+																</div>
+															</div>
+															
+														</div>
+														
+													</div>
+												</li>
+											{{/each}}
+											<!-- SKYROOMs -->
+											
+										</ol>
+									
+
+								</ol>
+							</div>
+							
+
+						</div>
+					</div>
+				</div>
+				<!-- SKYROOM LIST MANAGER -->
+				<script async src="https://static.addtoany.com/menu/page.js"></script>
+			
+			</div>
+			
+			
+		</div>
+		<!-- Main Wrapper -->
+	
+	</body>
+
+</template>
+

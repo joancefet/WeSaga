@@ -1,0 +1,98 @@
+
+<!-- 
+#
+# TEMPLATE: GROUPS MANAGER
+#
+# -->
+<template name="groups_manager">
+
+	{{> preloader}}
+	
+	<body class="fixed-navbar fixed-sidebar">
+
+		
+		<!-- Header -->
+		<div id="header">
+			<div class="color-line">
+			</div>
+			<div id="logo" class="light-version">
+				<span>
+					<a href="/">
+						<img class="" src="/images/skyrooms-logo.png" width="100%" />
+					</a>
+				</span>
+			</div>
+			<nav role="navigation">
+				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+				<div class="small-logo">
+					<img class="" src="/images/skyrooms-logo.png" width="100%" />
+				</div>
+			</nav>
+		</div>
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+		
+		<!-- Main Wrapper -->
+		<div id="wrapper">
+
+			<div class="transition animated fadeIn">
+				<div class="hpanel">
+					<div class="panel-body">
+
+						<div id="hbreadcrumb" class="pull-right m-t-lg">
+							<!-- <ol class="hbreadcrumb breadcrumb">
+								<li><a href="index.html">Dashboard</a></li>
+								<li>
+									<span>App views</span>
+								</li>
+								<li class="active">
+									<span>Your  </span>
+								</li>
+							</ol> -->
+						</div>
+						<h2 class="font-light m-b-xs">
+						
+							<i class="fa fa-cubes" aria-hidden="true"></i> Create a new group on SkyRooms
+							
+						</h2>
+					</div>
+				</div>
+			</div>
+			
+			<!-- CONTENT -->
+			<div class="col-lg-6">
+				<div class="hpanel">
+					
+					<div class="panel-body">
+					
+						<form class="form-horizontal">
+		
+									<label class="col-sm-2 control-label">Group Name</label>
+									<div class="col-sm-10">
+										<input type="text" name="group_name" class="form-control" placeholder="" required="" />
+									</div>
+									
+									<label class="col-sm-2 control-label">Group Name</label>
+									<div class="col-sm-10">
+										<input type="submit" value="Create New Group" />
+									</div>
+									
+						
+								<div class="hr-line-dashed"></div>
+					
+							
+						</form>
+						
+					</div>
+				</div>
+			</div>
+			<!-- CONTENT -->
+			
+		</div>
+		<!-- Main Wrapper -->
+		
+	</body>
+
+</template>

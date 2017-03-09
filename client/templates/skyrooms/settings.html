@@ -1,0 +1,286 @@
+
+<!-- 
+#
+# TEMPLATE: CREATE
+#
+# -->
+<template name="skyroom_settings">
+
+	{{> preloader}}
+	
+	<body class="fixed-navbar fixed-sidebar">
+
+		
+		<!-- Header -->
+		<div id="header">
+			<div class="color-line">
+			</div>
+			<div id="logo" class="light-version">
+				<span>
+					<a href="/">
+						<img class="" src="/images/skyrooms-logo.png" width="100%" />
+					</a>
+				</span>
+			</div>
+			<nav role="navigation">
+				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+				<div class="small-logo">
+					<img class="" src="/images/skyrooms-logo.png" width="100%" />
+				</div>
+			</nav>
+		</div>
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+		
+		<!-- Main Wrapper -->
+		<div id="wrapper">
+
+			<div class="transition animated fadeIn">
+				<div class="hpanel">
+					<div class="panel-body">
+
+						<div id="hbreadcrumb" class="pull-right m-t-lg">
+							<!-- <ol class="hbreadcrumb breadcrumb">
+								<li><a href="index.html">Dashboard</a></li>
+								<li>
+									<span>App views</span>
+								</li>
+								<li class="active">
+									<span>Your  </span>
+								</li>
+							</ol> -->
+						</div>
+						<h2 class="font-light m-b-xs">
+						
+							{{#if paramRoomId}}
+								{{#with paramRoomId}}
+									<i class="fa fa-cubes" aria-hidden="true"></i> Settings for {{name}}
+								{{/with}}
+							{{else}}
+								<i class="fa fa-cubes" aria-hidden="true"></i> Create a new SkyRoom!
+							{{/if}}
+							
+						</h2>
+					</div>
+				</div>
+			</div>
+			
+			<!-- CONTENT -->
+			<div class="col-lg-6">
+				<div class="hpanel">
+					
+					<div class="panel-body">
+					
+						<form class="form-horizontal create_skyroom" id="">
+		
+							<!-- SkyRoom Name -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">SkyRoom Name</label>
+									<div class="col-sm-10">
+										
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<input type="text" name="skyroom_name" class="form-control" placeholder="Example Room" required="" disabled value="{{name}}" />
+												<small>You cannot edit the name of this room.</small>
+											{{/with}}
+										{{else}}
+											<input type="text" name="skyroom_name" class="form-control" placeholder="Example Room" required="" />
+											<small>Found at /join/{{currentUser.profile.username}}/new-skyroom-name</small>
+										{{/if}}
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<!-- Password Required to Enter? -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Password Required to Enter?</label>
+									<div class="col-sm-10">
+										<select class="form-control m-b" name="skyroom_require_password" id="skyroom_require_password" required="">
+											<option value="no">No</option>
+											<option value="yes">Yes</option>
+										</select>
+										
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<script>
+													$("#skyroom_require_password").val('{{skyroom_require_password}}');
+												</script>
+											{{/with}}
+										{{else}}
+										
+										{{/if}}
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<!-- Password -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Password</label>
+									<div class="col-sm-10">
+									
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<input type="text" name="skyroom_password" class="form-control" placeholder="" value="{{password}}"/>
+												<small>(optional - can set or change later)</small>
+											{{/with}}
+										{{else}}
+											<input type="text" name="skyroom_password" class="form-control" placeholder="" />
+											<small>(optional - can set or change later)</small>
+										{{/if}}
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<!-- Type -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">SkyRoom Type</label>
+									<div class="col-sm-10">
+										<select class="form-control m-b" name="skyroom_type" id="skyroom_type" required="">
+										
+											<option value="">Select One</option>
+											<option value="video_conference">Video Conference Room</option>
+											<option value="audio_conference">Audio Conference Room</option>
+											<option value="news">News Room</option>
+											<option value="chat">Chat Room</option>
+											<option value="webinar">Webinar</option>
+											
+										</select>
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<script>
+													$("#skyroom_type").val('{{skyroom_type}}');
+												</script>
+											{{/with}}
+										{{else}}
+										
+										{{/if}}
+									
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<!-- Type -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Public or Unlisted?</label>
+									<div class="col-sm-10">
+										<select class="form-control m-b" name="skyroom_listing" id="skyroom_listing" required="">
+											<option value="public">Public</option>
+											<option value="private">Unlisted</option>
+										</select>
+										
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<script>
+													$("#skyroom_listing").val('{{skyroom_listing}}');
+												</script>
+											{{/with}}
+										{{else}}
+										
+										{{/if}}
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<!-- Type -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Users must belong to my Organization to enter?</label>
+									<div class="col-sm-10">
+										<select class="form-control m-b" name="skyroom_must_belong_to_org" id="skyroom_must_belong_to_org" required="">
+											<option value="no">No</option>
+											<option value="yes">Yes</option>
+										</select>
+										
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<script>
+													$("#skyroom_must_belong_to_org").val('{{skyroom_must_belong_to_org}}');
+												</script>
+											{{/with}}
+										{{else}}
+										
+										{{/if}}
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<!-- Type -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Users must a Colleague of mine?</label>
+									<div class="col-sm-10">
+										<select class="form-control m-b" name="skyroom_must_be_colleague" id="skyroom_must_be_colleague" required="">
+											<option value="no">No</option>
+											<option value="yes">Yes</option>
+										</select>
+										
+										{{#if paramRoomId}}
+											{{#with paramRoomId}}
+												<script>
+													$("#skyroom_must_be_colleague").val('{{skyroom_must_be_colleague}}');
+												</script>
+											{{/with}}
+										{{else}}
+										
+										{{/if}}
+										
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+							<!-- -->
+							
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+								
+									{{#if paramRoomId}}
+										{{#with paramRoomId}}
+											<input type="hidden" value="{{_id}}" name="skyroom_setting_id" />
+											<input type="hidden" value="{{slug}}" name="skyroom_setting_slug" />
+										{{/with}}
+									{{else}}
+										<input type="hidden" value="0" name="skyroom_setting_id" />
+									{{/if}}
+									
+								
+									{{#if paramRoomId}}
+										{{#with paramRoomId}}
+											<button type="submit" class="btn btn-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Update SkyRoom</button>
+											<div id="skyroom_settings_delete" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> DELETE SkyRoom</div>
+										{{/with}}
+									{{else}}
+										<button type="submit" class="btn btn-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Create SkyRoom!</button>
+									{{/if}}
+									
+									<a href="/skyrooms" class="btn btn-danger2 pull-right" type="submit"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
+									
+								</div>
+							</div>
+							
+						</form>
+						
+						
+						
+						
+					</div>
+				</div>
+			</div>
+			<!-- CONTENT -->
+			
+		</div>
+		<!-- Main Wrapper -->
+		
+	</body>
+
+</template>

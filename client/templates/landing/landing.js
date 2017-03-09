@@ -1,0 +1,3 @@
+Template.landing.rendered = function() {
+	
+};

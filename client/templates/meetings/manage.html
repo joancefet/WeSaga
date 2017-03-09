@@ -1,0 +1,307 @@
+<!-- 
+#
+# TEMPLATE: Meetings
+#
+# -->
+<template name="meetings_manage">
+
+	{{> preloader}}
+	
+	<body class="fixed-navbar fixed-sidebar">
+
+		
+		<!-- Header -->
+		<div id="header">
+			<div class="color-line">
+			</div>
+			<div id="logo" class="light-version">
+				<span>
+					<a href="/">
+						<img class="" src="/images/skyrooms-logo.png" width="100%" />
+					</a>
+				</span>
+			</div>
+			<nav role="navigation">
+				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+				<div class="small-logo">
+					<img class="" src="/images/skyrooms-logo.png" width="100%" />
+				</div>
+			</nav>
+		</div>
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+					
+					<div class="content animate-panel">		
+					
+						<div class="col-md-8">
+							
+							<!--
+								URL SCHEMA:
+								skyrooms.io/meet/andrewnormore956/room1
+								skyrooms.io/meet/andrewnormore956/room2
+								skyrooms.io/meet/andrewnormore956/tech-support
+							-->
+							
+							<div class="row">
+							
+								<div class="col-lg-8">
+									<div class="hpanel hgreen ">
+										<div class="panel-body">
+											
+											<form class="form-horizontal create_skyroom" id="">
+			
+												<!-- Meeting ID -->
+												{{#if paramRoomId}}
+														{{#with paramRoomId}}
+															<div class="form-group">
+																<label class="col-sm-2 control-label">Meeting ID</label>
+																<div class="col-sm-10">
+																	
+																	<input type="text" name="the_meeting_id" class="form-control" required="" disabled value="{{_id}}" />
+																	<small>Internal Meeting ID</small>
+																	
+																</div>
+															</div>
+															<div class="hr-line-dashed"></div>
+														{{/with}}
+													{{else}}
+													<input type="hidden" name="the_meeting_id" class="form-control" required="" disabled value="new" />
+												{{/if}}
+												<!-- -->
+			
+												<!-- Meeting Name -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Meeting Title</label>
+													<div class="col-sm-10">
+														
+														{{#if paramRoomId}}
+															{{#with paramRoomId}}
+																<input type="text" name="title" class="form-control" placeholder="Example Room" required="" disabled value="{{title}}" />
+																<small>Found at /meet/{{currentUser.profile.username}}/{{slug title}}</small>
+															{{/with}}
+														{{else}}
+															<input type="text" name="title" class="form-control" placeholder="Example Room" required="" />
+															<small>Found at /meet/{{currentUser.profile.username}}/meeting-title</small>
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Description -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Description of Meeting</label>
+														<div class="col-sm-10">
+															
+															{{#if paramRoomId}}
+																{{#with paramRoomId}}
+																	<input type="text" name="content" class="form-control" placeholder="Example Room" required="" value="{{content}}" />
+																{{/with}}
+															{{else}}
+																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" />
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Password Required to Enter? -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Password Required to Enter?</label>
+														<div class="col-sm-10">
+															<select class="form-control m-b" name="meta_password_required" id="meta_password_required" required="">
+																<option value="no">No</option>
+																<option value="yes">Yes</option>
+															</select>
+															
+															{{#if meta_password_required}}
+																{{#with meta_password_required}}
+																	<script>
+																		$("#meta_password_required").val('{{content}}');
+																	</script>
+																{{/with}}
+															{{else}}
+															
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Password -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Password</label>
+														<div class="col-sm-10">
+														
+															{{#if meta_password}}
+																{{#with meta_password}}
+																	<input type="text" name="meta_password" class="form-control" placeholder="" value="{{content}}"/>
+																	<small>(optional - can set or change later)</small>
+																{{/with}}
+															{{else}}
+																<input type="text" name="meta_password" class="form-control" placeholder="" />
+																<small>(optional - can set or change later)</small>
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Type -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">SkyRoom Type</label>
+														<div class="col-sm-10">
+															<select class="form-control m-b" name="meta_type" id="meta_type" required="">
+															
+																<option value="video_conference">Video Conference Room</option>
+																<option value="audio_conference">Audio Conference Room</option>
+																<option value="webinar">Webinar</option>
+																
+															</select>
+															{{#if meta_type}}
+																{{#with meta_type}}
+																	<script>
+																		$("#meta_type").val('{{content}}');
+																	</script>
+																{{/with}}
+															{{else}}
+															
+															{{/if}}
+														
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Type -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Public or Unlisted?</label>
+														<div class="col-sm-10">
+															<select class="form-control m-b" name="meta_listing" id="meta_listing" required="">
+																<option value="public">Public</option>
+																<option value="private">Unlisted</option>
+															</select>
+															
+															{{#if meta_listing}}
+																{{#with meta_listing}}
+																	<script>
+																		$("#meta_listing").val('{{content}}');
+																	</script>
+																{{/with}}
+															{{else}}
+															
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Type -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Users must belong to my Group to enter?</label>
+														<div class="col-sm-10">
+															<select class="form-control m-b" name="meta_groups_only" id="meta_groups_only" required="">
+																<option value="no">No</option>
+																<option value="yes">Yes</option>
+															</select>
+															
+															{{#if meta_groups_only}}
+																{{#with meta_groups_only}}
+																	<script>
+																		$("#meta_groups_only").val('{{content}}');
+																	</script>
+																{{/with}}
+															{{else}}
+															
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Type -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Users must a Colleague of mine?</label>
+														<div class="col-sm-10">
+															<select class="form-control m-b" name="meta_colleague_only" id="meta_colleague_only" required="">
+																<option value="no">No</option>
+																<option value="yes">Yes</option>
+															</select>
+															
+															{{#if meta_colleague_only}}
+																{{#with meta_colleague_only}}
+																	<script>
+																		$("#meta_colleague_only").val('{{content}}');
+																	</script>
+																{{/with}}
+															{{else}}
+															
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<div class="form-group">
+													<div class="col-sm-10 col-sm-offset-2">														
+													
+														{{#if paramRoomId}}
+															{{#with paramRoomId}}
+																<button type="submit" class="btn btn-success">
+																	<i class="fa fa-check-square-o" aria-hidden="true"></i> Update Meeting
+																</button>
+																<div id="meetings_delete" class="btn btn-danger">
+																	<i class="fa fa-trash" aria-hidden="true"></i> DELETE Meeting
+																</div>
+															{{/with}}
+														{{else}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-check-square-o" aria-hidden="true"></i> Create Meeting!
+															</button>
+														{{/if}}
+														
+														<a href="/meetings" class="btn btn-danger2 pull-right" type="submit"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
+														
+													</div>
+												</div>
+											
+											</form>
+											
+										</div>
+										
+									</div>
+								</div>
+								
+						
+							</div>
+						
+						</div>
+						
+						
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+	
+	</body>
+
+</template>
+

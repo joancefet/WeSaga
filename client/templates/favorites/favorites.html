@@ -1,0 +1,150 @@
+<!-- 
+#
+# TEMPLATE: favorites
+#
+# -->
+<template name="favorites">
+
+	{{> preloader}}
+	
+	<body class="fixed-navbar fixed-sidebar">
+
+		
+		<!-- Header -->
+		<div id="header">
+			<div class="color-line">
+			</div>
+			<div id="logo" class="light-version">
+				<span>
+					<a href="/">
+						<img class="" src="/images/skyrooms-logo.png" width="100%" />
+					</a>
+				</span>
+			</div>
+			<nav role="navigation">
+				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+				<div class="small-logo">
+					<img class="" src="/images/skyrooms-logo.png" width="100%" />
+				</div>
+			</nav>
+		</div>
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">
+	
+			<div class="transition animated fadeIn">
+				<div class="hpanel">
+					<div class="panel-body">
+
+						<div id="hbreadcrumb" class="pull-right m-t-lg">
+							<!-- <ol class="hbreadcrumb breadcrumb">
+								<li><a href="index.html">Dashboard</a></li>
+								<li>
+									<span>App views</span>
+								</li>
+								<li class="active">
+									<span>Your  </span>
+								</li>
+							</ol> -->
+						</div>
+						<h2 class="font-light m-b-xs">
+							<i class="fa fa-star" aria-hidden="true"></i> Favorites
+						</h2>
+					</div>
+				</div>
+			</div>
+			
+			<div class="content animate-panel">
+			
+				<div class="col-lg-2">
+					<div class="hpanel hgreen contact-panel">
+						<div class="panel-body">
+							<img alt="logo" class="" style="width:100%; height:auto;" src="/images/skyrooms-demo-room.jpg" />
+							<h3><a href="/join/demo"> Demo </a></h3>
+							<p>
+								We sell stuff online, and are always looking to network with people
+							</p>
+							<a href="/join/demo" class="btn btn-info btn-block btn-sm"><i class="fa fa-cubes" aria-hidden="true"></i> Join Demo</a> 
+						</div>
+						<div class="panel-footer contact-footer">
+							<div class="row">
+								<div class="col-md-4 border-right">
+								</div>
+								<div class="col-md-4 border-right">
+									<div class="contact-stat"><span>Participants: </span> <strong>8</strong></div>
+								</div>
+								<div class="col-md-4">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<div class="col-lg-2">
+					<div class="hpanel hgreen contact-panel">
+						<div class="panel-body">
+							<center><img alt="logo" class="img-circle m-b" src="/images/user_generic.jpg"></center>
+							<h3><a href=""> Bradly Danforth </a></h3>
+							<div class="text-muted font-bold m-b-xs">California, LA</div>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan.
+							</p>
+							<div class="btn btn-info btn-block btn-sm"><i class="fa fa-id-card" aria-hidden="true"></i> View Desk</div>
+							<div class="btn btn-warning2 btn-block btn-sm"><i class="fa fa-handshake-o" aria-hidden="true"></i> Remove  Colleague</div>
+						</div>
+						<div class="panel-footer contact-footer">
+							<div class="row">
+								<div class="col-md-4 border-right">
+									<div class="contact-stat"><span>Oraganizations: </span> <strong>4</strong></div>
+								</div>
+								<div class="col-md-4 border-right">
+									<div class="contact-stat"><span>Collegues: </span> <strong>408</strong></div>
+								</div>
+								<div class="col-md-4">
+									<div class="contact-stat"><span>SkyRooms: </span> <strong>22</strong></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-2">
+					<div class="hpanel hgreen contact-panel">
+						<div class="panel-body">
+							<img alt="logo" class="" style="width:100%; height:auto;" src="/images/company-sample.jpg" />
+							<h3><a href=""> Sample Company Inc. </a></h3>
+							<div class="text-muted font-bold m-b-xs">California, LA</div>
+							<p>
+								We sell stuff online, and are always looking to network with people
+							</p>
+							<div class="btn btn-info btn-block btn-sm"><i class="fa fa-briefcase" aria-hidden="true"></i> View Organization</div>
+						</div>
+						<div class="panel-footer contact-footer">
+							<div class="row">
+								<div class="col-md-4 border-right">
+									
+								</div>
+								<div class="col-md-4 border-right">
+									<div class="contact-stat"><span>Collegues: </span> <strong>408</strong></div>
+								</div>
+								<div class="col-md-4">
+									<div class="contact-stat"><span>SkyRooms: </span> <strong>22</strong></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		<!-- Main Wrapper -->
+	
+	</body>
+
+</template>
+

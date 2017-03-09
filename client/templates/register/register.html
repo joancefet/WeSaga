@@ -1,0 +1,93 @@
+
+<!-- 
+#
+# TEMPLATE: REGISTER
+#
+# -->
+<template name="register">
+
+	<body class="blank">
+	
+		{{> preloader}}
+			
+		<div class="color-line"></div>
+		
+		<div class="back-link">
+			<a href="/" class="btn btn-primary">Return Home</a>
+		</div>
+		
+		<div class="register-container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center m-b-md">
+						<img class="landing-logo" src="/images/skyrooms-logo.png" height="40px" />
+						<h3>Register a FREE Account</h3>
+					</div>
+					<div class="hpanel">
+						<div class="panel-body">
+						
+								<form>
+									<div class="row">
+										
+										<div class="form-group col-lg-6">
+											<label>First Name</label>
+											<input type="text"  id="name_first" class="form-control" name="name_first" required="">
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Last Name</label>
+											<input type="text"  id="name_last" class="form-control" name="name_last" required="">
+										</div>
+										
+										<hr />
+										
+										<div class="form-group col-lg-6">
+											<label>Password</label>
+											<input type="password"  id="password" class="form-control" name="password" required="">
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Repeat Password</label>
+											<input type="password"  id="password_repeat" class="form-control" name="password_repeat" required="">
+										</div>
+										
+										<hr />
+										
+										<div class="form-group col-lg-12">
+											<label>Email Address</label>
+											<input type="email"  id="email" class="form-control" name="email" required="">
+										</div>
+										
+										<hr />
+										
+										<div class="checkbox col-lg-12" style="padding-left:50px;">
+											<label>
+												<input type="checkbox" class="i-checks" >
+												Sign up for our newsletter
+											</label>
+											<br />
+											<label>
+												<input type="checkbox" class="i-checks"  required="">
+												I agree to the <a href="http://news.skyrooms.io/terms-and-conditions/" target="_blank" style="font-weight:bold;">Terms & Conditions</a> and <a href="http://news.skyrooms.io/privacy-policy/" target="_blank" style="font-weight:bold;">Privacy Policy</a>
+											</label>
+										</div>
+									</div>
+									<div class="text-center">
+										<input type="submit" class="btn btn-success" value="Register" />
+										<a href="/login" class="btn btn-default">Cancel</a>
+									</div>
+								</form>
+								
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					&copy;2017 <strong>SkyRooms</strong>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+
+
+</template>

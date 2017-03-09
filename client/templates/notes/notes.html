@@ -1,0 +1,130 @@
+<!-- 
+#
+# TEMPLATE: Notes
+#
+# -->
+<template name="notes">
+
+	{{> preloader}}
+	
+	<body class="fixed-sidebar">
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">
+			<div class="content animate-panel">					
+				<div class="row">
+			
+					<div class="col-md-8">
+						<div class="hpanel ">
+							<div class="panel-body">
+							
+								<textarea id="notepad" cols="40" rows="25" style="width:100%;" >{{currentUser.profile.notes}}</textarea>
+								<script>
+									
+									setTimeout(function(){
+										// TinyMCE has to be done this way for compatibilty reasons. :/
+										tinymce.EditorManager.editors = []; //we need to remove the old instances. 
+										
+										//Set "About" section to a TinyMCE editor.
+										tinymce.init({
+										  selector: 'textarea',
+										  element_format: "html",
+										  remove_linebreaks : true,
+										  convert_newlines_to_brs: true,
+										  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+										  height: 800,
+										  menubar: false,
+										  toolbar: 'insert | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+										});
+									},1000);
+									
+								</script>
+								
+							</div>
+						</div>
+					</div> 
+					
+					<!-- ADS CONTAINER -->
+					<div class="col-md-4">
+				
+						<div class="col-lg-12">
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<center>
+								
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- Sky2: Large Rectangle -->
+										<ins class="adsbygoogle"
+											 style="display:inline-block;width:336px;height:280px"
+											 data-ad-client="ca-pub-5191331981474706"
+											 data-ad-slot="2816270978"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+										
+									</center>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<center>
+									
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- Sky2: Skyscraper -->
+										<ins class="adsbygoogle"
+											 style="display:inline-block;width:300px;height:600px"
+											 data-ad-client="ca-pub-5191331981474706"
+											 data-ad-slot="1339537771"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+										
+									</center>
+									
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<center>
+									
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- Sky2: Large Rectangle -->
+										<ins class="adsbygoogle"
+											 style="display:inline-block;width:336px;height:280px"
+											 data-ad-client="ca-pub-5191331981474706"
+											 data-ad-slot="2816270978"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+										
+									</center>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>	
+					<!-- ADS CONTAINER -->
+					
+				</div>				
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+	
+	</body>
+
+</template>

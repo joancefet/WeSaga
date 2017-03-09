@@ -1,0 +1,185 @@
+<!-- 
+#
+# TEMPLATE: colleagues
+#
+# -->
+<template name="colleagues">
+
+	{{> preloader}}
+	
+	<body class="fixed-navbar fixed-sidebar">
+
+		
+		<!-- Header -->
+		<div id="header">
+			<div class="color-line">
+			</div>
+			<div id="logo" class="light-version">
+				<span>
+					<a href="/">
+						<img class="" src="/images/skyrooms-logo.png" width="100%" />
+					</a>
+				</span>
+			</div>
+			<nav role="navigation">
+				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+				<div class="small-logo">
+					<img class="" src="/images/skyrooms-logo.png" width="100%" />
+				</div>
+			</nav>
+		</div>
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+					
+					<div class="content animate-panel">		
+					
+						<div class="col-md-8">
+							
+							<div class="row">
+							
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="hpanel">
+											<div class="panel-body">
+												<div class="input-group">
+													<input class="form-control" type="text" placeholder="Search for people by name or email">
+													<div class="input-group-btn">
+														<button class="btn btn-default"><i class="fa fa-search"></i></button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+							</div>
+							
+							<div class="row">
+							
+								{{#each people}}
+								<div class="col-lg-3">
+									<div class="hpanel hgreen contact-panel">
+										<div class="panel-body">
+											<center><img alt="logo" class="img-circle m-b" src="/profileImages/{{profile.avatar}}"></center>
+											<h3><a href="">{{profile.username}} </a></h3>
+											<div class="text-muted font-bold m-b-xs">California, LA</div>
+											<p>
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan.
+											</p>
+											<!--<div class="btn btn-info btn-block btn-sm"><i class="fa fa-id-card" aria-hidden="true"></i> View Desk</div>-->
+											<div class="btn btn-success btn-block btn-sm"><i class="fa fa-handshake-o" aria-hidden="true"></i> Add Colleague</div>
+										</div>
+										<!--
+										<div class="panel-footer contact-footer">
+											<div class="row">
+												<div class="col-md-4 border-right">
+													<div class="contact-stat"><span>Oraganizations: </span> <strong>4</strong></div>
+												</div>
+												<div class="col-md-4 border-right">
+													<div class="contact-stat"><span>Collegues: </span> <strong>408</strong></div>
+												</div>
+												<div class="col-md-4">
+													<div class="contact-stat"><span>SkyRooms: </span> <strong>22</strong></div>
+												</div>
+											</div>
+										</div>
+										-->
+									</div>
+								</div>
+								{{/each}}
+						
+							</div>
+						
+						</div>
+						
+						<!-- ADS CONTAINER -->
+						<div class="col-md-4">
+					
+							<div class="col-lg-12">
+								<div class="hpanel hblue">
+									<div class="panel-body">
+									
+										<center>
+									
+											<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+											<!-- Sky2: Large Rectangle -->
+											<ins class="adsbygoogle"
+												 style="display:inline-block;width:336px;height:280px"
+												 data-ad-client="ca-pub-5191331981474706"
+												 data-ad-slot="2816270978"></ins>
+											<script>
+											(adsbygoogle = window.adsbygoogle || []).push({});
+											</script>
+											
+										</center>
+
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="hpanel hblue">
+									<div class="panel-body">
+									
+										<center>
+										
+											<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+											<!-- Sky2: Skyscraper -->
+											<ins class="adsbygoogle"
+												 style="display:inline-block;width:300px;height:600px"
+												 data-ad-client="ca-pub-5191331981474706"
+												 data-ad-slot="1339537771"></ins>
+											<script>
+											(adsbygoogle = window.adsbygoogle || []).push({});
+											</script>
+											
+										</center>
+										
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="hpanel hblue">
+									<div class="panel-body">
+									
+										<center>
+										
+											<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+											<!-- Sky2: Large Rectangle -->
+											<ins class="adsbygoogle"
+												 style="display:inline-block;width:336px;height:280px"
+												 data-ad-client="ca-pub-5191331981474706"
+												 data-ad-slot="2816270978"></ins>
+											<script>
+											(adsbygoogle = window.adsbygoogle || []).push({});
+											</script>
+											
+										</center>
+										
+									</div>
+								</div>
+							</div>
+							
+						</div>	
+						<!-- ADS CONTAINER -->
+							
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+	
+	</body>
+
+</template>
+

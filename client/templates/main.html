@@ -1,0 +1,155 @@
+
+<!-- 
+#
+# TEMPLATE: HEADER
+#
+# -->
+<template name="header">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<!-- Page title -->
+		<title>SkyRooms | Free Video Conferencing</title>
+		<meta name="description" content="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself" />
+
+		<!-- Twitter Card data -->
+		<meta name="twitter:card" value="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself">
+
+		<!-- Open Graph data -->
+		<meta property="og:title" content="SkyRooms.IO" />
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://www.skyrooms.io" />
+		<meta property="og:image" content="https://www.skyrooms.io/images/og_facebook.jpg" />
+		<meta property="og:description" content="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself" />
+
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
+
+		<!-- Vendor styles -->
+		
+		<!-- OneSignal Manifest-->
+		<link rel="manifest" href="/manifest.json">
+		
+		<script>
+			var OneSignal = window.OneSignal || [];
+			OneSignal.push(["init", {
+			  appId: "c7c0a812-c0cc-405c-bc16-7de68e4da968",
+			  autoRegister: true, /* Set to true to automatically prompt visitors */
+			  subdomainName: 'skyrooms',   
+			  httpPermissionRequest: {
+				enable: true
+			  },
+			  notifyButton: {
+				  enable: true /* Set to false to hide */
+			  }
+			}]);
+		</script>
+		
+		
+		
+	</head>
+
+</template>
+
+
+<!-- 
+#
+# TEMPLATE: SCREEN
+#
+# -->
+<template name="screen">
+
+	{{> header}}
+
+	{{> yield region="content"}}
+	
+	{{> footer}}
+
+</template> 
+
+
+<!-- 
+#
+# TEMPLATE: 404
+#
+# -->
+<template name="not_found">
+	{{> header}}
+
+	<div class="back-link">
+		<a href="index.html" class="btn btn-primary">Back to Dashboard</a>
+	</div>
+	<div class="error-container">
+		<i class="pe-7s-way text-success big-icon"></i>
+		<h1>404</h1>
+		<strong>Page Not Found</strong>
+		<p>
+			Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.
+
+		</p>
+		<a href="index.html" class="btn btn-xs btn-success">Go back to dashboard</a>
+	</div>
+
+	{{> footer}}
+	
+</template>
+
+
+<!-- 
+#
+# TEMPLATE: PRELOADER
+#
+# -->
+<template name="preloader">
+
+	<div class="splash"> 
+		<div class="color-line"></div>
+		<div class="splash-title">
+			<center>
+				<img class="landing-logo" src="/images/skyrooms-logo.png" height="40px" />
+				<div class="loader">Loading...</div>
+			</center>
+		</div> 
+	</div>
+
+
+</template>
+
+
+<!-- 
+#
+# TEMPLATE: FOOTER
+#
+# -->
+<template name="footer">
+
+	<!-- Local script for menu handle -->
+	<!-- It can be also directive -->
+	<script>
+		/*$(document).ready(function () {
+
+			// Page scrolling feature
+			$('a.page-scroll').bind('click', function(event) {
+				var link = $(this);
+				$('html, body').stop().animate({
+					scrollTop: $(link.attr('href')).offset().top - 50
+				}, 500);
+				event.preventDefault();
+			});
+
+			$('body').scrollspy({
+				target: '.navbar-fixed-top',
+				offset: 80
+			});
+
+		});
+		*/
+	</script>
+	
+</template>
+
+

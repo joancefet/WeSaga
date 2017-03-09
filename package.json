@@ -1,0 +1,21 @@
+{
+  "name": "skyrooms2",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.5.1",
+    "babel-runtime": "^6.20.0",
+    "btoa": "^1.1.2",
+    "cssnano": "^3.8.0",
+    "glob": "^7.1.1",
+    "jquery": "^3.1.1",
+    "load-grunt-tasks": "^3.5.2",
+    "markdown-it": "^8.1.0",
+    "meteor-node-stubs": "^0.2.3",
+    "npm-shrinkwrap": "^6.0.2",
+    "pixrem": "^3.0.2",
+    "time-grunt": "^1.4.0"
+  }
+}
