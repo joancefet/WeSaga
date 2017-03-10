@@ -3584,7 +3584,7 @@ ul.h-list li:hover a {
 }
 .landing-page header {
   background: url('/images/wallpaper/wallpaper-crystal.jpg') 50% 0 no-repeat;
-  height: 480px;
+  height: auto;
   padding-top: 50px;
   margin-bottom: 30px;
 }

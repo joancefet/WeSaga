@@ -5,7 +5,7 @@
 	
 	{{> preloader}}
 	
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<nav class="navbar navbar-default" style="margin-bottom:0px">
 		<div class="container">
 			<div class="navbar-header">
 				<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
@@ -21,98 +21,97 @@
 					
 				</div>
 			</div>
+			
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a class="page-scroll" href="#page-top">Home</a></li>
-					<li><a class="page-scroll" page-scroll href="/#features">Features</a></li>
-					<li><a class="page-scroll" page-scroll href="/#team">Team</a></li>
-					<li><a class="page-scroll" page-scroll href="/#contact">Contact</a></li>
-					<li><a class="page-scroll" page-scroll href="http://news.skyrooms.io">News</a></li>
+					<li class="active"><a class="page-scroll" href="/login">Login</a></li>
+					<li><a class="page-scroll" page-scroll href="/register">Register</a></li>
 				</ul>
 			</div>
+			
 		</div>
 	</nav>
 
-	<header id="page-top">
+	<header id="page-top" style="padding:0px 0 30px 0; margin-bottom:0px;">
 		<div class="container">
-			<div class="heading animated zoomInRight">
-				<h1>
-					FREE Next Generation Virtual Meetings
-				</h1>
-				<span>100% Free for both Personal and Enterprise Solutions.</span>
-				<p>&nbsp;</p>
-				<p>&nbsp;</p>
-				{{#if currentUser}}
-					<p>
-						<a href="/desk" class="btn btn-lg btn-info">
-							<i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;&nbsp;
-							My Desk & Account
-						</a>
-					</p>
-					<p>
-						<a href="#" class="btn btn-lg btn-success">
-							<i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;
-							Logout
-						</a>
-					</p>
-				{{else}}
-					<p>
-						<a href="/login" class="btn btn-lg btn-info">
-							<i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;&nbsp;
-							Login
-						</a>
-					</p>
-					<p>
-						<a href="/register" class="btn btn-lg btn-success">
-							<i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;
-							FREE Sign Up
-						</a>
-					</p>
-					<p>
-						<a href="https://www.skyrooms.io/meet/AndrewNormore2981/demo" class="btn btn-lg btn-warning2">
-							<i class="fa fa-caret-square-o-right" aria-hidden="true"></i>&nbsp;&nbsp;
-							Try a Live Demo
-						</a>
-					</p>
-				{{/if}}
+			<div class="heading">
+			
+				<div class="col-md-8">
+				
+					<h1>
+						SkyRooms Virtual Offices for Business
+					</h1>
+					<h3>A professionals social network offering free business tools for your organization.</h3>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					{{#if currentUser}}
+						<p>
+							<a href="/desk" class="btn btn-lg btn-info">
+								<i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+								My Desk & Account
+							</a>
+						</p>
+						<p>
+							<a href="#" class="btn btn-lg btn-success">
+								<i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;
+								Logout
+							</a>
+						</p>
+					{{else}}
+						<p>
+							<a href="/login" class="btn btn-lg btn-info">
+								<i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+								Login
+							</a>
+						</p>
+						<p>
+							<a href="/register" class="btn btn-lg btn-success">
+								<i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;
+								FREE Sign Up
+							</a>
+						</p>
+						<p>
+							<a href="https://www.skyrooms.io/meet/AndrewNormore2981/demo" class="btn btn-lg btn-warning2">
+								<i class="fa fa-caret-square-o-right" aria-hidden="true"></i>&nbsp;&nbsp;
+								Try a Demo Meeting
+							</a>
+						</p>
+					{{/if}}
+					
+				</div>
+				
+				<div class="col-md-4">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/WhghYX2RNDc?rel=0" frameborder="0" allowfullscreen></iframe>
+					<br />
+					<br />
+				</div>
 				
 			</div>
-			<div class="heading-image animate-panel animated bounceIn" data-child="img-animate" data-effect="fadeInRight">
-				<p class="small" style="color:white;">&nbsp;</p>
-				<img class="img-animate" src="/images/d1.jpg">
-				<img class="img-animate" src="/images/d2.jpg">
-				<img class="img-animate" src="/images/d3.jpg">
-				<img class="img-animate" src="/images/d4.jpg">
-				<br/>
-				<img class="img-animate" src="/images/d5.jpg">
-				<img class="img-animate" src="/images/d6.jpg">
-				<img class="img-animate" src="/images/d7.jpg">
-				<img class="img-animate" src="/images/d8.jpg">
-			</div>
 		</div>
+		
 	</header>
-	<section>
+	<section style="padding:0px 0 30px 0;">
 		<div class="container animated bounceIn">
 		<div class="row">
 			<div class="col-md-4">
 				<center>
-					<h4 class="m-t-lg"><i class="fa fa-hand-peace-o icon-big text-success"></i></h4>
-					<h4>FREE for Everyone</h4>
-					<h5>You'll never need to enter your credit card to use SkyRooms.</h5>
+					<h4 class="m-t-lg"><i class="fa fa-id-card-o icon-big text-success"></i></h4>
+					<h4>Professionals Social Network</h4>
+					<h5>View business cards and resumes. Connect with Colleagues.</h5>
 				</center>
 			</div>
 			<div class="col-md-4">
 				<center>
-					<h4 class="m-t-lg"><i class="fa fa-money icon-big text-success"></i></h4>
-					<h4>FREE for Business & Enterprise</h4>
-					<h5>Create unlimited hosts, no restirction on attendees.</h5>
+					<h4 class="m-t-lg"><i class="fa fa-pie-chart icon-big text-success"></i></h4>
+					<h4>Business Management Tools</h4>
+					<h5>Free business and project management tools, designed with the remote employee in mind.</h5>
 				</center>
 			</div>
 			<div class="col-md-4">
 				<center>
-					<h4 class="m-t-lg"><i class="fa fa-cloud-upload icon-big text-success"></i></h4>
-					<h4>NO DOWNLOADS Required</h4>
-					<h5>Simply share your meeting URL and connect.</h5>
+					<h4 class="m-t-lg"><i class="fa fa-users icon-big text-success"></i></h4>
+					<h4>Next Generation Virtual Conferences</h4>
+					<h5>Unlimited rooms, attendees, desktop sharing, meeting recording. All the features you'd expect — For Free</h5>
 				</center>
 			</div>
 		</div>
@@ -124,8 +123,81 @@
 		<div class="container">
 			<div class="row text-center">
 				<div class="col-lg-12">
-					<h2><span class="text-success">All Features</span> For Everyone</h2>
-					<h5>We have all the features you'd expect</h5>
+					<h2><span class="text-success">Professionals</span> Social Network</h2>
+					<h5>Use framiliar social networking tools to assist your organizations communication, projects, and team work.</h5>
+				</div>
+			</div>
+			
+			<div class="row text-center">
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-user text-success icon-big"></i></h4>
+					<strong>Your Desk</strong>
+					<p>It starts by posting status updates on your own, or a colleagues desk</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-commenting-o text-success icon-big"></i></h4>
+					<strong>Office Buzz</strong>
+					<p>Imagine a feed of information that was about your business and tasks, with out the 'extra stuff' and distractions</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-id-card-o text-success icon-big"></i></h4>
+					<strong>Business Cards</strong>
+					<p>Get an at a glance understanding of your colleagues and prospects current information</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-graduation-cap text-success icon-big"></i></h4>
+					<strong>Resumes</strong>
+					<p>Understand fully who you're working by viewing their entire resume during a meeting or project</p>
+				</div>
+			</div>
+			
+
+		</div>
+	</section>
+	
+	
+	<section id="features" class="bg-dark">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-lg-12">
+					<h2><span class="text-success">Business</span> Management Tools</h2>
+					<h5>Our Project, Task and Calendar system allows your employees to work together and stay organized.</h5>
+				</div>
+			</div>
+			
+			<div class="row text-center">
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-folder-open text-success icon-big"></i></h4>
+					<strong>Project Management</strong>
+					<p>Connect staff members or friends in a virtual conference room, share video and files.</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-check-square-o text-success icon-big"></i></h4>
+					<strong>Task Check List</strong>
+					<p>Run a 1 to 100,000 user webinar completely free.</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-calendar text-success icon-big"></i></h4>
+					<strong>Calendar Sync</strong>
+					<p>Sync with your calendar to schedule meetings with colleagues. We offer integrations to Moodle and Wordpress.</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="m-t-lg"><i class="fa fa-list-ul text-success icon-big"></i></h4>
+					<strong>Activity Log</strong>
+					<p>Run your meeting and save as an MP4, publishes to YouTube for later use.</p>
+				</div>
+			</div>
+			
+
+		</div>
+	</section>
+	
+	<section id="features" class="bg-light">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-lg-12">
+					<h2><span class="text-success">Next Generation</span> Video Conference</h2>
+					<h5>With our new technology we can offer unlimted meeting spaces to every one. Welcome to the future.</h5>
 				</div>
 			</div>
 			
@@ -164,20 +236,6 @@
 					<p>No more messy 1800 call-in. Simply join the meeting and hear every one.</p>
 				</div>
 				<div class="col-md-3">
-					<h4 class="m-t-lg"><i class="fa fa-commenting-o text-success icon-big"></i></h4>
-					<strong>Social Wall</strong>
-					<p>Your SkyRoom works for you when away by posting updates</p>
-				</div>
-				<div class="col-md-3">
-					<h4 class="m-t-lg"><i class="fa fa-group text-success icon-big"></i></h4>
-					<strong>User Profiles & Groups</strong>
-					<p>Connect with users and form groups for your organization</p>
-				</div>
-			</div>
-			
-			
-			<div class="row text-center">
-				<div class="col-md-3">
 					<h4 class="m-t-lg"><i class="pe-7s-airplay text-success icon-big"></i></h4>
 					<strong>Works on All Browsers & Devices</strong>
 					<p>No need to download or install confusing software. SkyRooms works in the browser.</p>
@@ -187,22 +245,13 @@
 					<strong>Faster Technology</strong>
 					<p>WebRTC means there's less 'stuff' in the middle to 'process'. Browser to Browser Mesh Networking speeds up the communication line.</p>
 				</div>
-				<div class="col-md-3">
-					<h4 class="m-t-lg"><i class="pe-7s-display1 text-success icon-big"></i></h4>
-					<strong>Media Sharing</strong>
-					<p>We have integrations to Google Docs, OneDrive, DropBox and more! Whiteboards, PDF and video sharing for your entire presentation.</p>
-				</div>
-				<div class="col-md-3">
-					<h4 class="m-t-lg"><i class="pe-7s-cloud-upload text-success icon-big"></i></h4>
-					<strong>On the Cloud</strong>
-					<p>There's nothing to download. Click the link and connect to your SkyRoom.</p>
-				</div>
 			</div>
-			
 
 		</div>
 	</section>
-		
+	
+	
+	<!--
 	<section id="clients">
 		<div class="container">
 			<div class="row text-center">
@@ -239,6 +288,7 @@
 
 		</div>
 	</section>
+	-->
 
 	<!--
 	<section id="team" class="bg-light">
@@ -321,7 +371,7 @@
 
 	
 	
-	
+	<!--
 	<section id="contact">
 		<div class="container">
 			<div class="row text-center">
@@ -385,7 +435,7 @@
 
 		</div>
 	</section>
-
+	-->
 
 
 	</body>
