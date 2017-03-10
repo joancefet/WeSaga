@@ -53,9 +53,9 @@ Router.configure({
 // Desk Helper
 Template.desk.helpers({
 	
-  expByUser(){
-	  return UserExperience.find({"ownerId":Meteor.userId()}, {sort: { fromStamp: -1 }});
-  },
+  // expByUser(){
+	  // return UserExperience.find({"ownerId":Meteor.userId()}, {sort: { fromStamp: -1 }});
+  // },
 	
   // post() {
 	  // return SkyroomPosts.find({ }, {sort: { timestamp: -1 }, limit: 10});

@@ -24,6 +24,13 @@ if (Meteor.isServer) {
 			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10 });
 		}
 		
+		if(action == "people_desk_posts"){
+			
+			var user = Meteor.users.findOne({"profile.username":userId}); 
+			// We can add view permissions here :)
+			return Posts.find({type:"desk_posts", owner_id:user._id}, { sort: { createdAt: -1 }, limit:10 });
+		}
+		
 		if(action == "notes"){
 			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10  });			
 		}
@@ -36,6 +43,10 @@ if (Meteor.isServer) {
 			return Meteor.users.find({}); //TODO Restrict by fields, lower data use
 		}
 		
+		if(action == "people_desk"){
+			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		}
+		
 		if(action == "colleagues"){
 			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
 		}
@@ -45,7 +56,6 @@ if (Meteor.isServer) {
 		}
 		
 		if(action == "meetings_by_url"){
-			console.log("FINDING: "+userId);
 			return Posts.find({type:"meetings", slug:userId}, { sort: { createdAt: -1 } }); // UserId is a slug in this exception... lazy...			
 		}
 		

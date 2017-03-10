@@ -7,7 +7,7 @@
 
 	{{> preloader}}
 	
-	<body class="fixed-navbar fixed-sidebar">
+	<body class="fixed-sidebar">
 
 		<!-- Navigation -->
 			{{> account_navigation}}
@@ -48,21 +48,36 @@
 									<div class="hpanel hgreen contact-panel">
 										<div class="panel-body">
 											{{#if profile.avatar}}
-												<center><img alt="logo" class="img-circle m-b" src="/profileImages/{{profile.avatar}}"></center>
+												<center>
+													<img alt="logo" class="img-circle m-b" src="/profileImages/{{profile.avatar}}" width="100%" />
+												</center>
 											{{else}}
-												<center><img alt="logo" class="img-circle m-b" src="/images/default.jpg"></center>
+												<center>
+													<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100%" />
+												</center>
 											{{/if}}
 											
-											<h3><a href="">{{profile.name_first}} {{profile.name_last}}</a></h3>
+											<h3>
+												<center>
+													<a href="/people/{{profile.username}}">
+														{{profile.name_first}}
+														<br />
+														{{profile.name_last}}
+													</a>
+												</center>
+											</h3>
 											{{#if profile.location}}
 												<div class="text-muted font-bold m-b-xs">Location</div>
 											{{/if}}
+											
 											<p style="display:none;">
 												SkyRooms - Test user
 											</p>
 											
-											<!--<div class="btn btn-info btn-block btn-sm"><i class="fa fa-id-card" aria-hidden="true"></i> View Desk</div>-->
-										
+											<!-- View Desk -->
+											<a href="/people/{{profile.username}}"  class="btn btn-primary btn-block btn-sm">
+												<i class="fa fa-id-card" aria-hidden="true"></i> View Desk
+											</a>
 											
 											{{#if noColleagueStatus "notFound"}}
 												<form>

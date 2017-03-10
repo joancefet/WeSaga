@@ -44,110 +44,141 @@
 	<!-- DESKTOP -->
 	<div class="profile-picture logo_mobile_hide">
 
-		<div class="stats-label text-color">
-			{{#if currentUser.profile.avatar}}
-				<img class="img-circle m-b" src="/profileImages/{{currentUser.profile.avatar}}" width="100px" height="100px" />
-			{{else}}
-				<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100px" height="100px" />
-			{{/if}}
-			
-			<span class="font-extra-bold font-uppercase">{{currentUser.profile.name_first}}</span>
-		</div>
+		{{#if currentUser}}
+			<div class="stats-label text-color">
+				{{#if currentUser.profile.avatar}}
+					<img class="img-circle m-b" src="/profileImages/{{currentUser.profile.avatar}}" width="100px" height="100px" />
+				{{else}}
+					<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100px" height="100px" />
+				{{/if}}
+				<br />
+				<span class="font-extra-bold font-uppercase">{{currentUser.profile.name_first}}</span>
+			</div>
+		{{else}}
+			<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100px" height="100px" />
+			<br />
+			<span class="font-extra-bold font-uppercase">Guest</span>
+		{{/if}}
 		
 	</div>
 
 	<!-- MOBILE -->
 	<li class="logo_desktop_hide" >
-		<a href="/desk">
-			<span class="nav-label">
-				<img class="img-circle m-b" src="/profileImages/{{currentUser.profile.avatar}}" width="25px" height="25px" /> 
-				<span class="font-extra-bold font-uppercase" style="position:relative; top:-5px">{{currentUser.profile.name_first}}</span>
-			</span> 
-		</a>
+		{{#if currentUser}}
+			<a href="/desk">
+				<span class="nav-label">
+					<img class="img-circle m-b" src="/profileImages/{{currentUser.profile.avatar}}" width="25px" height="25px" /> 
+					<span class="font-extra-bold font-uppercase" style="position:relative; top:-5px">{{currentUser.profile.name_first}}</span>
+				</span> 
+			</a>
+		{{else}}
+			<a href="/desk">
+				<span class="nav-label">
+					<img class="img-circle m-b" src="/images/default.jpg" width="25px" height="25px" /> 
+					<span class="font-extra-bold font-uppercase" style="position:relative; top:-5px">Guest</span>
+				</span> 
+			</a>
+		{{/if}}
 	</li>
 	
 
-	
-	<li class="{{account_navigation_list_active_class 'notify'}}">
-		<a href="/notify"> 
-			<span class="nav-label">
-				
-				{{#if notify_count}}
-					<i class="fa fa-bell" aria-hidden="true"></i> <span class="label label-danger">{{notify_count}}</span>
-				{{else}}
-					<i class="fa fa-bell" aria-hidden="true"></i> 
-				{{/if}}
-				
-			</span> 
-		</a>		
-	</li>
+	{{#if currentUser}}
+		<li class="{{account_navigation_list_active_class 'notify'}}">
+			<a href="/notify"> 
+				<span class="nav-label">
+					
+					{{#if notify_count}}
+						<i class="fa fa-bell" aria-hidden="true"></i> <span class="label label-danger">{{notify_count}}</span>
+					{{else}}
+						<i class="fa fa-bell" aria-hidden="true"></i> 
+					{{/if}}
+					
+				</span> 
+			</a>		
+		</li>
 
-	
-	<!-- Regular Nav -->
-	<li class="{{account_navigation_list_active_class 'buzz'}}">
-		<a href="/buzz"> 
-			<span class="nav-label">
-				<i class="fa fa-newspaper-o" aria-hidden="true"></i> Buzz
-			</span> 
-		</a>		
-	</li>
-	<li class="{{account_navigation_list_active_class 'desk'}}">
-		<a href="/desk"> 
-			<span class="nav-label">
-				<i class="fa fa-id-card" aria-hidden="true"></i> My Desk
-			</span> 
-		</a>		
-	</li>
-	<li class="{{account_navigation_list_active_class 'people'}}">
-		<a href="/people"> 
-			<span class="nav-label">
-				<i class="fa fa-address-book-o" aria-hidden="true"></i> People
-			</span> 
-		</a>
-	</li>
-	<li class="{{account_navigation_list_active_class 'colleagues'}}">
-		<a href="/colleagues"> 
-			<span class="nav-label">
-				<i class="fa fa-handshake-o" aria-hidden="true"></i> Colleagues
-			</span> 
-		</a>
-	</li>
-	<li class="{{account_navigation_list_active_class 'notes'}}">
-		<a href="/notes"> 
-			<span class="nav-label">
-				<i class="fa fa-file-o" aria-hidden="true"></i> Notes
-			</span> 
-		</a>
-	</li>
-	<li class="{{account_navigation_list_active_class 'meetings'}}">
-		<a href="/meetings"> 
-			<span class="nav-label">
-				<i class="fa fa-calendar" aria-hidden="true"></i> Meetings
-			</span> 
-		</a>
-	</li>
-	
-	<li class="{{account_navigation_list_active_class 'groups'}}">
-		<a href="/groups"> 
-			<span class="nav-label">
-				<i class="fa fa-briefcase" aria-hidden="true"></i> Work Groups
-			</span> 
-		</a>
-	</li>
-	<li class="{{account_navigation_list_active_class 'chats'}}">
-		<a href="/chats"> 
-			<span class="nav-label">
-				<i class="fa fa-comments" aria-hidden="true"></i> Chats
-			</span> 
-		</a>
-	</li>
-	
-	<li class="">
-		<a href="/" class="skyrooms_logout"> 
-			<span class="nav-label">
-				<i class="fa fa-power-off" aria-hidden="true"></i> Logout
-			</span> 
-		</a>
-	</li>
-	
+		
+		<!-- Regular Nav -->
+		<li class="{{account_navigation_list_active_class 'buzz'}}">
+			<a href="/buzz"> 
+				<span class="nav-label">
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Buzz
+				</span> 
+			</a>		
+		</li>
+		<li class="{{account_navigation_list_active_class 'desk'}}">
+			<a href="/desk"> 
+				<span class="nav-label">
+					<i class="fa fa-id-card" aria-hidden="true"></i> My Desk
+				</span> 
+			</a>		
+		</li>
+		<li class="{{account_navigation_list_active_class 'people'}}">
+			<a href="/people"> 
+				<span class="nav-label">
+					<i class="fa fa-address-book-o" aria-hidden="true"></i> People
+				</span> 
+			</a>
+		</li>
+		<li class="{{account_navigation_list_active_class 'colleagues'}}">
+			<a href="/colleagues"> 
+				<span class="nav-label">
+					<i class="fa fa-handshake-o" aria-hidden="true"></i> Colleagues
+				</span> 
+			</a>
+		</li>
+		<li class="{{account_navigation_list_active_class 'notes'}}">
+			<a href="/notes"> 
+				<span class="nav-label">
+					<i class="fa fa-file-o" aria-hidden="true"></i> Notes
+				</span> 
+			</a>
+		</li>
+		<li class="{{account_navigation_list_active_class 'meetings'}}">
+			<a href="/meetings"> 
+				<span class="nav-label">
+					<i class="fa fa-calendar" aria-hidden="true"></i> Meetings
+				</span> 
+			</a>
+		</li>
+		
+		<li class="{{account_navigation_list_active_class 'groups'}}">
+			<a href="/groups"> 
+				<span class="nav-label">
+					<i class="fa fa-briefcase" aria-hidden="true"></i> Work Groups
+				</span> 
+			</a>
+		</li>
+		<li class="{{account_navigation_list_active_class 'chats'}}">
+			<a href="/chats"> 
+				<span class="nav-label">
+					<i class="fa fa-comments" aria-hidden="true"></i> Chats
+				</span> 
+			</a>
+		</li>
+		
+		<li class="">
+			<a class="skyrooms_logout"> 
+				<span class="nav-label">
+					<i class="fa fa-power-off" aria-hidden="true"></i> Logout
+				</span> 
+			</a>
+		</li>
+	{{else}}
+		<li class="">
+			<a href="/login" class=""> 
+				<span class="nav-label">
+					<i class="fa fa-user-circle" aria-hidden="true"></i> Login
+				</span> 
+			</a>
+		</li>
+		<li class="">
+			<a href="/register" class=""> 
+				<span class="nav-label">
+					<i class="fa fa-user-plus" aria-hidden="true"></i> Register
+				</span> 
+			</a>
+		</li>
+	{{/if}}
+		
 </template>

@@ -101,6 +101,8 @@ Template.meet.onDestroyed(function () {
 	//Helpers.skyroom_connect(connection, Router.current().params.requested_room_slug, "leave" );
 	
 	
+	api.executeCommand('hangup');
+	
 });
 
 // SKYROOM Events

@@ -41,5 +41,8 @@ Template.notify.helpers({
 	notify() {
 		return Posts.find({type:"notify"});
 	},
+	slug(string){
+		return ToSeoUrl(string);
+	}
 	
 });

@@ -12,8 +12,9 @@ Router.route('/people',{
 		}
 	},
 	waitOn: function(){
-		Meteor.subscribe('posts', 'people_all'); 
-		
+		if(!Router.current().params.user_slug){
+			Meteor.subscribe('posts', 'people_all'); 		
+		}
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -21,6 +22,7 @@ Router.route('/people',{
 	}
 	
 });
+
 
 // Render
 Template.people.rendered = function() {
@@ -167,27 +169,49 @@ Template.people.events({
 		// Remove
 		// ---------------
 		if(target.action.value == "remove"){
+			
 			swal({
-				title: "You no longer Colleagues",
+				title: "Really remove this Colleague?",
 				text: "",
-				type: "danger",
-				showCancelButton: false,
+				type: "warning",
+				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Close",
+				confirmButtonText: "Confirm",
 				closeOnConfirm: true
-			});
-			
-			// Remove to accepted for Me
-			Meteor.call('posts.remove',
-				target.post_id.value,
-				"accepted"
+			},
+				function(){
+					
+					swal.close();
+					
+					// Remove to accepted for Me
+					Meteor.call('posts.remove',
+						target.post_id.value,
+						"accepted"
+					);
+					
+					// Remove to accepted for Colleague
+					Meteor.call('posts.removeByTitle',
+						target.owner_id.value,
+						"accepted"
+					);
+				
+					setTimeout(function(){
+					
+						swal({
+							title: "You no longer Colleagues",
+							text: "",
+							type: "danger",
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "Close",
+						});
+					
+					},100);
+						
+				}
+					
+				
 			);
-			
-			// Remove to accepted for Colleague
-			Meteor.call('posts.removeByTitle',
-				target.owner_id.value,
-				"accepted"
-			);
+
 			
 		} 
 		
@@ -202,6 +226,7 @@ Template.people.helpers({
 		//Meteor.subscribe('postsmeta', "notify_meta", this._id); 
 		return Meteor.users.find({ _id:{$ne:Meteor.userId()} }); // All users except ME
 	},
+	
 	noColleagueStatus(){
 		var posts = Posts.findOne({title:this._id });
 		if(posts){
@@ -223,4 +248,5 @@ Template.people.helpers({
 			return false;
 		}
 	}
+	
 });

@@ -1,0 +1,298 @@
+<!-- 
+#
+# TEMPLATE: desk
+#
+# -->
+<template name="people_desk">
+
+	{{> preloader}}
+	
+	<body class="fixed-sidebar">
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					{{#if people_desk}}
+						{{#with people_desk}}
+				
+							<div class="col-md-8 social-board">
+								
+								<!-- USER CARD  -->
+								
+								<div class="col-md-12">
+									<div class="hpanel hgreen">
+										<div class="panel-body">
+											
+											<div class="col-md-4">
+												
+												<center>
+													{{#if profile.avatar}}
+														<img alt="logo" class="img-circle m-b" src="/profileImages/{{profile.avatar}}" width="300px" height="300px" />
+													{{else}}
+														<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="300px" height="300px" />
+													{{/if}}
+													<h3>
+														<a href="" class="font-uppercase">{{profile.name_first}} {{profile.name_last}}</a>
+													</h3>
+													
+													{{#if noColleagueStatus "notFound"}}
+														<form>
+															<input type="hidden" name="user_id" value="{{_id}}" />
+															<input type="hidden" name="action" value="add" />
+															<button type="submit" class="btn btn-info btn-block ">
+																<i class="fa fa-handshake-o" aria-hidden="true"></i> Add Colleague
+															</button>
+														</form>
+													{{else}}
+														
+														{{#each colleagueStatus}}
+														
+															{{#if checkStatus "accepted"}}
+																<form>
+																	<input type="hidden" name="post_id" value="{{_id}}" />
+																	<input type="hidden" name="owner_id" value="{{owner_id}}" />
+																	<input type="hidden" name="action" value="remove" />
+																	<button type="submit" class="btn btn-danger btn-block ">
+																		<i class="fa fa-handshake-o" aria-hidden="true"></i> Remove Colleague
+																	</button> 
+																</form>
+															{{/if}}
+															{{#if checkStatus "request"}}
+																<form>
+																	<input type="hidden" name="post_id" value="{{_id}}" />
+																	<input type="hidden" name="parent_id" value="{{parent_id}}" />
+																	<input type="hidden" name="title" value="{{title}}" />
+																	<input type="hidden" name="action" value="accept" />
+																	<button type="submit" class="btn btn-success btn-block ">
+																		<i class="fa fa-handshake-o" aria-hidden="true"></i> Accept
+																	</button>
+																</form>
+															{{/if}}
+															{{#if checkStatus "waiting"}}
+																<form>
+																	<input type="hidden" name="post_id" value="{{_id}}" />
+																	<input type="hidden" name="parent_id" value="{{parent_id}}" />
+																	<input type="hidden" name="owner_id" value="{{owner_id}}" />
+																	<input type="hidden" name="action" value="cancel" />
+																	<button type="submit" class="btn btn-warning btn-block ">
+																		<i class="fa fa-handshake-o" aria-hidden="true"></i> Cancel Request
+																	</button>
+																</form>
+															{{/if}}
+														{{/each}}
+														
+													{{/if}}
+													
+													
+													<div class="btn btn-primary btn-block">
+														<i class="fa fa-graduation-cap" aria-hidden="true"></i> View Resume
+													</div>
+												</center>
+												
+												
+											</div>
+												
+											
+										</div>
+
+									</div>
+								</div>
+								<!-- USER CARD -->  
+								
+								
+								<!-- NEW POST -->
+								{{#each colleagueStatus}}								
+									{{#if checkStatus "accepted"}}
+										<div class="col-lg-12">
+
+											<div class="hpanel hblue">
+												<div class="panel-body">
+													<form class="new-post" autocomplete="off">
+														<div class="input-group">
+															<input type="text" class="form-control" name="newPostContent" placeholder="Leave something on {{profile.name_first}}'s desk."> 
+															<input type="hidden" name="owner_id" value="{{_id}}" />
+															<span class="input-group-btn"> 
+																<button type="submit" class="btn btn-primary">Post!</button> 
+															</span>
+														</div>
+													</form>
+												</div>
+											</div>
+											
+										</div>
+										
+									
+										<div class="col-md-12">
+										
+											<!-- POSTS BY COLLEAGUES -->
+											<div id="posts">
+											
+												{{#each desk_posts}}
+													
+													<div class="hpanel hblue">
+														<div class="panel-body">
+															<div class="media social-profile clearfix">
+																<a class="pull-left">
+																	{{#if HasOwnerAvatar}}
+																		<img alt="logo" class="img-circle m-b" src="/profileImages/{{owner_avatar}}" width=100 height=100 />
+																	{{else}}
+																		<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width=100 height=100 />
+																	{{/if}}
+																</a>
+																<div class="media-body">
+																	<h5 class="m-t-md">
+																		<span class="capitalize">{{owner_fullname}}</span>
+																	</h5>
+																	<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+																</div>
+															</div>
+															<div class="social-content m-t-md">
+																{{content}}
+															</div>
+														</div>
+														
+														<!-- CHATS -->
+														<div class="panel-footer">
+														
+															{{#each desk_comments}}
+																<div class="social-talk">
+																	<div class="media social-profile clearfix">
+																		<a class="pull-left">
+																			<a href="/people/{{owner_username}}">
+																				<img src="{{owner_avatar}}" alt="profile-picture">
+																			</a>
+																		</a>
+																		<div class="media-body">
+																			<span class="font-bold">
+																				<span class="capitalize">
+																					<a href="/people/{{owner_username}}">
+																						{{owner_fullname}}
+																					</a>
+																				</span>
+																			</span>
+																			<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+																			<div class="social-content">
+																				{{content}}  
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															{{/each}}	
+															
+															<div class="social-form">
+																<form name="comment" class="comment" autocomplete="off"> 
+																	<input type="hidden" name="parent_id" value="{{_id}}" />
+																	<input type="text"   name="content" class="form-control" placeholder="Your comment" />
+																</form>
+															</div>
+															
+														</div>
+														<!-- CHATS -->
+														
+													</div>
+													
+												 {{/each}}
+											</div>
+											<!-- POSTS BY COLLEAGUES -->
+										
+										</div>
+									
+									{{else}}
+									
+										To view this persons desk you must be a colleague.
+									
+									{{/if}}
+								{{/each}}
+
+								
+							</div>
+							
+
+							<div class="col-md-4">
+							
+								<div class="col-lg-12">
+									<div class="hpanel hblue">
+										<div class="panel-body">
+										
+											<center>
+										
+												<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+												<!-- Sky2: Large Rectangle -->
+												<ins class="adsbygoogle"
+													 style="display:inline-block;width:336px;height:280px"
+													 data-ad-client="ca-pub-5191331981474706"
+													 data-ad-slot="2816270978"></ins>
+												<script>
+												(adsbygoogle = window.adsbygoogle || []).push({});
+												</script>
+												
+											</center>
+
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-lg-12">
+									<div class="hpanel hblue">
+										<div class="panel-body">
+										
+											<center>
+											
+												<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+												<!-- Sky2: Skyscraper -->
+												<ins class="adsbygoogle"
+													 style="display:inline-block;width:300px;height:600px"
+													 data-ad-client="ca-pub-5191331981474706"
+													 data-ad-slot="1339537771"></ins>
+												<script>
+												(adsbygoogle = window.adsbygoogle || []).push({});
+												</script>
+												
+											</center>
+											
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-lg-12">
+									<div class="hpanel hblue">
+										<div class="panel-body">
+										
+											<center>
+											
+												<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+												<!-- Sky2: Large Rectangle -->
+												<ins class="adsbygoogle"
+													 style="display:inline-block;width:336px;height:280px"
+													 data-ad-client="ca-pub-5191331981474706"
+													 data-ad-slot="2816270978"></ins>
+												<script>
+												(adsbygoogle = window.adsbygoogle || []).push({});
+												</script>
+												
+											</center>
+											
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						{{/with}}
+					{{else}}
+						No one was found by this user name.
+					{{/if}}
+				
+				</div>	
+			</div>			
+		</div>
+		<!-- Main Wrapper -->
+	</body>
+
+</template>
+

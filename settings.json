@@ -1,1 +1,1 @@
-{"galaxy.meteor.com": {"env": {"MONGO_URL": "mongodb://meteordbuser:fyfyiaiaidmk4j4jahh@ds113660.mlab.com:13660/skyroomsio" } },"public": {"ga": {"id": "UA-4039763-124"}},"file_storage_path":"/programs/server/" }
+{"galaxy.meteor.com": {"env": {"MONGO_URL": "mongodb://meteordbuser:fyfyiaiaidmk4j4jahh@ds113660.mlab.com:13660/skyroomsio" } },"public": {"ga": {"id": "UA-4039763-124"}},"file_storage_path":"/tmp" }

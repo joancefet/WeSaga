@@ -1572,7 +1572,7 @@ body {
   .content {
     padding: 0px;
     min-width: 320px;
-	margin-top: 15px;
+	margin-top: 0px;
   }
 }
 .content-boxed {
@@ -1588,12 +1588,12 @@ body {
   background:#006ec3;
   background-repeat: no-repeat;
 }
-.fixed-navbar #header {
+.#header {
   width: 100%;
   position: fixed;
   z-index: 1000;
 }
-.fixed-navbar #wrapper {
+.#wrapper {
   top: 0px;
 }
 .fixed-sidebar #menu {
@@ -2654,6 +2654,11 @@ h6 {
   height: 62px;
 }
 @media (max-width: 768px) {
+	
+	.fixed-sidebar #menu {
+	  overflow-y: hidden;
+	}	
+	
   .navbar-form-custom,
   .navbar-right,
   #logo {
