@@ -96,8 +96,8 @@ Template.deskedit.onCreated(function () {
 
 // profileImages
 // =============
-var profileImages = new FilesCollection({
-	collectionName: 'profileImages',
+var uploadFiles = new FilesCollection({
+	collectionName: 'uploadFiles',
 	allowClientCode: false, // Disallow remove files from Client
 	onBeforeUpload: function (file) {
 		// Allow upload files under 10MB, and only in png/jpg/jpeg formats
@@ -144,11 +144,14 @@ Template.deskedit.helpers({
 Template.deskedit.events({
 	
 	'change #fileInput': function (event, template) {
+		
+		$( ".imageUploadPreview" ).addClass( "loader" );
+		$( ".imageUploadPreview img" ).addClass( "loader_background" );
 		  
 		if (event.currentTarget.files && event.currentTarget.files[0]) {
 		  // We upload only one file, in case
 		  // multiple files were selected
-		  var upload = profileImages.insert({
+		  var upload = uploadFiles.insert({
 			file: event.currentTarget.files[0],
 			streams: 'dynamic',
 			chunkSize: 'dynamic'
@@ -162,15 +165,35 @@ Template.deskedit.events({
 			if (error) {
 			  alert('Error during upload: ' + error);
 			} else {
-				console.log(fileObj._id);
-				console.log(event.currentTarget.files[0]);
+				// console.log(fileObj._id);
+				// console.log(event.currentTarget.files[0]);
 			  //alert('File "' + fileObj.name + '" successfully uploaded');
+			  
 			}
 			
-			// Update The users profile image
-			Meteor.users.update({_id:this.userId}, { $set:{"profile.avatar":fileObj._id+event.currentTarget.files[0].extensionWithDot}} ) // Had to use the current event for some reason
+			// console.log("1) PRECACHING IMAGE: "+"https://dlnde5a0p49uc.cloudfront.net/files"+fileObj._id+event.currentTarget.files[0].extensionWithDot);
+			$.ajax({
+			  url: "https://dlnde5a0p49uc.cloudfront.net/files/"+fileObj._id+event.currentTarget.files[0].extensionWithDot,
+			  context: document.body
+			}).done(function() {
+				
+			});
+		  
+			setTimeout(function(){
+				// Update The users profile image
+				
+				// console.log("3) UPDATING DATABASE NOW: "+Meteor.userId());
+				Meteor.users.update({_id:Meteor.userId()}, { $set:{"profile.avatar":fileObj._id+event.currentTarget.files[0].extensionWithDot}} ) // Had to use the current event for some reason
+				template.currentUpload.set(false);
+				
+				setTimeout(function(){
+					$( ".imageUploadPreview" ).removeClass( "loader" );
+					$( ".imageUploadPreview img" ).removeClass( "loader_background" );
+				},3000);
+				
+			},3000);
 			
-			template.currentUpload.set(false);
+
 		  });
 
 		  upload.start();

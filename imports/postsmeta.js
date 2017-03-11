@@ -87,7 +87,7 @@ Meteor.methods({
 				owner_id: author,
 				owner_username: Meteor.user().username,
 				owner_fullname: Meteor.user().profile.name_first +" "+Meteor.user().profile.name_last,
-				owner_avatar: "/profileImages/"+Meteor.user().profile.avatar, 
+				owner_avatar: "https://dlnde5a0p49uc.cloudfront.net/files/"+Meteor.user().profile.avatar, 
 				createdAt: Date.now(),
 				updatedAt: Date.now(),
 				timeAgo: new Date().toISOString(),

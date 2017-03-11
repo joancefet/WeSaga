@@ -80,7 +80,7 @@ Template.desk.helpers({
 		return Postsmeta.find({parent_id:this._id});
 	},
 	HasOwnerAvatar(){
-		if(this.owner_avatar != "/profileImages/undefined"){
+		if(this.owner_avatar != "/uploadFiles/undefined"){
 			return true;
 		}
 	}

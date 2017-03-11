@@ -78,7 +78,7 @@ Template.people_desk.helpers({
 		return Postsmeta.find({parent_id:this._id});
 	},
 	HasOwnerAvatar(){
-		if(this.owner_avatar != "/profileImages/undefined"){
+		if(this.owner_avatar != "https://dlnde5a0p49uc.cloudfront.net/files/undefined"){
 			return true;
 		}
 	},

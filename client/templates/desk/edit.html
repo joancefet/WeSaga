@@ -7,206 +7,106 @@
 
 	{{> preloader}}
 	
-	<body class="fixed-navbar fixed-sidebar">
-		
-		<!-- Header -->
-		<div id="header">
-			<div class="color-line">
-			</div>
-			<div id="logo" class="light-version">
-				<span>
-					<a href="/">
-						<img class="" src="/images/skyrooms-logo.png" width="100%" />
-					</a>
-				</span>
-			</div>
-			<nav role="navigation">
-				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
-				<div class="small-logo">
-					<img class="" src="/images/skyrooms-logo.png" width="100%" />
-				</div>
-			</nav>
-		</div>
+	<body class="fixed-sidebar">
 		
 		<!-- Navigation -->
 			{{> account_navigation}}
 		<!-- Navigation -->
 
 		<!-- Main Wrapper -->
-		<div id="wrapper">
-		
-			<div class="transition animated fadeIn">
-				<div class="hpanel">
-					<div class="panel-body">
-						<h2 class="font-light m-b-xs">
-								<i class="fa fa-id-card" aria-hidden="true"></i> My Desk 
-								<a class="btn btn-sm btn-success" id="saveProfile"><i class="fa fa-cog"></i> Save Profile</a>
-						</h2>
-					</div>
-				</div>
-			</div>
-
+		<div id="wrapper">		
 			<div class="content animate-panel">
-				<div class="row social-board">
-					<!-- USER DETAILS -->
-						<div class="col-lg-4">
-							
-							
-							<div class="hpanel hgreen">
-								<div class="panel-body">
-									<div class="pull-right text-right">
+				<div class="row">
+
+					<div class="col-md-8">
+						
+						<div class="hpanel hgreen">
+							<div class="panel-body">
+								
+								<div class="row">
+									
+									<div class="col-lg-4">
+										
+										<center>
+										
+											<div class="imageUploadPreview">
+												<img alt="logo" class="img-circle m-b m-t-md" src="https://dlnde5a0p49uc.cloudfront.net/files/{{currentUser.profile.avatar}}"  width="100%">
+											</div>
+											
+											<div>
+												{{#with currentUpload}}
+													Uploading <b>{{file.name}}</b>:
+													<span id="progress">{{progress.get}}%</span>
+												{{else}}
+													<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
+												{{/with}}
+											</div>
+											
+											<hr />
+											
+											<h3>
+												<a href="" class="font-uppercase">{{currentUser.profile.username}}</a>
+											</h3>
+											
+											<div class="col-md-6">
+												<input type="text" class="form-control" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
+											</div>
+											<div class="col-md-6">
+												<input type="text" class="form-control" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
+											</div>
+											
+		
+										</center>
+										
 										
 									</div>
 									
-									<div class="">
-										<div class="row">
-											<div class="col-md-4 border-right">
-												<div class="contact-stat"><span>Oraganizations: </span> <strong>4</strong></div>
-											</div>
-											<div class="col-md-4 border-right">
-												<div class="contact-stat"><span>Collegues: </span> <strong>408</strong></div>
-											</div>
-											<div class="col-md-4">
-												<div class="contact-stat"><span>SkyRooms: </span><strong id="skyroomsCount"></strong></div>
-											</div>
-										</div>
+									<div class="col-lg-4">
+										<h2>About You</h2>
+										<textarea id="aboutUser" cols="40" rows="15" ></textarea>
 									</div>
 									
-									<div class="row">
-										
-										<div class="col-lg-12">
-											
-											<center>
-												<h2>Avatar</h2>  
-											
-												<img alt="logo" class="img-circle m-b m-t-md" src="/profileImages/{{currentUser.profile.avatar}}"  width="100%">
-												
-												<div>
-													{{#with currentUpload}}
-														Uploading <b>{{file.name}}</b>:
-														<span id="progress">{{progress.get}}%</span>
-													{{else}}
-														<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
-													{{/with}}
-												</div>
-												  
-												<div class="btn-group">
-													<i class="fa fa-facebook btn btn-default btn-xs"></i>
-													<i class="fa fa-twitter btn btn-default btn-xs"></i>
-													<i class="fa fa-linkedin btn btn-default btn-xs"></i>
-												</div>
-												<h3>
-													<a href="" class="font-uppercase">{{currentUser.profile.username}}</a>
-												</h3>
-												<div class="col-md-6"><input type="text" class="form-control" name="firstName" value="{{currentUser.profile.firstName}}" placeholder="First name"></div>
-												<div class="col-md-6"><input type="text" class="form-control" name="lastName" value="{{currentUser.profile.lastName}}" placeholder="Last name"></div>
-												<br>
-												<br>
-												<div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-facebook btn btn-default btn-xs"></i></span> <input id="fbAcct" type="text" placeholder="Link to Facebook" class="form-control" value="{{currentUser.profile.FacebookURL}}"></div>
-												<div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-twitter btn btn-default btn-xs"></i></span> <input id="twAcct" type="text" placeholder="Link to Twitter" class="form-control" value="{{currentUser.profile.TwitterURL}}"></div>
-												<div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-linkedin btn btn-default btn-xs"></i></span> <input id="liAcct" type="text" placeholder="Link to LinkedIn" class="form-control" value="{{currentUser.profile.LinkedInURL}}"></div>
-											</center>
-											
-											<h2>About You</h2>
-											<textarea id="aboutUser" cols="40" rows="15" ></textarea>
-										</div>
-										
-									</div>
-									<hr />
-									<div class="row">
+									<div class="col-lg-4">
 										<section id="map">
-											<button id="update_location" type="button" class="btn btn-primary btn-xs">Update Location</button>
-											<div class="pull-right text-muted font-bold m-b-xs">{{currentUser.profile.locName}}</div>
-											<div class="map-container">
-												{{> googleMap name="editMap" options=mapOptions}}
-											</div>
-										</section>
+										<button id="update_location" type="button" class="btn btn-primary btn-xs">Update Location</button>
+										<div class="pull-right text-muted font-bold m-b-xs">{{currentUser.profile.locName}}</div>
+										<div class="map-container">
+											{{> googleMap name="editMap" options=mapOptions}}
+										</div>
+									</section>
 									</div>
-									<br><br>
-									<div class="row">
-										<h2>Experience</h2>
-										<div class="list-group">
-											{{#each expByUser}}
-												<a class="list-group-item" href="">
-													<div class="row">
-														<a id="{{_id}}-edit" class="btn btn-outline btn-info btn-xs pull-right edit">
-															<i class="fa fa-pencil-square-o"></i>
-														</a>
-														<a id="{{_id}}-delete" class="btn btn-outline btn-danger btn-xs pull-left delete">
-															<i class="fa fa-trash-o"></i>
-														</a>
-													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<h5 class="list-group-item-heading">{{title}}<div class="btn btn-xs btn-info">@{{org}}</div></h5>
-														</div>
-														<div class="col-md-6">
-															<h5 class="list-group-item-heading pull-right">{{fromDate}}-{{toDate}}</h5>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-12">
-															<p class="list-group-item-text">{{{description}}}</p>
-														</div>
-													</div>
-												</a>
-												
-											{{/each}}
-										</div>
-										<div id="editForm" class="list-group">
-											<a class="list-group-item" href="">
-												<div class="row">
-													<div class="col-md-12">
-														<input id="newTitle" type="text" class="form-control" placeholder="Title e.g. Service Technician">
-														<input id="newOrg" type="text" class="form-control" placeholder="Oraganization">
-														
-														<div class="input-daterange input-group" id="datepicker">
-															<input id="fromDate" type="text" class="input-sm form-control" name="start" placeholder="From">
-															<span class="input-group-addon">-</span>
-															<input id="toDate" type="text" class="input-sm form-control" name="end" placeholder="To">
-														</div>
-														<button id="presentCheck" class="btn btn-xs btn-default pull-right" type="button" aria-pressed="false">Present?</button>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-12">
-														<h3>Description</h3>
-														<textarea id="newDesc" cols="40" rows="6" ></textarea>
-													</div>
-												</div>
-												<br>
-												<button id="addExperience" type="button" class="btn btn-block btn-success updateExp">Add Experience</button>
-											</a>
-										</div>
-									</div> 
-								</div>
-								<div class="border-right border-left">
 									
+								</div>
+								
+							</div>
+							
+						</div>
+					</div>
+					<!-- Main Wrapper -->
+					
+					<!--Error Modal-->
+					<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header text-center">
+									<h4 class="modal-title">Error</h4>
+								</div>
+								<div class="modal-body">
+									All fields are required.
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
 								</div>
 							</div>
 						</div>
-					<!-- USER DETAILS -->
 					</div>
-				</div>
-			</div>
-		<!-- Main Wrapper -->
-		
-		<!--Error Modal-->
-		<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h4 class="modal-title">Error</h4>
-					</div>
-					<div class="modal-body">
-						All fields are required.
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-					</div>
+				
+			
 				</div>
 			</div>
 		</div>
+		<!-- Main Wrapper -->
+	
 	</body>
 </template>
 

@@ -47,7 +47,7 @@
 		{{#if currentUser}}
 			<div class="stats-label text-color">
 				{{#if currentUser.profile.avatar}}
-					<img class="img-circle m-b" src="/profileImages/{{currentUser.profile.avatar}}" width="100px" height="100px" />
+					<img class="img-circle m-b" src="https://s3-us-west-1.amazonaws.com/skyroomsfiles/files/{{currentUser.profile.avatar}}" width="100px" height="100px" />
 				{{else}}
 					<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100px" height="100px" />
 				{{/if}}
@@ -67,7 +67,7 @@
 		{{#if currentUser}}
 			<a href="/desk">
 				<span class="nav-label">
-					<img class="img-circle m-b" src="/profileImages/{{currentUser.profile.avatar}}" width="25px" height="25px" /> 
+					<img class="img-circle m-b" src="https://dlnde5a0p49uc.cloudfront.net/files/{{currentUser.profile.avatar}}" width="25px" height="25px" /> 
 					<span class="font-extra-bold font-uppercase" style="position:relative; top:-5px">{{currentUser.profile.name_first}}</span>
 				</span> 
 			</a>

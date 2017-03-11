@@ -4,5 +4,5 @@
 // Because Meteor SUCKS at delivering static content? CDN is necessary... 
 
 Meteor.startup(function(){  
-	//WebAppInternals.setBundledJsCssPrefix("https://cdn.skyrooms.io/");
+	//WebAppInternals.setBundledJsCssPrefix("https://skyrooms-eftrdfwg4jk.stackpathdns.com");
 });

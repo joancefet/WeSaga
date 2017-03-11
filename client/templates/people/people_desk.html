@@ -33,7 +33,7 @@
 												
 												<center>
 													{{#if profile.avatar}}
-														<img alt="logo" class="img-circle m-b" src="/profileImages/{{profile.avatar}}" width="300px" height="300px" />
+														<img alt="logo" class="img-circle m-b" src="https://dlnde5a0p49uc.cloudfront.net/files/{{profile.avatar}}" width="300px" height="300px" />
 													{{else}}
 														<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="300px" height="300px" />
 													{{/if}}
@@ -140,7 +140,7 @@
 															<div class="media social-profile clearfix">
 																<a class="pull-left">
 																	{{#if HasOwnerAvatar}}
-																		<img alt="logo" class="img-circle m-b" src="/profileImages/{{owner_avatar}}" width=100 height=100 />
+																		<img alt="logo" class="img-circle m-b" src="{{owner_avatar}}" width=100 height=100 />
 																	{{else}}
 																		<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width=100 height=100 />
 																	{{/if}}
