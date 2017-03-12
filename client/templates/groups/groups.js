@@ -16,7 +16,7 @@ Template.groups.rendered = function() {
 Template.groups.helpers({
 	
   groups() {
-    return Posts.find({});
+    //return Posts.find({});
   },
   
 });

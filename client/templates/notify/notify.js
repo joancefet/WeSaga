@@ -39,7 +39,7 @@ Template.notify.events({
 Template.notify.helpers({
 	
 	notify() {
-		return Posts.find({type:"notify"});
+		return Posts.find({type:"notify"}, {sort: { createdAt: -1 } });
 	},
 	slug(string){
 		return ToSeoUrl(string);

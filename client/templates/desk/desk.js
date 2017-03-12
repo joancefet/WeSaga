@@ -83,6 +83,10 @@ Template.desk.helpers({
 		if(this.owner_avatar != "/uploadFiles/undefined"){
 			return true;
 		}
+	},
+	
+	slug(string){
+		return ToSeoUrl(string);
 	}
 
 });

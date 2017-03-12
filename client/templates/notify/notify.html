@@ -41,19 +41,18 @@
 
 							{{#each notify}}
 							<div class="hpanel">
-								<a href="/people/{{owner_username}}">
+								<a href="/people/{{slug owner_username}}">
 								<div class="panel-body">
+									
 									<div class="pull-left text-right" style="padding:4px;">
-										<a href="/people/{{owner_username}}">
+										<a href="/people/{{slug owner_username}}">
 											<img src="{{owner_avatar}}" width="50px" height="50px" class="img-circle m-b"  />
 										</a>
 									</div>
 									<h4 class="m-b-xs">{{title}}</h4>
-									<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
-									
-									<p class="small">
-										<a class="btn btn-sm btn-primary" href="/people/{{slug owner_username}}">View Profile to Accept</a>
-									</p>
+									<small>
+										<time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time>
+									</small>
 									
 								</div>
 								</a>

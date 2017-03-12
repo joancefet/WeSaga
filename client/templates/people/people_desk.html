@@ -116,7 +116,7 @@
 													<form class="new-post" autocomplete="off">
 														<div class="input-group">
 															<input type="text" class="form-control" name="newPostContent" placeholder="Leave something on {{profile.name_first}}'s desk."> 
-															<input type="hidden" name="owner_id" value="{{_id}}" />
+															<input type="hidden" name="owner_id" value="{{../_id}}" />
 															<span class="input-group-btn"> 
 																<button type="submit" class="btn btn-primary">Post!</button> 
 															</span>
@@ -138,7 +138,7 @@
 													<div class="hpanel hblue">
 														<div class="panel-body">
 															<div class="media social-profile clearfix">
-																<a class="pull-left">
+																<a class="pull-left" href="/people/{{slug owner_username}}">
 																	{{#if HasOwnerAvatar}}
 																		<img alt="logo" class="img-circle m-b" src="{{owner_avatar}}" width=100 height=100 />
 																	{{else}}
@@ -163,15 +163,13 @@
 															{{#each desk_comments}}
 																<div class="social-talk">
 																	<div class="media social-profile clearfix">
-																		<a class="pull-left">
-																			<a href="/people/{{owner_username}}">
-																				<img src="{{owner_avatar}}" alt="profile-picture">
-																			</a>
+																		<a class="pull-left" href="/people/{{slug owner_username}}">
+																			<img src="{{owner_avatar}}" alt="profile-picture">
 																		</a>
 																		<div class="media-body">
 																			<span class="font-bold">
 																				<span class="capitalize">
-																					<a href="/people/{{owner_username}}">
+																					<a href="/people/{{slug owner_username}}">
 																						{{owner_fullname}}
 																					</a>
 																				</span>
