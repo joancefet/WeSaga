@@ -135,9 +135,8 @@ Template.deskedit.helpers({
 		console.log("expByUser");
 		return UserExperience.find({"ownerId":Meteor.userId()}, {sort: { fromStamp: -1 }});
 	},
+	
 });
-
-
 
 // Events
 // ======
@@ -145,59 +144,80 @@ Template.deskedit.events({
 	
 	'change #fileInput': function (event, template) {
 		
+		// TODO: Remove current profile pic from Cloudinary
+			
 		$( ".imageUploadPreview" ).addClass( "loader" );
 		$( ".imageUploadPreview img" ).addClass( "loader_background" );
-		  
-		if (event.currentTarget.files && event.currentTarget.files[0]) {
-		  // We upload only one file, in case
-		  // multiple files were selected
-		  var upload = uploadFiles.insert({
-			file: event.currentTarget.files[0],
-			streams: 'dynamic',
-			chunkSize: 'dynamic'
-		  }, false);
-
-		  upload.on('start', function () {
-			template.currentUpload.set(this);
-		  });
-
-		  upload.on('end', function (error, fileObj) {
-			if (error) {
-			  alert('Error during upload: ' + error);
-			} else {
-				// console.log(fileObj._id);
-				// console.log(event.currentTarget.files[0]);
-			  //alert('File "' + fileObj.name + '" successfully uploaded');
-			  
-			}
+		
+		
+		Cloudinary.upload(event.currentTarget.files, function(error, result){
 			
-			// console.log("1) PRECACHING IMAGE: "+"https://dlnde5a0p49uc.cloudfront.net/files"+fileObj._id+event.currentTarget.files[0].extensionWithDot);
-			$.ajax({
-			  url: "https://dlnde5a0p49uc.cloudfront.net/files/"+fileObj._id+event.currentTarget.files[0].extensionWithDot,
-			  context: document.body
-			}).done(function() {
-				
+			Meteor.users.update({_id:Meteor.userId()}, {
+				$set:{"profile.avatar":"https://res.cloudinary.com/skyroomsio/image/upload/c_thumb,g_face,h_512,w_512/v1489424858/"+result.public_id+"."+result.format}
 			});
-		  
+			
 			setTimeout(function(){
-				// Update The users profile image
+				$( ".imageUploadPreview" ).removeClass( "loader" );
+				$( ".imageUploadPreview img" ).removeClass( "loader_background" );
+			},2000);
+			
+		});
+		
+		console.log("COMPLETE");
+		
+		
+		// if (event.currentTarget.files && event.currentTarget.files[0]) {
+		
+		  // // We upload only one file, in case
+		  // // multiple files were selected
+		  // var upload = uploadFiles.insert({
+			// file: event.currentTarget.files[0],
+			// streams: 'dynamic',
+			// chunkSize: 'dynamic'
+		  // }, false);
+
+		  // upload.on('start', function () {
+			// template.currentUpload.set(this);
+		  // });
+
+		  // upload.on('end', function (error, fileObj) {
+			// if (error) {
+			  // alert('Error during upload: ' + error);
+			// } else {
+				// // console.log(fileObj._id);
+				// // console.log(event.currentTarget.files[0]);
+			  // //alert('File "' + fileObj.name + '" successfully uploaded');
+			  
+			// }
+			
+			
+			// // console.log("1) PRECACHING IMAGE: "+"https://dlnde5a0p49uc.cloudfront.net/files"+fileObj._id+event.currentTarget.files[0].extensionWithDot);
+			// $.ajax({
+			  // url: ""+fileObj._id+event.currentTarget.files[0].extensionWithDot,
+			  // context: document.body
+			// }).done(function() {
 				
-				// console.log("3) UPDATING DATABASE NOW: "+Meteor.userId());
-				Meteor.users.update({_id:Meteor.userId()}, { $set:{"profile.avatar":fileObj._id+event.currentTarget.files[0].extensionWithDot}} ) // Had to use the current event for some reason
-				template.currentUpload.set(false);
+			// });
+		  
+			// setTimeout(function(){
+				// // Update The users profile image
 				
-				setTimeout(function(){
-					$( ".imageUploadPreview" ).removeClass( "loader" );
-					$( ".imageUploadPreview img" ).removeClass( "loader_background" );
-				},3000);
+				// // console.log("3) UPDATING DATABASE NOW: "+Meteor.userId());
+				// Meteor.users.update({_id:Meteor.userId()}, { $set:{"profile.avatar":fileObj._id+event.currentTarget.files[0].extensionWithDot}} ) // Had to use the current event for some reason
+				// template.currentUpload.set(false);
 				
-			},3000);
+				// setTimeout(function(){
+					// $( ".imageUploadPreview" ).removeClass( "loader" );
+					// $( ".imageUploadPreview img" ).removeClass( "loader_background" );
+				// },3000);
+				
+			// },3000);
 			
 
-		  });
+		  // });
 
-		  upload.start();
-		}
+		  // upload.start();
+		// }
 	},
 	
 	'click #update_location': function(event){
@@ -370,7 +390,7 @@ Template.deskedit.events({
 			"profile.LinkedInURL": $('#liAcct').val(),
 		  }
 		});
-		Router.go('/desk');
+		Router.go('/buzz');
 		
 	},
 });

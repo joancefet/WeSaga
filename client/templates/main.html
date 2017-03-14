@@ -33,20 +33,16 @@
 		
 		<!-- OneSignal Manifest-->
 		<link rel="manifest" href="/manifest.json">
-		
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async ></script>
 		<script>
-			var OneSignal = window.OneSignal || [];
-			OneSignal.push(["init", {
-			  appId: "c7c0a812-c0cc-405c-bc16-7de68e4da968",
-			  autoRegister: true, /* Set to true to automatically prompt visitors */
-			  subdomainName: 'skyrooms',   
-			  httpPermissionRequest: {
-				enable: true
-			  },
-			  notifyButton: {
-				  enable: true /* Set to false to hide */
-			  }
-			}]);
+			  var OneSignal = window.OneSignal || [];
+				OneSignal.push(["init", {
+				  appId: "ba62f6a5-2cce-41c7-8139-b4026c6b1daf",
+				  autoRegister: false, /* Set to true to automatically prompt visitors */
+				  notifyButton: {
+					  enable: true /* Set to false to hide */
+				  }
+				}]);
 		</script>
 		
 		

@@ -40,7 +40,6 @@ less@2.7.9
 zimme:iron-router-active
 natestrauser:animate-css
 kevohagan:sweetalert
-chrismbeckett:toastr
 standard-minifiers@1.0.6
 
 
@@ -54,15 +53,14 @@ okgrow:router-autoscroll
 
 d3js:d3
 emdagon:c3js
-andrasph:clockpicker
 
 
 artwells:accounts-guest
 reywood:iron-router-ga
 lookback:seo
-brentjanderson:buzz
 teamon:tinymce
 dburles:google-maps
 mdg:geolocation
 mizzao:bootstrap-3
 dburles:collection-helpers
+lepozepo:cloudinary

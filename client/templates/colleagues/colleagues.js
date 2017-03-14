@@ -226,8 +226,10 @@ Template.colleagues.helpers({
 	
 	people() {
 		
-		var colleagueIds = Posts.find({	type:"colleagues" }).map(function (person) { return person.title; });
-		//console.log(colleagueIds);
+		var colleagueIds = Posts.find({	type:"colleagues" }).map(function(person){
+			return person.title; 
+		});
+		
 
 		return Meteor.users.find({ "_id": { "$in": colleagueIds }}, {sort: { _id: -1 }} );
 		

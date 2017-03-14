@@ -58,6 +58,16 @@ Template.people_desk.events({
 		);
 		
 		$('[name=content]').val('');
+		
+		// Notify Comment Author
+		  const data = {
+			contents: {
+			  en: 'Hey! Wazup? We miss you.',  
+			},
+		  };
+
+		  OneSignal.Notifications.create(["mYxzLdT4RWrCAR7m4"], data);
+		  // => returns OneSignal response.
 	},
 	
 	
@@ -265,7 +275,7 @@ Template.people_desk.helpers({
 		return Postsmeta.find({parent_id:this._id});
 	},
 	HasOwnerAvatar(){
-		if(this.owner_avatar != "https://dlnde5a0p49uc.cloudfront.net/files/undefined"){
+		if(this.owner_avatar != "undefined"){
 			return true;
 		}
 	},
