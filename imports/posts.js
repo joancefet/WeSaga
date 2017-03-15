@@ -10,7 +10,7 @@ if (Meteor.isServer) {
 	Meteor.publish('posts', function(action, userId, parent_id) {
 		
 		check(action, String);		
-		if(parent_id){ check(parent_id, String); }
+		//if(parent_id){ check(parent_id, String); }
 		
 		if(action == "notify"){
 			return Posts.find({type:action, owner_id:userId}, {sort: { createdAt: -1 }, limit:20 });
@@ -40,8 +40,39 @@ if (Meteor.isServer) {
 		}
 		
 		if(action == "people_all"){
-			return Meteor.users.find({}); //TODO Restrict by fields, lower data use
+			return Meteor.users.find({},{limit:10}); //TODO Restrict by fields, lower data use
 		}
+		
+		if(action == "people_search"){
+			
+			var search_type = 'name';
+			var query_email = userId.split("@");
+			var query_name  = userId.split(" ");
+			
+			console.log(query_email);
+			console.log(query_name);
+			
+			if( query_email[1] ){ 
+				search_type = "email"; 
+			}
+			
+			if(search_type == "email"){
+				console.log("SEARCHING FOR EMAIL: "+userId);
+				return Meteor.users.find({"emails.address":userId}, {limit:6}); //TODO Restrict by fields, lower data use
+			}
+			
+			if(search_type =="name"){
+				
+				if(query_name[1] == ""){
+					console.log("SEARCHING FOR FIRST NAME: "+query_name[0]);
+					return Meteor.users.find({"profile.name_first":{ $regex : new RegExp(query_name[0], "i") } }, {limit:6}); //TODO Restrict by fields, lower data use
+				}
+				if(query_name[1] != ""){
+					console.log("SEARCHING FOR FIRST AND LAST NAME: "+query_name[0]+" "+query_name[1]);
+					return Meteor.users.find({"profile.name_first":{ $regex : new RegExp(query_name[0], "i")}, "profile.name_last":{ $regex : new RegExp(query_name[1], "i")} }, {limit:6}); //TODO Restrict by fields, lower data use
+				}
+			}
+		}	
 		
 		if(action == "people_desk"){
 			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug

@@ -13,7 +13,8 @@ Router.route('/people',{
 	},
 	waitOn: function(){
 		if(!Router.current().params.user_slug){
-			Meteor.subscribe('posts', 'people_all'); 		
+			window.subscription_people_search = "";
+			window.subscription_people = Meteor.subscribe('posts', 'people_all'); 		
 		}
 	},
 	template:'screen',
@@ -32,6 +33,30 @@ Template.people.rendered = function() {
 
 // Events
 Template.people.events({
+	
+	'submit .search_start'(event) {
+		
+		$(".people_container").hide(); 
+		$(".show_loader").show();
+		
+		window.subscription_people.stop();
+		
+		if(window.subscription_people_search){ window.subscription_people_search.stop(); }
+		window.subscription_people_search = Meteor.subscribe('posts', 'people_search', $(".search_value").val());
+		
+		setTimeout(function(){
+			$(".people_container").show();
+			$(".show_loader").hide();
+		},1000);
+		
+	},
+	
+	'click .search_clear'(){
+		window.subscription_people.stop();
+		
+		window.subscription_people_search.stop();
+		Meteor.subscribe('posts', 'people_search_clear');
+	},
 	
 	'submit'(event) {
 		event.preventDefault();
