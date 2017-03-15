@@ -69,9 +69,9 @@ Template.buzz.events({
 				})(i); }
 
 				// Reset Form
-		$(".newPostContent").val(""); 
-		$("#fileInput").val("");
-		$(".fileInput_count").html("");
+				$(".newPostContent").val(""); 
+				$("#fileInput").val("");
+				$(".fileInput_count").html("");
 				
 			}
 		);

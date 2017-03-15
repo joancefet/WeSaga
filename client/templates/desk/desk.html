@@ -85,14 +85,34 @@
 									</div>
 									
 									<div class="col-xs-12 col-md-10">
-										<form class="new-post" autocomplete="off">
 											
-											<textarea required class="form-control" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
+										<textarea required class="form-control newPostContent" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
+										
+										<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" multiple style="display:none;">		
+										
+										<div class="btn btn-outline btn-primary desk_add_media" onClick="$('#fileInput').click();">
+											<i class="fa fa-camera" aria-hidden="true"></i>
+										</div>											
+										
+										<button type="submit" class="btn btn-success">
+											<i class="fa fa-file" aria-hidden="true"></i> Post
+										</button>
+										
+										<br />
+										
+										<div class="fileInput_count"></div>
+										<script>
+										
+											$("input[name=fileInput]").change(function() {
+												var names = [];
+												for (var i = 0; i < $(this).get(0).files.length; ++i) {
+													names.push($(this).get(0).files[i].name + ", ");
+												}
+												$(".fileInput_count").html(names);
+											});
+										
+										</script>
 											
-											<div class="btn btn-outline btn-primary desk_add_media"><i class="fa fa-camera" aria-hidden="true"></i></div>											
-											<button type="submit" class="btn btn-success"><i class="fa fa-file" aria-hidden="true"></i> Post</button> 
-											
-										</form>
 									</div>
 								</div>
 							</div>
@@ -131,6 +151,16 @@
 											
 											<div class="col-xs-12 col-md-10 well" style="font-size:22px;">
 													{{content}}
+											</div>
+											
+											<div class="col-xs-12 col-md-10" style="font-size:22px;">
+												<div class="lightBoxGallery">
+													{{#each post_attachment}}
+														<a href="{{content}}" data-gallery >
+															<img src="{{content}}"  style="width:100%;"/>
+														</a>
+													{{/each}}
+												</div>
 											</div>
 											
 										</div>

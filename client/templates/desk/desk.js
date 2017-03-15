@@ -48,64 +48,52 @@ Template.desk.rendered = function() {
 };
 
 
-//Helpers
-//=======
-Template.desk.helpers({
-	
-	// Google Map helper.
-	mapOptions: function() {
-		console.log("mapOptions called.");
-		if (GoogleMaps.loaded()) {
-		  return {
-			center: new google.maps.LatLng(Meteor.user().profile.locLat, Meteor.user().profile.locLng),
-			zoom: 8,
-			disableDefaultUI: true, 
-			draggable: false,
-			scrollwheel: false,
-			disableDoubleClickZoom: true,
-		  };
-		  console.log("There was NOT an error!");
-		} else {
-			console.log("There was an error!");
-		}
-	  },
-	  
-  
-	desk_posts() {
-		return Posts.find({type:"desk_posts"}, {sort: { createdAt: -1 } });
-	},
-	desk_comments(){
-		// SUBSCRIBE TO POSTMETA: parent_id
-		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
-		return Postsmeta.find({parent_id:this._id});
-	},
-	HasOwnerAvatar(){
-		if(this.owner_avatar != "/uploadFiles/undefined"){
-			return true;
-		}
-	},
-	
-	slug(string){
-		return ToSeoUrl(string);
-	}
-
-});
-
 // Events
 Template.desk.events({
 	
 	// Submit New Post
-	'submit .new-post'(event) {
+	'click .btn-success'(event) {
 		event.preventDefault();
 		
 		Meteor.call('posts.update',
 			"new",
 			"me",
 			"",
-			$(".new-post .form-control").val(),
+			$(".newPostContent").val(),
 			"desk_posts",
 			"",
-			"publish"
+			"publish",
+			function(error, parent_post_id){
+				
+				// Upload Attachments				
+				input = document.getElementById('fileInput');
+				for(var i = 0; i < input.files.length ; i++){(function(i) {
+					var file = input.files[i];
+					
+					// Send to Cloudinary
+					Cloudinary.upload( file, function(error, result){
+						
+						Meteor.call('postsmeta.update',
+							"new",
+							"me",
+							"",
+							"https://res.cloudinary.com/skyroomsio/image/upload/a_0/"+result.public_id+"."+result.format, 
+							"post_attachment",
+							parent_post_id,
+						);
+						console.log("ADDED post_attachment to:" +parent_post_id);
+					});
+					
+					
+				})(i); }
+
+				// Reset Form
+				$(".newPostContent").val(""); 
+				$("#fileInput").val("");
+				$(".fileInput_count").html("");
+				
+			}
+			
 		);
 		$(".new-post .form-control").val(""); // reset
 		
@@ -146,3 +134,52 @@ Template.desk.events({
 
 });
 
+
+//Helpers
+//=======
+Template.desk.helpers({
+	
+	// Google Map helper.
+	mapOptions: function() {
+		console.log("mapOptions called.");
+		if (GoogleMaps.loaded()) {
+		  return {
+			center: new google.maps.LatLng(Meteor.user().profile.locLat, Meteor.user().profile.locLng),
+			zoom: 8,
+			disableDefaultUI: true, 
+			draggable: false,
+			scrollwheel: false,
+			disableDoubleClickZoom: true,
+		  };
+		  console.log("There was NOT an error!");
+		} else {
+			console.log("There was an error!");
+		}
+	  },
+	  
+  
+	desk_posts() {
+		return Posts.find({type:"desk_posts"}, {sort: { createdAt: -1 } });
+	},
+	
+	post_attachment(){
+		Meteor.subscribe('postsmeta', "post_attachment", this._id);
+		return Postsmeta.find({type: "post_attachment", parent_id:this._id});
+	},
+	
+	desk_comments(){
+		// SUBSCRIBE TO POSTMETA: parent_id
+		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
+		return Postsmeta.find({parent_id:this._id});
+	},
+	HasOwnerAvatar(){
+		if(this.owner_avatar != "/uploadFiles/undefined"){
+			return true;
+		}
+	},
+	
+	slug(string){
+		return ToSeoUrl(string);
+	}
+
+});
