@@ -25,7 +25,7 @@ Router.route('/buzz',{
 
 // Render
 Template.buzz.rendered = function() {
-
+	
 };
 
 
@@ -33,21 +33,55 @@ Template.buzz.rendered = function() {
 Template.buzz.events({
 	
 	// Submit New Post
-	'submit .new-post'(event) {
+	'click .btn-success'(event) {
 		event.preventDefault();
 		
 		Meteor.call('posts.update',
 			"new",
 			"me",
 			"",
-			$(".new-post .form-control").val(),
+			$(".newPostContent").val(),
 			"desk_posts",
 			"",
-			"publish"
+			"publish",
+			function(error, parent_post_id){
+				
+				// Upload Attachments				
+				input = document.getElementById('fileInput');
+				for(var i = 0; i < input.files.length ; i++){(function(i) {
+					var file = input.files[i];
+					
+					// Send to Cloudinary
+					Cloudinary.upload( file, function(error, result){
+						
+						Meteor.call('postsmeta.update',
+							"new",
+							"me",
+							"",
+							"https://res.cloudinary.com/skyroomsio/image/upload/a_0/"+result.public_id+"."+result.format, 
+							"post_attachment",
+							parent_post_id,
+						);
+						console.log("ADDED post_attachment to:" +parent_post_id);
+					});
+					
+					
+				})(i); }
+
+				// Reset Form
+		$(".newPostContent").val(""); 
+		$("#fileInput").val("");
+		$(".fileInput_count").html("");
+				
+			}
 		);
-		$(".new-post .form-control").val(""); // reset
+		
+		// Reset Form
+		$(".newPostContent").val(""); 
+		
 		
 	},
+	
 	
 	// Comment
 	'submit .comment'(event) {
@@ -84,7 +118,8 @@ Template.buzz.helpers({
 		colleagueIds.forEach(function(colleague){
 			
 			// Post.find({"user_id":user_id}, {skip: 0, limit: 5}); // Sample useage of skipping and limits!
-			Meteor.subscribe('posts', "desk_posts", colleague ); 
+			Meteor.subscribe('posts', "desk_posts", colleague );
+			
 		});
 		
 		// This user should be added to the Buzz as well.
@@ -101,7 +136,12 @@ Template.buzz.helpers({
 	desk_comments(){
 		// SUBSCRIBE TO POSTMETA: parent_id
 		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
-		return Postsmeta.find({parent_id:this._id});
+		return Postsmeta.find({type: "post_comment", parent_id:this._id});
+	},
+	
+	post_attachment(){
+		Meteor.subscribe('postsmeta', "post_attachment", this._id);
+		return Postsmeta.find({type: "post_attachment", parent_id:this._id});
 	},
 	
 	HasOwnerAvatar(){

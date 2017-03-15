@@ -17,8 +17,13 @@ if (Meteor.isServer) {
 		}
 		
 		if(action == "desk_comments"){
-			return Postsmeta.find({parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 });
+			return Postsmeta.find({type:"post_comment", parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 });
 		}
+		
+		if(action == "post_attachment"){
+			return Postsmeta.find({type:"post_attachment", parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 });
+		}
+		
 		
 		if(action == "notify_meta"){
 			return Postsmeta.find({parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //, 

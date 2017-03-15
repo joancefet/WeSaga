@@ -77,14 +77,23 @@
 
 							<div class="hpanel hblue">
 								<div class="panel-body">
-									<form class="new-post" autocomplete="off">
-										<div class="input-group">
-											<input type="text" class="form-control" name="newPostContent" placeholder="Leave something on your desk."> 
-											<span class="input-group-btn"> 
-												<button type="submit" class="btn btn-primary">Post!</button> 
-											</span>
-										</div>
-									</form>
+								
+									<div class="col-xs-12 col-md-2">
+										<center>
+											<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
+										</center>
+									</div>
+									
+									<div class="col-xs-12 col-md-10">
+										<form class="new-post" autocomplete="off">
+											
+											<textarea required class="form-control" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
+											
+											<div class="btn btn-outline btn-primary desk_add_media"><i class="fa fa-camera" aria-hidden="true"></i></div>											
+											<button type="submit" class="btn btn-success"><i class="fa fa-file" aria-hidden="true"></i> Post</button> 
+											
+										</form>
+									</div>
 								</div>
 							</div>
 							
@@ -99,24 +108,31 @@
 									
 									<div class="hpanel hblue">
 										<div class="panel-body">
-											<div class="media social-profile clearfix">
-												<a class="pull-left" href="/people/{{slug owner_username}}">
-													{{#if HasOwnerAvatar}}
-														<img alt="logo" class="img-circle m-b" src="{{owner_avatar}}" width=100 height=100 />
-													{{else}}
-														<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width=100 height=100 />
-													{{/if}}
-												</a>
-												<div class="media-body">
-													<h5 class="m-t-md">
-														<span class="capitalize">{{currentUser.profile.fullname}}</span>
-													</h5>
-													<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
-												</div>
+										
+											<div class="col-xs-12 col-md-2">
+												<center>
+													<a class="" href="/people/{{slug owner_username}}">
+														{{#if HasOwnerAvatar}}
+															<img alt="logo" class="img-circle" src="{{owner_avatar}}" width=100 height=100 />
+														{{else}}
+															<img alt="logo" class="img-circle" src="/images/default.jpg" width=100 height=100 />
+														{{/if}}
+													</a>
+													<br />
+													<div class="media-body">
+														<h5 class="m-t-md">
+															<span class="capitalize">{{owner_fullname}}</span>
+														</h5>
+														<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+													</div>
+												</center>
+											
 											</div>
-											<div class="social-content m-t-md">
-												{{content}}
+											
+											<div class="col-xs-12 col-md-10 well" style="font-size:22px;">
+													{{content}}
 											</div>
+											
 										</div>
 										
 										<!-- CHATS -->

@@ -29,20 +29,12 @@
 										
 										<center>
 										
-										
 											<div class="imageUploadPreview imageUploadPreview">
 												<img alt="logo" class="img-circle m-b m-t-md" src="{{currentUser.profile.avatar}}"  width="100%">
 											</div>
 											
-											
-											
 											<div>
-												{{#with currentUpload}}
-													Uploading <b>{{file.name}}</b>:
-													<span id="progress">{{progress.get}}%</span>
-												{{else}}
-													<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
-												{{/with}}
+												<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
 											</div>
 											
 											<hr />
