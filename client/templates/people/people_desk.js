@@ -23,7 +23,7 @@ Router.route('/people/:user_slug',{
 Template.people_desk.events({
 	
 	// Submit New Post
-	'click .btn-success'(event) {
+	'click .people_submit_new_post'(event) {
 		
 		event.preventDefault();
 		const target = event.target;

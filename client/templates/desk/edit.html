@@ -33,26 +33,18 @@
 												<img alt="logo" class="img-circle m-b m-t-md" src="{{currentUser.profile.avatar}}"  width="100%">
 											</div>
 											
-											<div>
-												<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
-											</div>
+											<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
 											
+											<input type="text" class="form-control" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
+											
+											<input type="text" class="form-control" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
+										
 											<hr />
-											
-											<h3>
-												<a href="" class="font-uppercase">{{currentUser.profile.username}}</a>
-											</h3>
-											
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
-											</div>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
+										
+											<div class="save_all btn btn-lg btn-block btn-success">
+												<i class="fa fa-floppy-o" aria-hidden="true"></i> Save All
 											</div>
 											
-											
-											
-		
 										</center>
 										
 										
@@ -60,7 +52,28 @@
 									
 									<div class="col-lg-4">
 										<h2>About You</h2>
-										<textarea id="aboutUser" cols="40" rows="15" ></textarea>
+										<textarea id="user_about" cols="40" rows="18" style="width:100%;" >{{currentUser.profile.about}}</textarea>
+										<script>
+											
+											setTimeout(function(){
+												// TinyMCE has to be done this way for compatibilty reasons. :/
+												tinymce.EditorManager.editors = []; //we need to remove the old instances. 
+												
+												//Set "About" section to a TinyMCE editor.
+												tinymce.init({
+												  selector: 'textarea#user_about',
+												  element_format: "html",
+												  remove_linebreaks : true,
+												  convert_newlines_to_brs: true,
+												  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+												  menubar: false,
+												  statusbar: false,
+												  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+												  maxLength : 600
+												});
+											},1000);
+											
+										</script>
 									</div>
 									
 									<div class="col-lg-4">

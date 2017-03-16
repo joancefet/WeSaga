@@ -8,26 +8,6 @@
 	{{> preloader}}
 	
 	<body class="fixed-sidebar">
-
-		
-		<!-- Header -->
-		<div id="header">
-			<div class="color-line">
-			</div>
-			<div id="logo" class="light-version">
-				<span>
-					<a href="/">
-						<img class="" src="/images/skyrooms-logo.png" width="100%" />
-					</a>
-				</span>
-			</div>
-			<nav role="navigation">
-				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
-				<div class="small-logo">
-					<img class="" src="/images/skyrooms-logo.png" width="100%" />
-				</div>
-			</nav>
-		</div>
 		
 		<!-- Navigation -->
 			{{> account_navigation}}
@@ -37,149 +17,138 @@
 		<div id="wrapper">		
 			<div class="content animate-panel">
 				<div class="row">
-					
-					<div class="content animate-panel">		
-					
-						<div class="col-md-8">
-							
-							<!--
-								URL SCHEMA:
-								skyrooms.io/meet/andrewnormore956/room1
-								skyrooms.io/meet/andrewnormore956/room2
-								skyrooms.io/meet/andrewnormore956/tech-support
-							-->
-								
-								
-							<div class="row">
-							
-								<div class="hpanel">
-									<div class="panel-body">
-										<div class="input-group">
-											<a href="/meetings/manage" class="btn btn-lg btn-success">Create New Meeting</a>
-										</div>
-									</div>
-								</div>
-								
-							</div>	
-							
-							<div class="row">
-							
-								{{#each meetings}}
-								<div class="col-lg-3">
-									<div class="hpanel hgreen contact-panel">
-										<div class="panel-body">
-											<center>
-												<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg">
-											</center>
-											<h3>
-												<a href="/meet/{{owner_username}}/{{slug title}}">
-													{{title}}
-												</a>
-											</h3>
-											<p>
-												{{content}}
-											</p>
-											
-											<a href="/meet/{{owner_username}}/{{slug title}}" class="btn btn-info btn-block btn-sm">
-												<i class="fa fa-handshake-o" aria-hidden="true"></i> Enter Meeting Room
-											</a>
-											
-											<div>
-												<a href="/meetings/manage/{{_id}}" class="btn btn-warning btn-block btn-sm">
-													<i class="fa fa-handshake-o" aria-hidden="true"></i> Edit Meeting
-												</a>
-											</div>
-											
-											<div class="btn btn-primary btn-sm btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/meet/{{owner_username}}/{{slug title}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
-												<i class="fa fa-share-alt" aria-hidden="true"></i> Share
-											</div>
-											<script async src="https://static.addtoany.com/menu/page.js"></script>
-											
-											
-										</div>
-										
-									</div>
-								</div>
-								{{/each}}
-								
+				
+					<div class="col-md-8">
 						
+						<!--
+							URL SCHEMA:
+							skyrooms.io/meet/andrewnormore956/room1
+							skyrooms.io/meet/andrewnormore956/room2
+							skyrooms.io/meet/andrewnormore956/tech-support
+						-->
+						
+						<div class="hpanel">
+							<div class="panel-body">
+								<div class="input-group">
+									<a href="/meetings/manage" class="btn btn-lg btn-success">Create New Meeting</a>
+								</div>
 							</div>
-						
 						</div>
 						
-						<div class="col-md-4">
+						<div class="row">
+						
+							{{#each meetings}}
+							<div class="col-lg-3">
+								<div class="hpanel hgreen contact-panel">
+									<div class="panel-body">
+										<center>
+											<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg">
+										</center>
+										<h3>
+											<a href="/meet/{{owner_username}}/{{slug title}}">
+												{{title}}
+											</a>
+										</h3>
+										<p>
+											{{content}}
+										</p>
+										
+										<a href="/meet/{{owner_username}}/{{slug title}}" class="btn btn-info btn-block btn-sm">
+											<i class="fa fa-handshake-o" aria-hidden="true"></i> Enter Meeting Room
+										</a>
+										
+										<div>
+											<a href="/meetings/manage/{{_id}}" class="btn btn-warning btn-block btn-sm">
+												<i class="fa fa-handshake-o" aria-hidden="true"></i> Edit Meeting
+											</a>
+										</div>
+										
+										<div class="btn btn-primary btn-sm btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/meet/{{owner_username}}/{{slug title}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
+											<i class="fa fa-share-alt" aria-hidden="true"></i> Share
+										</div>
+										<script async src="https://static.addtoany.com/menu/page.js"></script>
+										
+										
+									</div>
+									
+								</div>
+							</div>
+							{{/each}}
+							
 					
-							<div class="col-lg-12">
-								<div class="hpanel hblue">
-									<div class="panel-body">
-									
-										<center>
-									
-											<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-											<!-- Sky2: Large Rectangle -->
-											<ins class="adsbygoogle"
-												 style="display:inline-block;width:336px;height:280px"
-												 data-ad-client="ca-pub-5191331981474706"
-												 data-ad-slot="2816270978"></ins>
-											<script>
-											(adsbygoogle = window.adsbygoogle || []).push({});
-											</script>
-											
-										</center>
-
-									</div>
-								</div>
-							</div>
-							
-							<div class="col-lg-12">
-								<div class="hpanel hblue">
-									<div class="panel-body">
-									
-										<center>
-										
-											<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-											<!-- Sky2: Skyscraper -->
-											<ins class="adsbygoogle"
-												 style="display:inline-block;width:300px;height:600px"
-												 data-ad-client="ca-pub-5191331981474706"
-												 data-ad-slot="1339537771"></ins>
-											<script>
-											(adsbygoogle = window.adsbygoogle || []).push({});
-											</script>
-											
-										</center>
-										
-									</div>
-								</div>
-							</div>
-							
-							<div class="col-lg-12">
-								<div class="hpanel hblue">
-									<div class="panel-body">
-									
-										<center>
-										
-											<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-											<!-- Sky2: Large Rectangle -->
-											<ins class="adsbygoogle"
-												 style="display:inline-block;width:336px;height:280px"
-												 data-ad-client="ca-pub-5191331981474706"
-												 data-ad-slot="2816270978"></ins>
-											<script>
-											(adsbygoogle = window.adsbygoogle || []).push({});
-											</script>
-											
-										</center>
-										
-									</div>
-								</div>
-							</div>
-							
-						</div>	
-							
-							
+						</div>
+					
 					</div>
 					
+					<div class="col-md-4">
+				
+						<div class="col-lg-12">
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<center>
+								
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- Sky2: Large Rectangle -->
+										<ins class="adsbygoogle"
+											 style="display:inline-block;width:336px;height:280px"
+											 data-ad-client="ca-pub-5191331981474706"
+											 data-ad-slot="2816270978"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+										
+									</center>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<center>
+									
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- Sky2: Skyscraper -->
+										<ins class="adsbygoogle"
+											 style="display:inline-block;width:300px;height:600px"
+											 data-ad-client="ca-pub-5191331981474706"
+											 data-ad-slot="1339537771"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+										
+									</center>
+									
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<center>
+									
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- Sky2: Large Rectangle -->
+										<ins class="adsbygoogle"
+											 style="display:inline-block;width:336px;height:280px"
+											 data-ad-client="ca-pub-5191331981474706"
+											 data-ad-slot="2816270978"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+										
+									</center>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>	
 					
 				</div>
 			</div>

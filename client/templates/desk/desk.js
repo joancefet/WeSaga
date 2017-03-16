@@ -52,7 +52,7 @@ Template.desk.rendered = function() {
 Template.desk.events({
 	
 	// Submit New Post
-	'click .btn-success'(event) {
+	'click .desk_submit_new_post'(event) {
 		event.preventDefault();
 		
 		Meteor.call('posts.update',

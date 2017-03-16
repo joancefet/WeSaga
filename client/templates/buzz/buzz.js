@@ -33,7 +33,7 @@ Template.buzz.rendered = function() {
 Template.buzz.events({
 	
 	// Submit New Post
-	'click .btn-success'(event) {
+	'click .buzz_submit_new_post'(event) {
 		event.preventDefault();
 		
 		Meteor.call('posts.update',
