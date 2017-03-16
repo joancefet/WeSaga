@@ -51,7 +51,7 @@ Template.deskedit.helpers({
 		console.log("mapOptions called.");
 		if (GoogleMaps.loaded()) {
 		  return {
-			center: new google.maps.LatLng(Meteor.user().profile.locLat, Meteor.user().profile.locLng),
+			center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
 			zoom: 8,
 			disableDefaultUI: true, 
 			draggable: true,
@@ -93,26 +93,41 @@ Template.deskedit.events({
 		
 	},
 	
-	'click #update_location': function(event){
+	'click .desk_save_all': function(event){
+		
+		// Update working location
+		// TODO: Change this to Google Maps API so user can enter data. This is quick and dirty.
 		$.getJSON('https://freegeoip.net/json/').done(function(location){
-          //$('#country').html(location.country_name);
-          //$('#country_code').html(location.country_code);
-          //$('#region').html(location.region_name);
-          //$('#region_code').html(location.region_code);
-          //$('#city').html(location.city);
-		  //alert(location.city);
-          //$('#latitude').html(location.latitude);
-          //$('#longitude').html(location.longitude);
-          //$('#timezone').html(location.time_zone);
-          //$('#ip').html(location.ip);
-		  Meteor.users.update(Meteor.userId(), {
-		  $set: {
-			"profile.locLat": location.latitude,
-			"profile.locLng": location.longitude,
-			"profile.locName": location.city + ", " + location.region_name + ", " + location.country_name,
-		  }
+			//$('#country').html(location.country_name);
+			//$('#country_code').html(location.country_code);
+			//$('#region').html(location.region_name);
+			//$('#region_code').html(location.region_code);
+			//$('#city').html(location.city);
+			//alert(location.city);
+			//$('#latitude').html(location.latitude);
+			//$('#longitude').html(location.longitude);
+			//$('#timezone').html(location.time_zone);
+			//$('#ip').html(location.ip);
+			Meteor.users.update(Meteor.userId(), {
+				$set: {
+					"profile.location_latitude": location.latitude,
+					"profile.location_longitude": location.longitude,
+					"profile.location_name": location.city + ", " + location.region_name + ", " + location.country_name,
+				}
+			});
 		});
-     });
+		
+		// Update profile data
+		Meteor.users.update(Meteor.userId(), {
+			$set: {
+				"profile.name_first": $(".update_name_first").val(),
+				"profile.name_last": $(".update_name_last").val(),
+				"profile.about": tinyMCE.get('user_about').getContent(),
+			}
+		});
+		
+		Router.go("/desk");
+		
 	}
 	
 })

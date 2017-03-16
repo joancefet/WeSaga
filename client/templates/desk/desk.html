@@ -34,7 +34,7 @@
 											<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="300px" height="300px" />
 										{{/if}}
 										<h3>
-											<a href="" class="font-uppercase">{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}</a>
+											<a href="" class="">{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}</a>
 										</h3>
 										<a class="btn btn-success btn-block" onClick="Router.go('/desk/edit')"><i class="fa fa-cog"></i> Build Profile</a>
 										<div class="btn btn-info btn-block"><i class="fa fa-handshake-o" aria-hidden="true"></i> View Resume</div>
@@ -43,7 +43,7 @@
 								</div>
 									
 								<div id="aboutUser" class="col-md-4">
-									{{{currentUser.profile.aboutUser}}}
+									{{{currentUser.profile.about}}}
 								</div>
 								
 								<div class="col-md-4">
@@ -51,7 +51,7 @@
 									<section id="map">
 										
 										<div class="pull-right text-muted font-bold m-b-xs">
-											{{currentUser.profile.locName}}
+											{{currentUser.profile.location_name}}
 										</div>
 										<div class="map-container">
 											{{> googleMap name="profileMap" options=mapOptions}}

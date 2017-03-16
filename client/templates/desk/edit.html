@@ -35,13 +35,13 @@
 											
 											<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
 											
-											<input type="text" class="form-control" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
+											<input type="text" class="form-control update_name_first" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
 											
-											<input type="text" class="form-control" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
+											<input type="text" class="form-control update_name_last" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
 										
 											<hr />
 										
-											<div class="save_all btn btn-lg btn-block btn-success">
+											<div class="desk_save_all btn btn-lg btn-block btn-success">
 												<i class="fa fa-floppy-o" aria-hidden="true"></i> Save All
 											</div>
 											
@@ -51,8 +51,10 @@
 									</div>
 									
 									<div class="col-lg-4">
-										<h2>About You</h2>
-										<textarea id="user_about" cols="40" rows="18" style="width:100%;" >{{currentUser.profile.about}}</textarea>
+										<h2>About Me</h2>
+										<p>Use this oppourtunity to briefly tell people about yourself and what you do. It is public to EVERYONE on the internet.</p>
+										
+										<textarea id="user_about" cols="40" rows="22" style="width:100%;" >{{currentUser.profile.about}}</textarea>
 										<script>
 											
 											setTimeout(function(){
@@ -78,12 +80,16 @@
 									
 									<div class="col-lg-4">
 										<section id="map">
-										<button id="update_location" type="button" class="btn btn-primary btn-xs">Update Location</button>
-										<div class="pull-right text-muted font-bold m-b-xs">{{currentUser.profile.locName}}</div>
-										<div class="map-container">
-											{{> googleMap name="editMap" options=mapOptions}}
-										</div>
-									</section>
+											
+											<div class="pull-right text-muted font-bold m-b-xs">
+												{{currentUser.profile.location_name}}
+											</div>
+											
+											<div class="map-container">
+												{{> googleMap name="editMap" options=mapOptions}}
+											</div>
+											
+										</section>
 									</div>
 									
 								</div>
