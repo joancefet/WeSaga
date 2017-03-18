@@ -4,23 +4,36 @@ import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
 
 // Route
-Router.route('/people/:user_slug',{
+Router.route('/resume/:user_slug',{
 
 	data:function(){
 		
 	},
 	waitOn: function(){
-		Meteor.subscribe('posts', 'people_desk',  ToSeoUrl(Router.current().params.user_slug) );
-		Meteor.subscribe('posts', "people_desk_posts", ToSeoUrl(Router.current().params.user_slug) ); 
+		Meteor.subscribe('posts', 'resume',  ToSeoUrl(Router.current().params.user_slug) );
+		Meteor.subscribe('posts', "resume_posts", ToSeoUrl(Router.current().params.user_slug) ); 
+		
+		Meteor.subscribe('posts', "resume_owner", ToSeoUrl(Router.current().params.user_slug) ); 
+		
+		Meteor.subscribe('posts', "resume_skill", ToSeoUrl(Router.current().params.user_slug) ); 		
+		Meteor.subscribe('posts', "resume_education",ToSeoUrl(Router.current().params.user_slug) ); 
+			Meteor.subscribe('postsmeta', "resume_education_date1",ToSeoUrl(Router.current().params.user_slug) );
+			Meteor.subscribe('postsmeta', "resume_education_date2",ToSeoUrl(Router.current().params.user_slug) );	
+			Meteor.subscribe('postsmeta', "resume_education_type",ToSeoUrl(Router.current().params.user_slug) );
+		Meteor.subscribe('posts', "resume_experience",ToSeoUrl(Router.current().params.user_slug) ); 
+			Meteor.subscribe('postsmeta', "resume_experience_group",ToSeoUrl(Router.current().params.user_slug) );
+			Meteor.subscribe('postsmeta', "resume_experience_date1",ToSeoUrl(Router.current().params.user_slug) );
+			Meteor.subscribe('postsmeta', "resume_experience_date2",ToSeoUrl(Router.current().params.user_slug) );	
+			Meteor.subscribe('postsmeta', "resume_experience_type",ToSeoUrl(Router.current().params.user_slug) );
 	},
 	template:'screen',
 	yieldTemplates: {
-		'people_desk': {to: 'content'},
+		'resume': {to: 'content'},
 	}
 	
 });
 
-Template.people_desk.events({
+Template.resume.events({
 	
 	// Submit New Post
 	'click .people_submit_new_post'(event) {
@@ -290,9 +303,10 @@ Template.people_desk.events({
 });	
 
 
-Template.people_desk.helpers({
+Template.resume.helpers({
 	
-	people_desk() {
+	
+	resume() {
 		//Meteor.subscribe('postsmeta', "notify_meta", this._id); 
 		return Meteor.users.findOne({ "profile.username":Router.current().params.user_slug }); 
 	},
@@ -355,4 +369,35 @@ Template.people_desk.helpers({
 		}
 	},
 	
-});
+	
+	resume_skills(){
+		return Posts.find({type:"resume_skill", parent_id:this._id});
+	},	
+	
+	resume_education(){
+		return Posts.find({type:"resume_education"});
+	},
+	resume_education_date1(){
+		return Postsmeta.find({type:"resume_education_date1", parent_id:this._id});
+	},
+	resume_education_date2(){
+		return Postsmeta.find({type:"resume_education_date2", parent_id:this._id});
+	},
+	resume_education_type(){
+		return Postsmeta.find({type:"resume_education_type", parent_id:this._id});
+	},
+	
+	resume_experience(){
+		return Posts.find({type:"resume_experience"});
+	},
+	resume_experience_group(){
+		return Postsmeta.find({type:"resume_experience_group", parent_id:this._id});
+	},
+	resume_experience_date1(){
+		return Postsmeta.find({type:"resume_experience_date1", parent_id:this._id});
+	},
+	resume_experience_date2(){
+		return Postsmeta.find({type:"resume_experience_date2", parent_id:this._id});
+	},
+	
+}); 

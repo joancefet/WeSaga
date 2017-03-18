@@ -50,28 +50,21 @@ Router.configure({
 // This needs to be moved in to their own JS files, but for some reason Meteor hates it
 // Lets do this asap but its hard :(
 
-// Desk Helper
-Template.desk.helpers({
+// Account Navigation Helper
+Template.sidebar_right.helpers({
 	
-  // expByUser(){
-	  // return UserExperience.find({"ownerId":Meteor.userId()}, {sort: { fromStamp: -1 }});
-  // },
+
+	// ACTIVE CLASS ON MENU BARS
+	show_ads(){
+		if(location.hostname === "localhost"){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
-  // post() {
-	  // return SkyroomPosts.find({ }, {sort: { timestamp: -1 }, limit: 10});
-  // },
+	
   
-  // postChatById() {
-	  // return SkyroomPostComments.find({"postParentId":this._id}, { sort: { timestamp: -1 }, limit: 3});
-  // },
-  
-  // currentUpload: function () {
-      // return Template.instance().currentUpload.get();
-  // },
-  
-  // numberOfSkyrooms: function(userId) {
-	  // console.log(userId);
-  // },
   
 });
 
@@ -267,7 +260,7 @@ Template.onRendered(function () {
 Router.onAfterAction(function(){
 	
 	console.log("RENDER: Router.onAfterAction");
-	
+	$('body').addClass("fixed-sidebar");
 	
 });
 

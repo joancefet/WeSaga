@@ -7,7 +7,7 @@
 
 	{{> preloader}}
 	
-	<body class="fixed-sidebar">
+	
 		
 		<!-- Navigation -->
 			{{> account_navigation}}
@@ -36,8 +36,12 @@
 										<h3>
 											<a href="" class="">{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}</a>
 										</h3>
-										<a class="btn btn-success btn-block" onClick="Router.go('/desk/edit')"><i class="fa fa-cog"></i> Build Profile</a>
-										<div class="btn btn-info btn-block"><i class="fa fa-handshake-o" aria-hidden="true"></i> View Resume</div>
+										<a class="btn btn-success btn-block" onClick="Router.go('/desk/edit')">
+											<i class="fa fa-cog"></i> Build Profile & Resume
+										</a>
+										<a href="/resume/{{currentUser.profile.username}}" class="btn btn-info btn-block">
+											<i class="fa fa-handshake-o" aria-hidden="true"></i> View Resume
+										</a>
 									</center>
 									
 								</div>
@@ -202,81 +206,13 @@
 					</div>
 					
 
-					<div class="col-md-4">
-					
-						<div class="col-lg-12">
-							<div class="hpanel hblue">
-								<div class="panel-body">
-								
-									<center>
-								
-										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-										<!-- Sky2: Large Rectangle -->
-										<ins class="adsbygoogle"
-											 style="display:inline-block;width:336px;height:280px"
-											 data-ad-client="ca-pub-5191331981474706"
-											 data-ad-slot="2816270978"></ins>
-										<script>
-										(adsbygoogle = window.adsbygoogle || []).push({});
-										</script>
-										
-									</center>
-
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
-							<div class="hpanel hblue">
-								<div class="panel-body">
-								
-									<center>
-									
-										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-										<!-- Sky2: Skyscraper -->
-										<ins class="adsbygoogle"
-											 style="display:inline-block;width:300px;height:600px"
-											 data-ad-client="ca-pub-5191331981474706"
-											 data-ad-slot="1339537771"></ins>
-										<script>
-										(adsbygoogle = window.adsbygoogle || []).push({});
-										</script>
-										
-									</center>
-									
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
-							<div class="hpanel hblue">
-								<div class="panel-body">
-								
-									<center>
-									
-										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-										<!-- Sky2: Large Rectangle -->
-										<ins class="adsbygoogle"
-											 style="display:inline-block;width:336px;height:280px"
-											 data-ad-client="ca-pub-5191331981474706"
-											 data-ad-slot="2816270978"></ins>
-										<script>
-										(adsbygoogle = window.adsbygoogle || []).push({});
-										</script>
-										
-									</center>
-									
-								</div>
-							</div>
-						</div>
-						
-					</div>				
+					{{> sidebar_right}}
 				
 				</div>	
 			</div>			
 		</div>
 		<!-- Main Wrapper -->
-	</body>
+	
 
 </template>
 

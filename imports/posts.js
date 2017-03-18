@@ -90,7 +90,23 @@ if (Meteor.isServer) {
 			return Posts.find({type:"meetings", slug:userId}, { sort: { createdAt: -1 } }); // UserId is a slug in this exception... lazy...			
 		}
 		
+		// RESUMES
+		// =======
+		if(action == "resume_owner"){
+			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		}
 		
+		if(action == "resume_skill"){
+			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(action == "resume_education"){
+			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(action == "resume_experience"){
+			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
 		
 		
 	});
@@ -122,7 +138,7 @@ Meteor.methods({
 			// NEW POST
 			var post_id = Posts.insert({
 				owner_id: author,
-				owner_username: Meteor.user().username,
+				owner_username: Meteor.user().profile.username,
 				owner_fullname: Meteor.user().profile.name_first +" "+Meteor.user().profile.name_last,
 				owner_avatar: ""+Meteor.user().profile.avatar, 
 				createdAt: Date.now(),

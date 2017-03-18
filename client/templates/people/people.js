@@ -79,7 +79,7 @@ Template.people.events({
 			});
 			
 			// Add Notification and Meta data		
-			var post_id = Meteor.call('posts.update',
+			Meteor.call('posts.update',
 				"new",
 				target.user_id.value,
 				"Colleague Request from "+Meteor.user().profile.username,
