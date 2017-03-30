@@ -1,36 +1,31 @@
-// Route
 import { Posts } 					from '../../../imports/posts.js';
 import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
-// Route
-Router.route('/people',{
-
+// ROUTER
+//=========
+Router.route('/group/:group_slug/people/pending',{
 	data:function(){
 		
-		if( !Meteor.user() ){
-			Router.go('/');
-		}
 	},
 	waitOn: function(){
-		window.subscription_people_search = "";
-		window.subscription_people = Meteor.subscribe('posts', 'people_all'); 		
+		Meteor.subscribe('posts', 'group_by_slug',  ToSeoUrl(Router.current().params.group_slug) );
+		window.subscription_group_people_pending_search = "";
+		//window.subscription_group_people_pending = Meteor.subscribe('posts', 'group_people_pending_all', Router.current().params.group_slug);
 	},
 	template:'screen',
 	yieldTemplates: {
-		'people': {to: 'content'},
+		'group_people_pending': {to: 'content'},
 	}
 	
 });
 
-
-// Render
-Template.people.rendered = function() {
+Template.group_people_pending.rendered = function() {
 
 };
 
 
 // Events
-Template.people.events({
+Template.group_people_pending.events({
 	
 	// SEARCH
 	// ------
@@ -241,15 +236,115 @@ Template.people.events({
 			
 		} 
 		
+		
+		// ---------------
+		// GROUP ACCEPT
+		// ---------------
+		if(target.action.value == "group_accept"){
+			
+			swal({
+				title: "Group Request has been Accepted",
+				text: "A notification was sent to the person",
+				type: "success",
+				showCancelButton: false,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Close",
+				
+			});
+			
+			// Update to accepted for Owner
+			Meteor.call('posts.group_accept',
+				target.owner_id.value,
+				target.group_id.value,
+			);
+
+			// // Notify the requesting user about the new colleague
+			// Meteor.call('posts.update',
+				// "new",
+				// target.title.value,
+				// "Colleague Accepted",
+				// "",
+				// "notify",
+				// "",
+				// "new"
+			// );
+			
+		}
+		// ---------------
+		// GROUP DECLINE
+		// ---------------
+		if(target.action.value == "group_decline"){
+			swal({
+				title: "Group Request has been Declined!",
+				text: "A notification was sent to the person",
+				type: "error",
+				showCancelButton: false,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Close",
+				
+			});
+			
+			Meteor.call('posts.group_decline',
+				target.owner_id.value,
+				target.group_id.value,
+			);
+
+			// // Notify the requesting user about the new colleague
+			// Meteor.call('posts.update',
+				// "new",
+				// target.title.value,
+				// "Colleague Accepted",
+				// "",
+				// "notify",
+				// "",
+				// "new"
+			// );
+			
+		}
+		
 	}
 	
 });
 
 // Events
-Template.people.helpers({
+Template.group_people_pending.helpers({
+	
+	group_slug(){
+		return Router.current().params.group_slug; 
+	},
+	group_id(){
+		var group = Posts.findOne({type:"groups"}); 
+		return group._id;
+	},
+	slug(title){
+		return ToSeoUrl(title); 
+	},
 	
 	people() {
+		
+		// Fetch the group
+		var group = Posts.findOne({type:"groups"});
+		
+		// Fetch Group Members post
+		Meteor.subscribe('posts', 'group_member_all_by_group_id', group._id );
+		
+		// Subscribe to those users
+		var members = Posts.find({type:"group_member", status:"waiting"});
+		members.forEach(function(member){
+			Meteor.subscribe('posts', 'group_member_user_profile', member.owner_id );
+		});
+		
 		return Meteor.users.find({ _id:{$ne:Meteor.userId()} }); // All users except ME
+		
+		
+		// if( window.subscription_group_people_pending_search == "" ){
+			
+			// // Find all members, retreive their profile
+			// var members = Posts.find({});
+			
+		// }else{
+			
+		// }
 	},
 	
 	noColleagueStatus(){
@@ -275,3 +370,4 @@ Template.people.helpers({
 	}
 	
 });
+

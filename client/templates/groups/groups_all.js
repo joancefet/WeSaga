@@ -10,7 +10,6 @@ Router.route('/groups/all',{
 	waitOn: function(){
 		window.subscription_group_search = "";
 		window.subscription_group = Meteor.subscribe('posts', 'groups_all');
-		
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -72,7 +71,7 @@ Template.groups_all.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Add Notification and Meta data		
@@ -123,7 +122,7 @@ Template.groups_all.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// 1-OWNER) owner_id:, type:colleague, status:"waiting"
@@ -151,7 +150,7 @@ Template.groups_all.events({
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Confirm",
-				closeOnConfirm: true
+				
 			},
 				function(){
 					

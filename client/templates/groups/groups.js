@@ -69,7 +69,7 @@ Template.groups.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// 1-OWNER) owner_id:, type:colleague, status:"waiting"

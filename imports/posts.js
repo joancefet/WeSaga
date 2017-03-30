@@ -16,27 +16,27 @@ if (Meteor.isServer) {
 			return Posts.find({type:action, owner_id:userId}, {sort: { createdAt: -1 }, limit:20 });
 		}
 		
-		if(action == "all"){
-			return Posts.find({}, {sort: { createdAt: -1 }, limit:10 });
-		}
-		
-		if(action == "desk_posts"){
-			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10 });
-		}
-		
-		if(action == "people_desk_posts"){
-			
-			var user = Meteor.users.findOne({"profile.username":userId}); 
-			// We can add view permissions here :)
-			return Posts.find({type:"desk_posts", owner_id:user._id}, { sort: { createdAt: -1 }, limit:10 });
-		}
+		// if(action == "all"){
+			// return Posts.find({}, {sort: { createdAt: -1 }, limit:10 });
+		// }
 		
 		if(action == "notes"){
 			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10  });			
 		}
 		
-		if(action == "skyrooms"){
-			return Posts.find({type:action}, { sort: { createdAt: -1 }, limit:10 });			
+		// DESK
+		// =======
+		if(action == "desk_posts"){
+			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10 });
+		}
+		
+		// PEOPLE
+		// =======
+		if(action == "people_desk_posts"){
+			
+			var user = Meteor.users.findOne({"profile.username":userId}); 
+			// We can add view permissions here :)
+			return Posts.find({type:"desk_posts", owner_id:user._id}, { sort: { createdAt: -1 }, limit:10 });
 		}
 		
 		if(action == "people_all"){
@@ -78,10 +78,14 @@ if (Meteor.isServer) {
 			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
 		}
 		
+		// COLLEAGUES
+		// =======
 		if(action == "colleagues"){
 			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		
+		// MEETINGS
+		// =======
 		if(action == "meetings"){
 			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
 		}
@@ -95,14 +99,26 @@ if (Meteor.isServer) {
 		if(action == "groups"){
 			return Posts.find({type:action, _id: userId}, { sort: { createdAt: -1 } });			
 		}
+		if(action == "group_by_slug"){
+			return Posts.find({type:"groups", slug: userId}, { sort: { createdAt: -1 } });			
+		}
 		if(action == "groups_all"){
 			return Posts.find({type:"groups"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_members_all_by_slug"){
+			return Posts.find({type:"group_member", slug:userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_member"){
 			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
 		}
+		if(action == "group_member_user_profile"){
+			return Meteor.users.find({_id: userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		}
 		if(action == "group_member_by_group_id"){
 			return Posts.find({type:"group_member", owner_id: userId, parent_id: parent_id}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_member_all_by_group_id"){
+			return Posts.find({type:"group_member", parent_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_member_role"){
 			return Posts.find({type:action, parent_id: userId}, { sort: { createdAt: -1 } });			
@@ -119,6 +135,42 @@ if (Meteor.isServer) {
 			return Posts.find({type:"groups","title":{ $regex : new RegExp(search_query, "i") } }, {limit:8}); //TODO Restrict by fields, lower data use
 			
 		}	
+		
+		if(action == "group_people_all"){
+			return Meteor.users.find({},{limit:8}); //TODO Restrict by fields, lower data use
+		}
+		
+		if(action == "group_people_search"){
+			
+			var search_type = 'name';
+			var query_email = userId.split("@");
+			var query_name  = userId.split(" ");
+			
+			console.log(query_email);
+			console.log(query_name);
+			
+			if( query_email[1] ){ 
+				search_type = "email"; 
+			}
+			
+			if(search_type == "email"){
+				console.log("SEARCHING FOR EMAIL: "+userId);
+				return Meteor.users.find({"emails.address":userId}, {limit:6}); //TODO Restrict by fields, lower data use
+			}
+			
+			if(search_type =="name"){
+				
+				if(query_name[1] == ""){
+					console.log("SEARCHING FOR FIRST NAME: "+query_name[0]);
+					return Meteor.users.find({"profile.name_first":{ $regex : new RegExp(query_name[0], "i") } }, {limit:6}); //TODO Restrict by fields, lower data use
+				}
+				if(query_name[1] != ""){
+					console.log("SEARCHING FOR FIRST AND LAST NAME: "+query_name[0]+" "+query_name[1]);
+					return Meteor.users.find({"profile.name_first":{ $regex : new RegExp(query_name[0], "i")}, "profile.name_last":{ $regex : new RegExp(query_name[1], "i")} }, {limit:6}); //TODO Restrict by fields, lower data use
+				}
+			}
+		}	
+		
 		
 		
 		
@@ -277,6 +329,23 @@ Meteor.methods({
 		check(userId, String);
 		console.log("LEAVE GROUP: "+groupId);
 		Posts.remove({type:"group_member", parent_id:groupId, owner_id:userId});
+	},
+	
+	'posts.group_accept'(userId, group_parent_id) {
+		
+		Posts.update({owner_id:userId, parent_id:group_parent_id},
+			{$set: {
+				updatedAt: Date.now(), 
+				status:"accepted",
+				}
+			}
+		);
+		
+	},
+	'posts.group_decline'(userId, group_parent_id) {
+		
+		Posts.remove({owner_id:userId, parent_id:group_parent_id});
+		
 	},
 	
 

@@ -52,7 +52,7 @@ Template.colleagues.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Add Notification and Meta data		
@@ -104,7 +104,7 @@ Template.colleagues.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// 1-OWNER) owner_id:, type:colleague, status:"waiting"
@@ -139,7 +139,7 @@ Template.colleagues.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Update to accepted for Owner
@@ -179,7 +179,7 @@ Template.colleagues.events({
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Confirm",
-				closeOnConfirm: true
+				
 			},
 				function(){
 					

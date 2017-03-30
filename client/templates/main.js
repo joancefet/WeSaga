@@ -44,6 +44,7 @@ import './desk/desk.html';
 import './groups/groups.html';
 	import './groups/groups_manager.html';
 import './group/group_desk.html';
+	import './group/group_people_pending.html';
 import './chats/chats.html';
 import './people/people.html';
 import './register/register.html';
@@ -108,17 +109,14 @@ Template.account_navigation.events({
 		swal({
 			title: "Logout?",
 			text: "",
-			type: "warning",
+			type: "question",
 			showCancelButton: true,
 			confirmButtonColor: "#DD6B55",
 			confirmButtonText: "Logout",
-			closeOnConfirm: true
-		},
-			function(){
-				Meteor.logout();
-				Router.go('/');
-			}
-		);
+		}).then(function (result) {
+			Meteor.logout();
+			Router.go('/');
+		});
 		
 	},
 

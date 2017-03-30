@@ -133,7 +133,7 @@ Template.groups_manager.events({
 						showCancelButton: false,
 						cancelButtonText: "Cancel",
 						confirmButtonText: "Close",
-						closeOnConfirm: true
+						
 					});
 				}else{
 					swal({
@@ -143,7 +143,7 @@ Template.groups_manager.events({
 						showCancelButton: false,
 						cancelButtonText: "Cancel",
 						confirmButtonText: "Close",
-						closeOnConfirm: true
+						
 					});
 				}
 				
@@ -167,7 +167,7 @@ Template.groups_manager.events({
 			cancelButtonText: "Cancel",
 			confirmButtonColor: "#c0392b",
 			confirmButtonText: "Delete group",
-			closeOnConfirm: true
+			
 		},
 		function(){				
 			

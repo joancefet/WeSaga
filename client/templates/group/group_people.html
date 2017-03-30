@@ -38,6 +38,12 @@
 											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
 										</a>
 										
+										<br />
+										<br />
+										<a href="/group/{{group_slug}}/people/pending" class="btn btn-sm btn-primary">
+											<i class="fa fa-bell" aria-hidden="true"></i> Pending Group Requests
+										</a>
+										
 									</div>
 									
 									<div class="col-md-3">
@@ -63,128 +69,114 @@
 							</div>
 						</div>
 						
-						<div class="row">
+						<center class="show_loader" style="display:none;">
+							<div class="loader"></div>
+						</center>
 						
-							<div class="col-md-3">
-								<div class="hpanel blog-box">
-									<div class="panel-heading">
-										<div class="media clearfix">
-											<a class="pull-left">
-												<img src="images/a4.jpg" alt="profile-picture">
+						<div class="row">
+							<div class="col-md-12">
+								<h4 class="text-white search_container_message">Showing Group Members</h4>
+							</div>
+						</div> 
+						
+						<div class="row search_container">
+							{{#if people}}
+								{{#each people}}
+								<div class="col-lg-3">
+									<div class="hpanel hgreen">
+										<div class="panel-body">
+											
+											<a href="/people/{{profile.username}}">
+												{{#if profile.avatar}}
+													<center>
+														<img alt="logo" class="img-circle m-b" src="{{profile.avatar}}" width="100%" style="width:100%; height:205px;"  />
+													</center>
+												{{else}}
+													<center>
+														<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100%" style="width:100%; height:205px;" />
+													</center>
+												{{/if}}
 											</a>
-											<div class="media-body">
-												<small>Created by: <span class="font-bold">Anna Smith</span> </small>
-												<br>
-												<small class="text-muted">10.07.2015, 02:12 am</small>
-											</div>
+											
+											<h3>
+												<center>
+													<a href="/people/{{profile.username}}">
+														{{profile.name_first}}
+														<br />
+														{{profile.name_last}}
+													</a>
+												</center>
+											</h3>
+											{{#if profile.location}}
+												<div class="text-muted font-bold m-b-xs">Location</div>
+											{{/if}}
+											
+											<p style="display:none;">
+												SkyRooms - Test user
+											</p>
+											
+											<!-- View Desk -->
+											<a href="/people/{{profile.username}}"  class="btn btn-primary btn-block btn-sm">
+												<i class="fa fa-id-card" aria-hidden="true"></i> View Desk
+											</a>
+											
+											{{#if noColleagueStatus "notFound"}}
+												<form class="btn-form-top btn-form">
+													<input type="hidden" name="user_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="add" />
+													<button type="submit" class="btn btn-success btn-block btn-sm">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Add Colleague
+													</button>
+												</form>
+											{{else}}
+												
+												{{#each colleagueStatus}}
+												
+													{{#if checkStatus "request"}}
+														<form class="btn-form-top btn-form">
+															<input type="hidden" name="post_id" value="{{_id}}" />
+															<input type="hidden" name="parent_id" value="{{parent_id}}" />
+															<input type="hidden" name="title" value="{{title}}" />
+															<input type="hidden" name="action" value="accept" />
+															<button type="submit" class="btn btn-success btn-block btn-sm">
+																<i class="fa fa-handshake-o" aria-hidden="true"></i> Accept
+															</button>
+														</form>
+													{{/if}}
+													{{#if checkStatus "waiting"}}
+														<form class="btn-form-top btn-form">
+															<input type="hidden" name="post_id" value="{{_id}}" />
+															<input type="hidden" name="parent_id" value="{{parent_id}}" />
+															<input type="hidden" name="owner_id" value="{{owner_id}}" />
+															<input type="hidden" name="action" value="cancel" />
+															<button type="submit" class="btn btn-warning btn-block btn-sm">
+																<i class="fa fa-handshake-o" aria-hidden="true"></i> Cancel Request
+															</button>
+														</form>
+													{{/if}}
+												{{/each}}
+												
+											{{/if}}
+											
+											<button type="submit" class="btn btn-block btn-sm btn-info">
+												<i class="fa fa-phone-square" aria-hidden="true"></i> Call
+											</button> 
+											
+											<button type="submit" class="btn btn-block btn-sm btn-info">
+												<i class="fa fa-commenting-o" aria-hidden="true"></i> Message
+											</button> 
+										
+										
+										
+											
 										</div>
-									</div>
-									<div class="panel-image">
-										<img class="img-responsive" src="images/p1.jpg" alt="">
-										<div class="title">
-											<a href="blog_details.html"> <h4>Standard chunk of Lorem Ipsum</h4></a>
-											<small>Even slightly believable</small>
-										</div>
-									</div>
-									<div class="panel-body">
-										<p>
-											Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-										</p>
-										<p>
-											Etiam aliquam elit vestibulum, convallis risus at, rutrum ex. Aliquam erat volutpat. Morbi blandit nisi a magna vestibulum, eget volutpat risus sodales.
-										</p>
-										<a href="blog_details.html" class="btn btn-primary btn-xs">Read more</a>
-									</div>
-									<div class="panel-footer">
-											<span class="pull-right">
-												<i class="fa fa-comments-o"> </i> 10 comments
-											</span>
-										<i class="fa fa-eye"> </i> 62 views
+										
 									</div>
 								</div>
-
-							</div>
-							
-							<div class="col-md-3">
-								<div class="hpanel blog-box">
-									<div class="panel-heading">
-										<div class="media clearfix">
-											<a class="pull-left">
-												<img src="images/a4.jpg" alt="profile-picture">
-											</a>
-											<div class="media-body">
-												<small>Created by: <span class="font-bold">Anna Smith</span> </small>
-												<br>
-												<small class="text-muted">10.07.2015, 02:12 am</small>
-											</div>
-										</div>
-									</div>
-									<div class="panel-image">
-										<img class="img-responsive" src="images/p1.jpg" alt="">
-										<div class="title">
-											<a href="blog_details.html"> <h4>Standard chunk of Lorem Ipsum</h4></a>
-											<small>Even slightly believable</small>
-										</div>
-									</div>
-									<div class="panel-body">
-										<p>
-											Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-										</p>
-										<p>
-											Etiam aliquam elit vestibulum, convallis risus at, rutrum ex. Aliquam erat volutpat. Morbi blandit nisi a magna vestibulum, eget volutpat risus sodales.
-										</p>
-										<a href="blog_details.html" class="btn btn-primary btn-xs">Read more</a>
-									</div>
-									<div class="panel-footer">
-											<span class="pull-right">
-												<i class="fa fa-comments-o"> </i> 10 comments
-											</span>
-										<i class="fa fa-eye"> </i> 62 views
-									</div>
-								</div>
-
-							</div>
-							
-							<div class="col-md-3">
-								<div class="hpanel blog-box">
-									<div class="panel-heading">
-										<div class="media clearfix">
-											<a class="pull-left">
-												<img src="images/a4.jpg" alt="profile-picture">
-											</a>
-											<div class="media-body">
-												<small>Created by: <span class="font-bold">Anna Smith</span> </small>
-												<br>
-												<small class="text-muted">10.07.2015, 02:12 am</small>
-											</div>
-										</div>
-									</div>
-									<div class="panel-image">
-										<img class="img-responsive" src="images/p1.jpg" alt="">
-										<div class="title">
-											<a href="blog_details.html"> <h4>Standard chunk of Lorem Ipsum</h4></a>
-											<small>Even slightly believable</small>
-										</div>
-									</div>
-									<div class="panel-body">
-										<p>
-											Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-										</p>
-										<p>
-											Etiam aliquam elit vestibulum, convallis risus at, rutrum ex. Aliquam erat volutpat. Morbi blandit nisi a magna vestibulum, eget volutpat risus sodales.
-										</p>
-										<a href="blog_details.html" class="btn btn-primary btn-xs">Read more</a>
-									</div>
-									<div class="panel-footer">
-											<span class="pull-right">
-												<i class="fa fa-comments-o"> </i> 10 comments
-											</span>
-										<i class="fa fa-eye"> </i> 62 views
-									</div>
-								</div>
-
-							</div>
-							
+								{{/each}}
+							{{else}}
+								We didn't find any one by that name or email address.
+							{{/if}}
 						</div> 
 						
 					</div> 
