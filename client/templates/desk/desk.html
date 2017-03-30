@@ -7,8 +7,6 @@
 
 	{{> preloader}}
 	
-	
-		
 		<!-- Navigation -->
 			{{> account_navigation}}
 		<!-- Navigation -->
@@ -98,7 +96,7 @@
 									
 									<div class="fileInput_count"></div>
 									<script>
-									
+										// Counts the amount of files, shows what will be uploaded to user.
 										$("input[name=fileInput]").change(function() {
 											var names = [];
 											for (var i = 0; i < $(this).get(0).files.length; ++i) {
@@ -135,14 +133,16 @@
 													<h5 class="m-t-md">
 														<span class="capitalize">{{owner_fullname}}</span>
 													</h5>
-													<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+													<small>
+														<time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time>
+													</small>
 												</div>
 											</center>
 										
 										</div>
 										
 										<div class="col-xs-12 col-md-10 well" style="font-size:22px;">
-												{{content}}
+											{{content}}
 										</div>
 										
 										<div class="col-xs-12 col-md-10" style="font-size:22px;">

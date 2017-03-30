@@ -36,6 +36,10 @@ Template.buzz.events({
 	'click .buzz_submit_new_post'(event) {
 		event.preventDefault();
 		
+		if( $(".newPostContent").val().length < 1 ){
+			return;
+		}
+		
 		Meteor.call('posts.update',
 			"new",
 			"me",

@@ -22,20 +22,39 @@
 						
 						<div class="hpanel">
 							<div class="panel-body">
-								<form class="search_start">
-									<div class="input-group">
-										<input class="form-control search_value" type="text" placeholder="Search for people by name or email">
-										
-										<div class="input-group-btn ">
-											<button type="submit" class="btn btn-default">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
+							
+								<div class="row">
+									<div class="col-md-9">
+									
+										<a href="/colleagues" class="btn btn-primary">
+											<i class="fa fa-address-book-o" aria-hidden="true"></i> Colleagues
+										</a>
+										<a href="/people" class="btn btn-info">
+											<i class="fa fa-address-book-o" aria-hidden="true"></i> All People
+										</a>
 										
 									</div>
 									
-									<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
-								</form>
+									<div class="col-md-3">
+									
+										<form class="search_start">
+											<div class="input-group">
+												<input class="form-control search_value" type="text" placeholder="Search..." />
+												
+												<div class="input-group-btn ">
+													<button type="submit" class="btn btn-default">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
+												
+											</div>
+											
+											<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+										</form>
+									
+									</div>
+								</div>
+								
 							</div>
 						</div>
 						
@@ -44,7 +63,13 @@
 							<div class="loader"></div>
 						</center>
 						
-						<div class="row people_container">
+						<div class="row">
+							<div class="col-md-12">
+								<h4 class="text-white search_container_message">Showing the most recent People on SkyRooms</h4>
+							</div>
+						</div> 
+						
+						<div class="row search_container">
 							{{#if people}}
 								{{#each people}}
 								<div class="col-lg-3">
@@ -86,7 +111,7 @@
 											</a>
 											
 											{{#if noColleagueStatus "notFound"}}
-												<form>
+												<form class="btn-form-top">
 													<input type="hidden" name="user_id" value="{{_id}}" />
 													<input type="hidden" name="action" value="add" />
 													<button type="submit" class="btn btn-info btn-block btn-sm">
@@ -98,7 +123,7 @@
 												{{#each colleagueStatus}}
 												
 													{{#if checkStatus "accepted"}}
-														<form>
+														<form class="btn-form-top">
 															<input type="hidden" name="post_id" value="{{_id}}" />
 															<input type="hidden" name="owner_id" value="{{owner_id}}" />
 															<input type="hidden" name="action" value="remove" />
@@ -108,7 +133,7 @@
 														</form>
 													{{/if}}
 													{{#if checkStatus "request"}}
-														<form>
+														<form class="btn-form-top">
 															<input type="hidden" name="post_id" value="{{_id}}" />
 															<input type="hidden" name="parent_id" value="{{parent_id}}" />
 															<input type="hidden" name="title" value="{{title}}" />
@@ -119,7 +144,7 @@
 														</form>
 													{{/if}}
 													{{#if checkStatus "waiting"}}
-														<form>
+														<form class="btn-form-top">
 															<input type="hidden" name="post_id" value="{{_id}}" />
 															<input type="hidden" name="parent_id" value="{{parent_id}}" />
 															<input type="hidden" name="owner_id" value="{{owner_id}}" />

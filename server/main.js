@@ -6,10 +6,12 @@ Meteor.startup(() => {
 	import '../imports/postsmeta.js';
 	
 	import '../imports/skyroom_tools_server.js';
-	import '../imports/user_experience.js';
 	
 	
-	
+		// Accounts.config({
+		// // enable client user creation
+		// forbidClientAccountCreation: false,
+	// }),
 	
 	// ================
 	// FILES
@@ -134,20 +136,20 @@ Meteor.startup(() => {
 	// ================
 	
 	// Settings
-	AccountsGuest.enabled = false // . Automatically logs in all visitors.
-	AccountsGuest.forced= true //. Will force recently logged out accounts into guest mode.
-	AccountsGuest.name = false //, assign the guest a friendly nickname. WEIRD NAMES, maybe customize this later on. Guest is fine for now..
-	AccountsGuest.anonymous = false // Dont generate a fake email address / password. This is an anon account
+	// AccountsGuest.enabled = false // . Automatically logs in all visitors.
+	// AccountsGuest.forced= true //. Will force recently logged out accounts into guest mode.
+	// AccountsGuest.name = false //, assign the guest a friendly nickname. WEIRD NAMES, maybe customize this later on. Guest is fine for now..
+	// AccountsGuest.anonymous = false // Dont generate a fake email address / password. This is an anon account
 	
-	// Clean up anonymous accounts
-	var before = new Date();
-	before.setHours(before.getHours() - 1); // Remove one hour old accounts
-	Accounts.removeOldGuests(before);
+	// // Clean up anonymous accounts
+	// var before = new Date();
+	// before.setHours(before.getHours() - 1); // Remove one hour old accounts
+	// Accounts.removeOldGuests(before);
 
 	
-	Meteor.publish("userList", function () {
-           return Meteor.users.find({}, {fields: {emails: 1, profile: 1}});
-    });
+	// Meteor.publish("userList", function () {
+           // return Meteor.users.find({}, {fields: {emails: 1, profile: 1}});
+    // });
 	
 	// ================
 	// PARTICIPANTS

@@ -1,1 +1,1 @@
-start cmd.exe /k "meteor run android-device --mobile-server=http://staging.skyrooms.io:3000"
+start cmd.exe /k "meteor run android-device --mobile-server=https://www.skyrooms.io"

@@ -40,7 +40,7 @@ if (Meteor.isServer) {
 		}
 		
 		if(action == "people_all"){
-			return Meteor.users.find({},{limit:10}); //TODO Restrict by fields, lower data use
+			return Meteor.users.find({},{limit:8}); //TODO Restrict by fields, lower data use
 		}
 		
 		if(action == "people_search"){
@@ -89,6 +89,38 @@ if (Meteor.isServer) {
 		if(action == "meetings_by_url"){
 			return Posts.find({type:"meetings", slug:userId}, { sort: { createdAt: -1 } }); // UserId is a slug in this exception... lazy...			
 		}
+		
+		// GROUPS
+		// =======
+		if(action == "groups"){
+			return Posts.find({type:action, _id: userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "groups_all"){
+			return Posts.find({type:"groups"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_member"){
+			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_member_by_group_id"){
+			return Posts.find({type:"group_member", owner_id: userId, parent_id: parent_id}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_member_role"){
+			return Posts.find({type:action, parent_id: userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_desk"){
+			return Posts.find({type:action, slug: userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_search"){
+			
+			var search_query = userId; // Need to rename the parameters soon...
+			
+			console.log("SEARCHING FOR GROUP: "+search_query);
+			
+			return Posts.find({type:"groups","title":{ $regex : new RegExp(search_query, "i") } }, {limit:8}); //TODO Restrict by fields, lower data use
+			
+		}	
+		
+		
 		
 		// RESUMES
 		// =======
@@ -213,11 +245,18 @@ Meteor.methods({
 		Posts.remove({_id:postId});
 	},
 	
+	'posts.removeByParent'(postId) {
+		check(postId, String);
+		console.log("REMOVE BY PARENT: "+postId);
+		Posts.remove({parent_id:postId});
+	},
+	
+	
+	
 	'posts.removeByTitle'(post_title) {
 		check(post_title, String);
 		console.log("REMOVE BY TITLE: "+post_title);
 		Posts.remove({title:post_title});
-
 	},
 	
 	// Notifications
@@ -232,6 +271,13 @@ Meteor.methods({
 		);
 	},
 	
+	// GROUPS
+	'posts.leaveGroup'(groupId, userId) {
+		check(groupId, String);
+		check(userId, String);
+		console.log("LEAVE GROUP: "+groupId);
+		Posts.remove({type:"group_member", parent_id:groupId, owner_id:userId});
+	},
 	
 
 });

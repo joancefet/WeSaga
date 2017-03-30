@@ -6,167 +6,160 @@
 <template name="buzz">
 
 	{{> preloader}}
+
+	<!-- Navigation -->
+		{{> account_navigation}}
+	<!-- Navigation -->
 	
-	
+	<!-- Main Wrapper -->
+	<div id="wrapper">	
+		<div class="content animate-panel">
+			<div class="row">
+				
+				<div class="col-md-8">
+				
 
-		<!-- Navigation -->
-			{{> account_navigation}}
-		<!-- Navigation -->
-		
-		<!-- Main Wrapper -->
-		<div id="wrapper">	
-			<div class="content animate-panel">
-				<div class="row">
-					
-					<div class="col-md-8">
-					
+					<!-- NEW POST -->		
 
-						<!-- NEW POST -->		
-
-							<div class="hpanel hblue">
-								<div class="panel-body">
+						<div class="hpanel hblue">
+							<div class="panel-body">
+							
+								<div class="col-xs-12 col-md-2">
+									<center>
+										<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
+									</center>
+								</div>
 								
-									<div class="col-xs-12 col-md-2">
-										<center>
-											<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
-										</center>
-									</div>
+								<div class="col-xs-12 col-md-10">
+								
+									<textarea required class="form-control newPostContent" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
 									
-									<div class="col-xs-12 col-md-10">
+									<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" multiple style="display:none;">		
 									
-										<textarea required class="form-control newPostContent" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
+									<div class="btn btn-outline btn-primary desk_add_media" onClick="$('#fileInput').click();">
+										<i class="fa fa-camera" aria-hidden="true"></i>
+									</div>											
+									
+									<button type="submit" class="btn btn-success buzz_submit_new_post">
+										<i class="fa fa-file" aria-hidden="true"></i> Post
+									</button>
+									
+									<br />
+									
+									<div class="fileInput_count"></div>
+									<script>
+									
+										$("input[name=fileInput]").change(function() {
+											var names = [];
+											for (var i = 0; i < $(this).get(0).files.length; ++i) {
+												names.push($(this).get(0).files[i].name + ", ");
+											}
+											$(".fileInput_count").html(names);
+										});
+									
+									</script>
+									
 										
-										<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" multiple style="display:none;">		
-										
-										<div class="btn btn-outline btn-primary desk_add_media" onClick="$('#fileInput').click();">
-											<i class="fa fa-camera" aria-hidden="true"></i>
-										</div>											
-										
-										<button type="submit" class="btn btn-success buzz_submit_new_post">
-											<i class="fa fa-file" aria-hidden="true"></i> Post
-										</button>
-										
-										<br />
-										
-										<div class="fileInput_count"></div>
-										<script>
-										
-											$("input[name=fileInput]").change(function() {
-												var names = [];
-												for (var i = 0; i < $(this).get(0).files.length; ++i) {
-													names.push($(this).get(0).files[i].name + ", ");
-												}
-												$(".fileInput_count").html(names);
-											});
-										
-										</script>
-										
-											
-									</div>
 								</div>
 							</div>
-							
-				
-						<!-- POSTS BY COLLEAGUES -->
-						<div id="posts">
+						</div>
 						
-							{{#each colleagues_post}}
-								
-								<div class="hpanel hblue">
-									<div class="panel-body">
-										
-										<div class="col-xs-12 col-md-2">
-											<center>
-												<a class="" href="/people/{{slug owner_username}}">
-													{{#if HasOwnerAvatar}}
-														<img alt="logo" class="img-circle" src="{{owner_avatar}}" width=100 height=100 />
-													{{else}}
-														<img alt="logo" class="img-circle" src="/images/default.jpg" width=100 height=100 />
-													{{/if}}
-												</a>
-												<br />
-												<div class="media-body">
-													<h5 class="m-t-md">
-														<span class="capitalize">{{owner_fullname}}</span>
-													</h5>
-													<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
-												</div>
-											</center>
-										
-										</div>
-										
-										<div class="col-xs-12 col-md-10 well" style="font-size:22px;">
-											{{content}}
-										</div>
-										
-										
-										<div class="col-xs-12 col-md-10" style="font-size:22px;">
-											<div class="lightBoxGallery">
-												{{#each post_attachment}}
-													<a href="{{content}}" data-gallery >
-														<img src="{{content}}"  style="width:100%;"/>
-													</a>
-												{{/each}}
+			
+					<!-- POSTS BY COLLEAGUES -->
+					<div id="posts">
+					
+						{{#each colleagues_post}}
+							
+							<div class="hpanel hblue">
+								<div class="panel-body">
+									
+									<div class="col-xs-12 col-md-2">
+										<center>
+											<a class="" href="/people/{{slug owner_username}}">
+												{{#if HasOwnerAvatar}}
+													<img alt="logo" class="img-circle" src="{{owner_avatar}}" width=100 height=100 />
+												{{else}}
+													<img alt="logo" class="img-circle" src="/images/default.jpg" width=100 height=100 />
+												{{/if}}
+											</a>
+											<br />
+											<div class="media-body">
+												<h5 class="m-t-md">
+													<span class="capitalize">{{owner_fullname}}</span>
+												</h5>
+												<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
 											</div>
-										</div>
-										
+										</center>
+									
 									</div>
 									
-									<!-- CHATS -->
-									<div class="panel-footer">
+									<div class="col-xs-12 col-md-10 well" style="font-size:22px;">
+										{{content}}
+									</div>
 									
-										{{#each desk_comments}}
-											<div class="social-talk">
-												<div class="media social-profile clearfix">
-													<a class="pull-left" href="/people/{{slug owner_username}}">
-														<img src="{{owner_avatar}}" alt="profile-picture">
-													</a>
-													<div class="media-body">
-														<span class="font-bold">
-															<span class="capitalize">
-																<a href="/people/{{slug owner_username}}">
-																	{{owner_fullname}}
-																</a>
-															</span>
+									
+									<div class="col-xs-12 col-md-10" style="font-size:22px;">
+										<div class="lightBoxGallery">
+											{{#each post_attachment}}
+												<a href="{{content}}" data-gallery >
+													<img src="{{content}}"  style="width:100%;"/>
+												</a>
+											{{/each}}
+										</div>
+									</div>
+									
+								</div>
+								
+								<!-- CHATS -->
+								<div class="panel-footer">
+								
+									{{#each desk_comments}}
+										<div class="social-talk">
+											<div class="media social-profile clearfix">
+												<a class="pull-left" href="/people/{{slug owner_username}}">
+													<img src="{{owner_avatar}}" alt="profile-picture">
+												</a>
+												<div class="media-body">
+													<span class="font-bold">
+														<span class="capitalize">
+															<a href="/people/{{slug owner_username}}">
+																{{owner_fullname}}
+															</a>
 														</span>
-														<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
-														<div class="social-content">
-															{{content}}  
-														</div>
+													</span>
+													<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+													<div class="social-content">
+														{{content}}  
 													</div>
 												</div>
 											</div>
-										{{/each}}	
-										
-										<div class="social-form">
-											<form name="comment" class="comment" autocomplete="off"> 
-												<input type="hidden" name="parent_id" value="{{_id}}" />
-												<input type="text"   name="content" class="form-control" placeholder="Your comment" />
-											</form>
 										</div>
-										
+									{{/each}}	
+									
+									<div class="social-form">
+										<form name="comment" class="comment" autocomplete="off"> 
+											<input type="hidden" name="parent_id" value="{{_id}}" />
+											<input type="text"   name="content" class="form-control" placeholder="Your comment" />
+										</form>
 									</div>
-									<!-- CHATS -->
 									
 								</div>
+								<!-- CHATS -->
 								
-							 {{/each}}
-						</div>
-						<!-- POSTS BY COLLEAGUES -->
+							</div>
+							
+						 {{/each}}
 					</div>
-					
-					<!-- ADS CONTAINER -->
-					{{> sidebar_right}}
-			
-					
-					
+					<!-- POSTS BY COLLEAGUES -->
 				</div>
+				
+				<!-- ADS CONTAINER -->
+				{{> sidebar_right}}
+		
 			</div>
 		</div>
-		<!-- Main Wrapper -->
-
-	
-	
+	</div>
+	<!-- Main Wrapper -->
 
 </template>
 

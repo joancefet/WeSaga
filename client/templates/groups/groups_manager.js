@@ -1,6 +1,24 @@
 import { Posts } 					from '../../../imports/posts.js';
 import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
+// ROUTER
+//=========
+Router.route('/groups/manage',{
+	data:function(){
+		
+		if( !Meteor.user()){
+			Router.go('/');
+		}
+	},
+	waitOn: function(){
+		Meteor.subscribe('posts', 'groups', Meteor.userId()); 
+	},
+	template:'screen',
+	yieldTemplates: {
+		'groups_manager': {to: 'content'},
+	}
+	
+});
 
 Template.groups_manager.rendered = function() {
 	
@@ -12,52 +30,151 @@ Template.groups_manager.rendered = function() {
 // Events
 Template.groups_manager.events({
 	
+	// CREATE / UPDATE
 	'submit'(event) {
 		
 		event.preventDefault();
+		const target = event.target;
 		
-		Meteor.call('posts.insert',
-			Meteor.user().username,
-			$(".form-control").val(),
-			"group",
+		var group_id = "unset";
+		if(target.the_group_id.value){
+			group_id = target.the_group_id.value;
+		} else {
+			group_id = "new";
+		}
+		
+		// UPDATE
+		Meteor.call('posts.update',
+			group_id,
+			"me",
+			target.title.value,
+			target.content.value,
+			"groups",
+			"",
+			"publish"
+			,function(error, result, event){
+				
+				// group Meta Data
+				// -----------------
+				
+				returned_group_id = result; 
+				
+				var update_meta_by_parent = false;
+				if(group_id != "new"){ 
+					update_meta_by_parent = true; 
+				}
+				
+				// Image
+				if($("#fileInput").prop('files')){
+					
+					console.log("Starting Upload");
+					
+					Cloudinary.upload( $("#fileInput").prop('files'), function(error, result){
+						
+						// meta_group_image	
+						Meteor.call('postsmeta.update',
+							group_id,
+							"me",
+							"meta_group_image",
+							"https://res.cloudinary.com/skyroomsio/image/upload/c_thumb,h_256,w_256/v1489424858/"+result.public_id+"."+result.format,
+							"group_meta",
+							returned_group_id,
+							"publish",
+							update_meta_by_parent
+						);
+						
+						console.log("Upload Complete: "+group_id);
+						
+					});
+				}
+				
+				// Become a member of this group
+				Meteor.call('posts.update',
+					"new",
+					"me",
+					target.title.value,
+					"",
+					"group_member",
+					returned_group_id,
+					"accepted"
+				);
+				
+				// Become group admin
+				Meteor.call('posts.update',
+					"new",
+					"me",
+					target.title.value,
+					"",
+					"group_member_role",
+					returned_group_id,
+					"admin"
+				);
+				
+				// meta_listing	
+				Meteor.call('postsmeta.update',
+					group_id,
+					"me",
+					"meta_listing",
+					target.meta_listing.value,
+					"group_meta",
+					returned_group_id,
+					"publish",
+					update_meta_by_parent
+				);
+				
+				// All Done
+				Router.go("/groups");
+				
+				if(group_id == "new"){
+					swal({
+						title: "Group Created",
+						text: "",
+						type: "success",
+						showCancelButton: false,
+						cancelButtonText: "Cancel",
+						confirmButtonText: "Close",
+						closeOnConfirm: true
+					});
+				}else{
+					swal({
+						title: "Group Updated",
+						text: "",
+						type: "success",
+						showCancelButton: false,
+						cancelButtonText: "Cancel",
+						confirmButtonText: "Close",
+						closeOnConfirm: true
+					});
+				}
+				
+			}
 		);
 		
-		Router.go('/groups/');
+		
+		// update should have completed
 		
 	},
 	
-	'click #groups_manager_delete'(event){
-		
+	// DELETE
+	'click #groups_delete'(event) {
 		event.preventDefault();
 		
-		const target = event.target;
-		
 		swal({
-			title: "Delete SkyRoom & Contents?",
-			text: "All references to this SkyRoom will be delted when you press confirm",
-			type: "error",
+			title: "Delete this group?",
+			text: "Users will see a 'group Room Closed' message",
+			type: "warning",
 			showCancelButton: true,
-			cancelButtonText: "CANCEL",
+			cancelButtonText: "Cancel",
 			confirmButtonColor: "#c0392b",
-			confirmButtonText: "Confirm Delete this SkyRoom",
+			confirmButtonText: "Delete group",
 			closeOnConfirm: true
 		},
 		function(){				
-		
-			Meteor.call('skyrooms.remove', $('input[name=skyroom_setting_id]').val() );
-		
-			Router.go('/skyrooms');
 			
-			swal({
-				title: "Deleted",
-				text: "",
-				type: "success",
-				showCancelButton: false,
-				cancelButtonText: "",
-				confirmButtonColor: "#c0392b",
-				confirmButtonText: "Close",
-				closeOnConfirm: true
-			});
+			Meteor.call('posts.remove',
+				Router.current().params.roomId,
+			);
+			Router.go('/groups',);
 			
 		});
 		

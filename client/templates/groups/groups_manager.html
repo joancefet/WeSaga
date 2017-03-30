@@ -7,92 +7,188 @@
 <template name="groups_manager">
 
 	{{> preloader}}
-	
-	<body class="fixed-navbar fixed-sidebar">
-
-		
-		<!-- Header -->
-		<div id="header">
-			<div class="color-line">
-			</div>
-			<div id="logo" class="light-version">
-				<span>
-					<a href="/">
-						<img class="" src="/images/skyrooms-logo.png" width="100%" />
-					</a>
-				</span>
-			</div>
-			<nav role="navigation">
-				<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
-				<div class="small-logo">
-					<img class="" src="/images/skyrooms-logo.png" width="100%" />
-				</div>
-			</nav>
-		</div>
 		
 		<!-- Navigation -->
 			{{> account_navigation}}
 		<!-- Navigation -->
 		
 		<!-- Main Wrapper -->
-		<div id="wrapper">
-
-			<div class="transition animated fadeIn">
-				<div class="hpanel">
-					<div class="panel-body">
-
-						<div id="hbreadcrumb" class="pull-right m-t-lg">
-							<!-- <ol class="hbreadcrumb breadcrumb">
-								<li><a href="index.html">Dashboard</a></li>
-								<li>
-									<span>App views</span>
-								</li>
-								<li class="active">
-									<span>Your  </span>
-								</li>
-							</ol> -->
-						</div>
-						<h2 class="font-light m-b-xs">
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+					
+					<div class="col-md-8">
 						
-							<i class="fa fa-cubes" aria-hidden="true"></i> Create a new group on SkyRooms
-							
-						</h2>
-					</div>
-				</div>
-			</div>
-			
-			<!-- CONTENT -->
-			<div class="col-lg-6">
-				<div class="hpanel">
-					
-					<div class="panel-body">
-					
-						<form class="form-horizontal">
+						<!--
+							URL SCHEMA:
+							skyrooms.io/meet/andrewnormore956/room1
+							skyrooms.io/meet/andrewnormore956/room2
+							skyrooms.io/meet/andrewnormore956/tech-support
+						-->
+						
+						<div class="row">
+						
+							<div class="col-lg-8">
+								<div class="hpanel hgreen ">
+									<div class="panel-body">
+										
+										<form class="form-horizontal create_skyroom" id="">
+										
+											<div class="form-group">
+												<label class="col-sm-2 control-label"></label>
+												<div class="col-sm-10">
+													
+													{{#if meta_group_image}}
+														{{#with meta_group_image}}
+															<div class="imageUploadPreview imageUploadPreview">
+																<img alt="logo" class="img-circle m-b m-t-md" src="{{content}}"  style="height:205px; width:205px;" />
+															</div>
+														{{/with}}
+													{{else}}
+													
+														<div class="imageUploadPreview imageUploadPreview">
+															<img alt="logo" class="img-circle m-b m-t-md" src="/images/meeting-default.jpg"  style="height:205px; width:205px;" />
+														</div>
+													
+													{{/if}}
+													
+												</div>
+											</div>
+											<div class="hr-line-dashed"></div>
+											
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Group Logo</label>
+												<div class="col-sm-10">
+												
+													<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
+													
+												</div>
+											</div>
+											<div class="hr-line-dashed"></div>
+										
+											<!-- group ID -->
+											{{#if paramRoomId}}
+													{{#with paramRoomId}}
+														<div class="form-group">
+															<label class="col-sm-2 control-label">Group ID</label>
+															<div class="col-sm-10">
+																
+																<input type="text" name="the_group_id" class="form-control" required="" disabled value="{{_id}}" />
+																<small>Internal Group ID</small>
+																
+															</div>
+														</div>
+														<div class="hr-line-dashed"></div>
+													{{/with}}
+												{{else}}
+												<input type="hidden" name="the_group_id" class="form-control" required="" disabled value="new" />
+											{{/if}}
+											<!-- -->
 		
-									<label class="col-sm-2 control-label">Group Name</label>
-									<div class="col-sm-10">
-										<input type="text" name="group_name" class="form-control" placeholder="" required="" />
+											<!-- group Name -->
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Group Title</label>
+												<div class="col-sm-10">
+													
+													{{#if paramRoomId}}
+														{{#with paramRoomId}}
+															<input type="text" name="title" class="form-control" placeholder="Example Group" required="" disabled value="{{title}}" />
+															<small>Found at /group/title</small>
+														{{/with}}
+													{{else}}
+														<input type="text" name="title" class="form-control" placeholder="Example Group" required="" />
+														<small>Found at /group/title</small>
+													{{/if}}
+													
+												</div>
+											</div>
+											<div class="hr-line-dashed"></div>
+											<!-- -->
+											
+											<!-- Description -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Description of Group</label>
+													<div class="col-sm-10">
+														
+														{{#if paramRoomId}}
+															{{#with paramRoomId}}
+																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" value="{{content}}" />
+															{{/with}}
+														{{else}}
+															<input type="text" name="content" class="form-control" placeholder="Example Room" required="" />
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+											<!-- -->
+											
+											
+											<!-- Type -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Public or Unlisted?</label>
+													<div class="col-sm-10">
+														<select class="form-control m-b" name="meta_listing" id="meta_listing" required="">
+															<option value="public">Public</option>
+															<option value="private">Unlisted</option>
+														</select>
+														
+														{{#if meta_listing}}
+															{{#with meta_listing}}
+																<script>
+																	$("#meta_listing").val('{{content}}');
+																</script>
+															{{/with}}
+														{{else}}
+														
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+											<!-- -->
+											
+											<div class="form-group">
+												<div class="col-sm-10 col-sm-offset-2">														
+												
+													{{#if paramRoomId}}
+														{{#with paramRoomId}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-check-square-o" aria-hidden="true"></i> Update Group
+															</button>
+															<div id="groups_delete" class="btn btn-danger">
+																<i class="fa fa-trash" aria-hidden="true"></i> Delete Group
+															</div>
+														{{/with}}
+													{{else}}
+														<button type="submit" class="btn btn-success">
+															<i class="fa fa-check-square-o" aria-hidden="true"></i> Create Group
+														</button>
+													{{/if}}
+													
+													<a href="/groups" class="btn btn-danger2 pull-right" type="submit"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
+													
+												</div>
+											</div>
+										
+										</form>
+										
 									</div>
 									
-									<label class="col-sm-2 control-label">Group Name</label>
-									<div class="col-sm-10">
-										<input type="submit" value="Create New Group" />
-									</div>
-									
-						
-								<div class="hr-line-dashed"></div>
-					
+								</div>
+							</div>
 							
-						</form>
-						
+					
+						</div>
+					
 					</div>
+					
+					
 				</div>
 			</div>
-			<!-- CONTENT -->
-			
 		</div>
 		<!-- Main Wrapper -->
 		
-	</body>
+
 
 </template>

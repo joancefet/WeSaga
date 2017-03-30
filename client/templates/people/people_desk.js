@@ -28,6 +28,10 @@ Template.people_desk.events({
 		event.preventDefault();
 		const target = event.target;
 		
+		if( $(".newPostContent").val().length < 1 ){
+			return;
+		}
+		
 		Meteor.call('posts.update',
 			"new",
 			$("#owner_id").val(),

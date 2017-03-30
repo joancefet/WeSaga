@@ -230,7 +230,6 @@ Template.colleagues.helpers({
 			return person.title; 
 		});
 		
-
 		return Meteor.users.find({ "_id": { "$in": colleagueIds }}, {sort: { _id: -1 }} );
 		
 	},

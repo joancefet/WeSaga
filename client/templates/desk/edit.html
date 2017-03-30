@@ -42,9 +42,13 @@
 											<div class="desk_save_all btn btn-lg btn-block btn-success">
 												<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Profile
 											</div>
-											<a href="/desk" class="btn btn-block btn-danger">
-												<i class="fa fa-times-circle-o" aria-hidden="true"></i> Cancel
+											<a href="/resume/{{currentUser.profile.username}}" class="btn btn-block btn-primary">
+												<i class="fa fa-times-circle-o" aria-hidden="true"></i> View Resume
 											</a>
+											<a href="/desk" class="btn btn-block btn-danger">
+												<i class="fa fa-times-circle-o" aria-hidden="true"></i> Cancel Changes
+											</a>
+											
 											
 										</center>
 										
@@ -243,6 +247,28 @@
 														<input required type="text" class="form-control resume_education_title" name="resume_education_title" value="{{title}}" placeholder="" />
 														<hr />
 														
+														<h5>Education Type:</h5>
+														{{#each resume_education_type}}
+															<select required  class="form-control m-b" id="{{_id}}" name="resume_education_type">
+																<option value="">Select Education Type</option>
+																<optgroup label="Degree">
+																	<option value="Associate Degree">Associate Degree</option>
+																	<option value="Bachelors Degree">Bachelors Degree</option>
+																	<option value="Masters Degree">Masters Degree</option>
+																	<option value="Doctorate Degree">Doctorate Degree</option>
+																</optgroup>
+																<optgroup label="Certificate">
+																	<option value="Diploma">Diploma</option>
+																	<option value="Certificate">Certificate</option>
+																</optgroup>
+																<option value="Other">Other</option>
+															</select>
+															<script>
+																$('select#{{_id}}').val("{{title}}");
+															</script>
+														{{/each}}
+														<hr />
+														
 														<h5>Details:</h5>
 														<textarea class="resume_education_content" name="resume_education_content" cols="40" rows="12" style="width:100%;" >{{content}}</textarea>
 														<script>
@@ -281,28 +307,6 @@
 															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_education_date2" name="resume_education_date2" value="{{title}}" placeholder="MM/DD/YYYY" />
 															<script>
 																$('#{{_id}}_datepicker').datepicker({});
-															</script>
-														{{/each}}
-														<hr />
-
-														<h5>Education Type:</h5>
-														{{#each resume_education_type}}
-															<select required  class="form-control m-b" id="{{_id}}" name="resume_education_type">
-																<option value="">Select Education Type</option>
-																<optgroup label="Degree">
-																	<option value="Associate Degree">Associate Degree</option>
-																	<option value="Bachelors Degree">Bachelors Degree</option>
-																	<option value="Masters Degree">Masters Degree</option>
-																	<option value="Doctorate Degree">Doctorate Degree</option>
-																</optgroup>
-																<optgroup label="Certificate">
-																	<option value="Diploma">Diploma</option>
-																	<option value="Certificate">Certificate</option>
-																</optgroup>
-																<option value="Other">Other</option>
-															</select>
-															<script>
-																$('select#{{_id}}').val("{{title}}");
 															</script>
 														{{/each}}
 														<hr />

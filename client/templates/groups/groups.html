@@ -6,97 +6,122 @@
 <template name="groups">
 
 	{{> preloader}}
-	
-	<body class="fixed-sidebar">
 		
 		<!-- Navigation -->
 			{{> account_navigation}}
 		<!-- Navigation -->
 
 		<!-- Main Wrapper -->
-		<div id="wrapper">
-			
+		<div id="wrapper">		
 			<div class="content animate-panel">
+				<div class="row">
 				
-				<!-- GROUPS LIST MANAGER -->
-				<div class="col-lg-12">
-					<div class="hpanel">
-						<div class="panel-body">
-
-							<p class="">
-								<a href="/groups/manage" class="btn btn-primary"><i class="fa fa-file-o" aria-hidden="true"></i> Create a new Group</a>
-							</p>
-
-							<div class="dd" id="nestable2">
-								<ol class="dd-list">
+					<!-- GROUPS LIST MANAGER -->
+					<div class="col-lg-8">
+					
+						<div class="hpanel">
+							<div class="panel-body">
+							
+								<div class="row">
+									<div class="col-md-9">
+									
+										<a href="/groups/" class="btn btn-info">My Groups</a>
+										<a href="/groups/all" class="btn btn-primary">All Groups</a>
+										<a href="/groups/manage" class="btn btn-primary">Create New Group</a>
 										
-									<!-- SKYROOMs -->
-									{{#each groups}}
-										<li class="dd-item">
-											<div class="dd-handle">
-											
-												<div class="row" style="margin:0px 4px;">
-													
-													<div class="col-lg-2">
-														<div class="row">
-													
-															<a href="/join/{{slug}}" class="btn btn-block btn-info"><i class="fa fa-share" aria-hidden="true"></i> Join: {{name}} {{_id}}</a>
-															
-														</div>
-													</div>
-													
-													<div class="col-lg-4">
-														<div class="row">
-														
-															&nbsp;&nbsp;<i class="fa fa-user-circle" aria-hidden="true"></i> 0 Particiapants
-															| <i class="fa fa-eye" aria-hidden="true"></i> 0 Views
-															
-														</div>
-													</div>
-													
-													<div class="col-lg-6">
-														<div class="row">
-														
-															<div class="pull-right">
-															
-																<div class="btn btn-primary a2a_dd" data-a2a-url="https://www.skyrooms.io/join/{{slug}}" data-a2a-title="{{name}} - SkyRooms">
-																	<i class="fa fa-share-alt" aria-hidden="true"></i> Share
-																</div>
-																<script async src="https://static.addtoany.com/menu/page.js"></script>
-																<a href="/skyrooms/settings/{{_id}}" class="btn btn-warning2">
-																	<i class="fa fa-cogs" aria-hidden="true"></i> Settings
-																</a>
-																
-															</div>
-														
-														</div>
-													</div>
-													
+									</div>
+									
+									<div class="col-md-3">
+									
+										<form class="search_start">
+											<div class="input-group">
+												<input class="form-control search_value" type="text" placeholder="Search Work Groups...">
+												
+												<div class="input-group-btn ">
+													<button type="submit" class="btn btn-default">
+														<i class="fa fa-search"></i>
+													</button>
 												</div>
 												
 											</div>
-										</li>
-									{{/each}}
-									<!-- SKYROOMs -->
+											
+											<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+										</form>
 									
-
-								</ol>
+									</div>
+								</div>
+								
 							</div>
-							
-
 						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<h4 class="text-white">You are a Member in the following Groups</h4>
+							</div>
+						</div>
+					
+
+						<div class="row">
+						
+							{{#each groups}}
+								<div class="col-lg-3">
+									<div class="hpanel hgreen contact-panel">
+										<div class="panel-body">
+											<center>
+												<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" style="width:100%; height:205px;"/>
+											</center>
+											<h3>
+												<a href="/meet/{{owner_username}}/{{slug title}}">
+													{{title}}
+												</a>
+											</h3>
+											<p>
+												{{content}}
+											</p>
+											
+											{{#if groupsStatus "waiting"}}
+												<form class="btn-form">
+													<input type="hidden" name="group_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="cancel" />
+													<button type="submit" class="btn btn-warning btn-block btn-sm">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Cancel Request
+													</button>
+												</form>
+											{{/if}}
+											
+											{{#if groupsStatus "accepted"}}
+												<a href="/group/{{slug title}}" class="btn btn-info btn-block btn-sm">
+													<i class="fa fa-handshake-o" aria-hidden="true"></i> View Group
+												</a>
+													
+												<a href="/groups/manage/{{_id}}" class="btn btn-warning btn-block btn-sm">
+													<i class="fa fa-handshake-o" aria-hidden="true"></i> Edit Group
+												</a>
+											{{/if}}
+											
+											
+											<div class="btn btn-primary btn-sm btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/group/{{slug title}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
+												<i class="fa fa-share-alt" aria-hidden="true"></i> Share
+											</div>
+											<script async src="https://static.addtoany.com/menu/page.js"></script>
+										
+											
+										</div>
+										
+									</div>
+								</div>
+							{{/each}}
+							
+						</div>
+								
 					</div>
+					
+					{{> sidebar_right}}
+					
 				</div>
-				<!-- SKYROOM LIST MANAGER -->
-				<script async src="https://static.addtoany.com/menu/page.js"></script>
-			
 			</div>
-			
-			
 		</div>
 		<!-- Main Wrapper -->
-	
-	</body>
 
 </template>
 

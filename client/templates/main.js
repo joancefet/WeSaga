@@ -14,8 +14,20 @@ import { Postsmeta } 				from '../../imports/postsmeta.js';
 // ====================================
 Meteor.startup(function(){
 	
-});
+	// const prerenderio = Npm.require('prerender-node');
+    // const settings = Meteor.settings.PrerenderIO;
+	// prerenderio.set('prerenderServiceUrl', 'https://www.skyrooms.io');
+	// prerenderio.set('prerenderToken', 'YAFC7DBK5iDkboKHKvze');
 
+    // if (settings && settings.token && settings.host) {
+        // prerenderio.set('prerenderToken', settings.token);
+        // prerenderio.set('host', settings.host);
+        // prerenderio.set('protocol', 'https');
+        // WebApp.rawConnectHandlers.use(prerenderio);
+    // }
+	
+	
+});
 
 
 // ====================================	
@@ -28,13 +40,12 @@ import './main.html';
 import './landing/landing.html';
 import './meet/meet.html';
 import './desk/desk.html';
-import './desk/edit.html';
+	import './desk/edit.html';
 import './groups/groups.html';
 	import './groups/groups_manager.html';
+import './group/group_desk.html';
 import './chats/chats.html';
 import './people/people.html';
-import './colleagues/colleagues.html';
-import './organizations/organizations.html';
 import './register/register.html';
 import './login/login.html';
 
@@ -53,7 +64,6 @@ Router.configure({
 // Account Navigation Helper
 Template.sidebar_right.helpers({
 	
-
 	// ACTIVE CLASS ON MENU BARS
 	show_ads(){
 		if(location.hostname === "localhost"){
@@ -63,9 +73,6 @@ Template.sidebar_right.helpers({
 		}
 	}
 	
-	
-  
-  
 });
 
 // Account Navigation Helper
@@ -77,7 +84,6 @@ Template.account_navigation_list.rendered = function() {
 // Account Navigation Helper
 Template.account_navigation_list.helpers({
 	
-
 	// ACTIVE CLASS ON MENU BARS
 	account_navigation_list_active_class(link) {
 
@@ -118,120 +124,6 @@ Template.account_navigation.events({
 
 });
 
-
-// SKYROOM Helper
-// Template.skyroom.helpers({	
-	
-	// SkyRoom() {
-		
-		// // Discover room slug
-		// console.log("SLUG IS: "+ToSeoUrl(Router.current().params.user_slug)+"/"+Router.current().params.requested_room_slug);
-		// if(typeof Router.current().params.requested_room_slug === 'undefined' || !Router.current().params.requested_room_slug){
-			// var slug = ToSeoUrl(Router.current().params.user_slug); // Find by Room Slug
-		// } else {
-			// var slug = ToSeoUrl( Router.current().params.user_slug) + "/"+ ToSeoUrl(Router.current().params.requested_room_slug ); // Find by User Name (no 2nd level name was given)
-		// }
-		
-		// var SkyRoom = SkyRooms.findOne({"slug": slug}); // Find by User Name (no 2nd level name was given)
-		
-		// // Password Required?
-		// if(SkyRoom.skyroom_require_password == "yes"){
-			// if(Session.get("skyroom_current_password") == SkyRoom.password){
-				// return SkyRoom;
-			// } else {
-				// Session.set("join_room_slug", slug);
-				// Session.set("join_room_error_message", "SkyRoom Password was not correct");
-				// Router.go("/join/");
-			// }
-		// } else {
-			
-			// // No password was required
-			// return SkyRoom;
-		// }
-		
-		// // WHY IS THIS BROKEN?
-		// // Return data if found, if not, prompt message
-		// if(SkyRoom === undefined){
-			// Router.go('/skyroom_not_found');
-		// } else{
-		// }
-		
-	// },
-	
-	// ParticipantsCount(){
-		
-		// if(typeof  Router.current().params.requested_room_slug === 'undefined' || !Router.current().params.requested_room_slug){
-			// var count = SkyroomParticipants.find( {"slug": ToSeoUrl(Router.current().params.user_slug) }).count(); // Find by Room Slug
-		// } else {
-			// var count = SkyroomParticipants.find( {"slug": ToSeoUrl( Router.current().params.user_slug) + "/"+ ToSeoUrl(Router.current().params.requested_room_slug ) }).count(); // Find by Room Slug
-		// }
-		// return count;
-	// },
-	
-	// SkyroomParticipantList(){
-		
-		// if(typeof  Router.current().params.requested_room_slug === 'undefined' || !Router.current().params.requested_room_slug){
-			// var participants = SkyroomParticipants.find( {"slug": ToSeoUrl(Router.current().params.user_slug) }); // Find by Room Slug
-		// } else {
-			// var participants = SkyroomParticipants.find( {"slug": ToSeoUrl( Router.current().params.user_slug) + "/"+ ToSeoUrl(Router.current().params.requested_room_slug ) }); // Find by Room Slug
-		// }
-		
-		// return participants
-	// },
-	
-	// notGuest(){
-		// if(Meteor.user().profile.guest){
-			// return 0;
-		// } else {
-			// return 1;
-		// }
-	// },
-	
-	// // MESSAGES
-	// skyroomMessages_byParentId() {
-		
-		// return SkyroomMessages.find({"slug":ToSeoUrl( Router.current().params.user_slug) },	{ sort: { timestamp: -1 }}); // , limit: 7    No need, we only ever get 7 in the subscription model
-		
-	// },
-	
-	// chatSound(){
-		
-		// // console.log("PLAY SOUND");
-		// // var s = new buzz.sound('/sounds/chat_message.mp3', {volume:20});
-		// // s.play();
-
-	// },
-	
-	// userDevices(){
-		
-	// },
-	
-// });
-
-
-// ACCOUNT Helper
-// Template.skyrooms.helpers({
-	
-  // skyrooms() {
-    // return SkyRooms.find({ "owner_id":Meteor.userId(), "skyroom_depth":2 });
-  // },
-  
-// });
-
-// // ACCOUNT Helper
-// Template.skyroom_settings.helpers({
-	
-  // paramRoomId() {
-		// return SkyRooms.findOne({"_id":Router.current().params.roomId});
-	  
-    // return Router.current().params.roomId;
-  // },
-  
-// });
-
-
-
-
 // ====================================	
 // GENERAL
 // ====================================	
@@ -240,6 +132,8 @@ Template.account_navigation.events({
 Template.onRendered(function () {
 	console.log("RENDER: Template.onRendered");
 
+	$('body').addClass("fixed-sidebar");
+	
 	// LOADING SCREEN
 	if( window.skyroom_rendered == undefined && window.skyroom_rendered == null ){
 		//console.log("SET TIMEOUT!");
@@ -260,7 +154,7 @@ Template.onRendered(function () {
 Router.onAfterAction(function(){
 	
 	console.log("RENDER: Router.onAfterAction");
-	$('body').addClass("fixed-sidebar");
+	
 	
 });
 
@@ -325,6 +219,7 @@ function fixWrapperHeight() {
 
 
 function setBodySmall() {
+	
     if ($(window).width() < 769) {
         $('body').addClass('page-small');
     } else {
