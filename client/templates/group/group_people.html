@@ -111,10 +111,6 @@
 												<div class="text-muted font-bold m-b-xs">Location</div>
 											{{/if}}
 											
-											<p style="display:none;">
-												SkyRooms - Test user
-											</p>
-											
 											<!-- View Desk -->
 											<a href="/people/{{profile.username}}"  class="btn btn-primary btn-block btn-sm">
 												<i class="fa fa-id-card" aria-hidden="true"></i> View Desk
@@ -169,6 +165,8 @@
 											{{#if groupAdmin}}
 												<form class="btn-form-top btn-form">
 													<input type="hidden" name="user_id" value="{{_id}}" />
+													<input type="hidden" name="parent_id" value="{{parent_id}}" />
+													<input type="hidden" name="owner_id" value="{{owner_id}}" />
 													<input type="hidden" name="action" value="remove_from_group" />
 													<button type="submit" class="btn btn-danger btn-block btn-sm">
 														<i class="fa fa-handshake-o" aria-hidden="true"></i> Remove from Group

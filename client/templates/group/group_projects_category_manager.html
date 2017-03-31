@@ -1,0 +1,120 @@
+
+<!-- 
+#
+# TEMPLATE: GROUPS MANAGER
+#
+# -->
+<template name="groups_project_category_manager">
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+		
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+					
+					<div class="col-md-8">
+						
+						<div class="row">
+						
+							<div class="col-lg-8">
+								<div class="hpanel hgreen ">
+									<div class="panel-body">
+										
+										{{#with groups_project_category}}
+											<form class="form-horizontal create_skyroom" id="">
+											
+												<input type="hidden" name="the_group_id" class="form-control" required="" disabled value="{{the_group_id}}" />
+												
+												<!-- group ID -->
+												{{#if the_group_project_id}}
+													<input type="hidden" name="the_group_project_id" class="form-control" required="" disabled value="{{the_group_project_id}}" />
+												{{else}}
+													<input type="hidden" name="the_group_project_id" class="form-control" required="" disabled value="new" />
+												{{/if}}
+												<!-- -->
+			
+												<!-- group Name -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Project Category Title</label>
+													<div class="col-sm-10">
+														
+														<input type="hidden" name="group_slug" value="{{group_slug}}" />
+														
+														{{#if the_group_project_title}}
+															<input type="text" name="title" class="form-control" placeholder="Example Group" required="" value="{{the_group_project_title}}" />
+															<small>Found at /group/title</small>
+														{{else}}
+															<input type="text" name="title" class="form-control" placeholder="Example Group" required="" />
+															<small>Found at /group/title</small>
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Description -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Description of Project Category</label>
+														<div class="col-sm-10">
+															
+															{{#if the_group_project_content}}
+																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" value="{{the_group_project_content}}" />
+															{{else}}
+																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" />
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												
+												<div class="form-group">
+													<div class="col-sm-10 col-sm-offset-2">														
+													
+														{{#if the_group_project_id}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-check-square-o" aria-hidden="true"></i> Update Project Category
+															</button>
+															<div id="groups_delete" class="btn btn-danger">
+																<i class="fa fa-trash" aria-hidden="true"></i> Delete Project Category
+															</div>
+														{{else}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-check-square-o" aria-hidden="true"></i> Create Project Category
+															</button>
+														{{/if}}
+														
+														<a href="/group/{{group_slug}}/projects" class="btn btn-danger2 pull-right" type="submit"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
+														
+													</div>
+												</div>
+											
+											</form>
+										{{/with}}
+										
+									</div>
+									
+								</div>
+							</div>
+							
+					
+						</div>
+					
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+		
+
+
+</template>

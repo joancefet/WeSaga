@@ -30,6 +30,29 @@ if (Meteor.isServer) {
 			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10 });
 		}
 		
+		
+		
+		
+		// RESUMES
+		// =======
+		if(action == "resume_owner"){
+			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		}
+		
+		if(action == "resume_skill"){
+			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(action == "resume_education"){
+			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(action == "resume_experience"){
+			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		
+		
 		// PEOPLE
 		// =======
 		if(action == "people_desk_posts"){
@@ -124,7 +147,10 @@ if (Meteor.isServer) {
 			return Posts.find({type:"group_member", parent_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_member_role"){
-			return Posts.find({type:action, parent_id: userId}, { sort: { createdAt: -1 } });			
+			return Posts.find({type:"group_member_role", parent_id: userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "group_member_role_by_user_id"){
+			return Posts.find({type:"group_member_role", owner_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_desk"){
 			return Posts.find({type:action, slug: userId}, { sort: { createdAt: -1 } });			
@@ -175,25 +201,19 @@ if (Meteor.isServer) {
 		}	
 		
 		
-		
-		
-		// RESUMES
+		// PROJECTS
 		// =======
-		if(action == "resume_owner"){
-			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		if(action == "groups_project_category"){
+			return Posts.find({type:action, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "groups_project_category_by_parent_id"){
+			return Posts.find({type:"groups_project_category", parent_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		
-		if(action == "resume_skill"){
-			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		if(action == "groups_project_by_parent_id"){
+			return Posts.find({type:"groups_project", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
 		
-		if(action == "resume_education"){
-			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
-		}
-		
-		if(action == "resume_experience"){
-			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
-		}
 		
 		
 	});

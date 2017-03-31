@@ -8,9 +8,12 @@ Router.route('/group/:group_slug/people',{
 		
 	},
 	waitOn: function(){
-		Meteor.subscribe('posts', 'group_by_slug',  ToSeoUrl(Router.current().params.group_slug) );
+		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );
 		window.subscription_group_people_search = "";
 		//window.subscription_group_people = Meteor.subscribe('posts', 'group_people_all', Router.current().params.group_slug);
+		
+		// Get member role
+		Meteor.subscribe('posts', 'group_member_role_by_user_id', Meteor.userId() );
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -71,7 +74,6 @@ Template.group_people.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				
 			});
 			
 			// Add Notification and Meta data		
@@ -253,17 +255,11 @@ Template.group_people.events({
 					
 					swal.close();
 					
-					// Remove to accepted for Me
-					// Meteor.call('posts.remove',
-						// target.post_id.value,
-						// "accepted"
-					// );
-					
-					// // Remove to accepted for Colleague
-					// Meteor.call('posts.removeByTitle',
-						// target.owner_id.value,
-						// "accepted"
-					// );
+					// Remove user from group
+					Meteor.call('posts.leave_group',
+						target.group_id.value,
+						target.user_id.value,
+					);
 				
 					setTimeout(function(){
 					

@@ -18,52 +18,50 @@
 				
 				<div class="col-md-8">
 				
-
 					<!-- NEW POST -->		
-
-						<div class="hpanel hblue">
-							<div class="panel-body">
+					<div class="hpanel hblue">
+						<div class="panel-body">
+						
+							<div class="col-xs-12 col-md-2">
+								<center>
+									<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
+								</center>
+							</div>
 							
-								<div class="col-xs-12 col-md-2">
-									<center>
-										<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
-									</center>
-								</div>
+							<div class="col-xs-12 col-md-10">
+							
+								<textarea required class="form-control newPostContent" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
 								
-								<div class="col-xs-12 col-md-10">
+								<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" multiple style="display:none;">		
 								
-									<textarea required class="form-control newPostContent" name="newPostContent" placeholder="Leave something on your desk." style="width:100%; resize: none; font-size:22px;"></textarea>
+								<div class="btn btn-outline btn-primary desk_add_media" onClick="$('#fileInput').click();">
+									<i class="fa fa-camera" aria-hidden="true"></i>
+								</div>											
+								
+								<button type="submit" class="btn btn-success buzz_submit_new_post">
+									<i class="fa fa-file" aria-hidden="true"></i> Post
+								</button>
+								
+								<br />
+								
+								<div class="fileInput_count"></div>
+								<script>
+								
+									$("input[name=fileInput]").change(function() {
+										var names = [];
+										for (var i = 0; i < $(this).get(0).files.length; ++i) {
+											names.push($(this).get(0).files[i].name + ", ");
+										}
+										$(".fileInput_count").html(names);
+									});
+								
+								</script>
+								
 									
-									<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" multiple style="display:none;">		
-									
-									<div class="btn btn-outline btn-primary desk_add_media" onClick="$('#fileInput').click();">
-										<i class="fa fa-camera" aria-hidden="true"></i>
-									</div>											
-									
-									<button type="submit" class="btn btn-success buzz_submit_new_post">
-										<i class="fa fa-file" aria-hidden="true"></i> Post
-									</button>
-									
-									<br />
-									
-									<div class="fileInput_count"></div>
-									<script>
-									
-										$("input[name=fileInput]").change(function() {
-											var names = [];
-											for (var i = 0; i < $(this).get(0).files.length; ++i) {
-												names.push($(this).get(0).files[i].name + ", ");
-											}
-											$(".fileInput_count").html(names);
-										});
-									
-									</script>
-									
-										
-								</div>
 							</div>
 						</div>
-						
+					</div>
+					<!-- NEW POST -->		
 			
 					<!-- POSTS BY COLLEAGUES -->
 					<div id="posts">

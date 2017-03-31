@@ -3,7 +3,7 @@ import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
 // ROUTER
 //=========
-Router.route('/group/:group_slug/projects/details',{
+Router.route('/group/:group_slug/projects/details/:groupsProjectId',{
 	data:function(){
 		
 	},

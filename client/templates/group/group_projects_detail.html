@@ -99,73 +99,9 @@
 										<div class="btn btn-sm btn-primary"><i class="fa fa-list" aria-hidden="true"></i> Add Task List</div>
 										<p>&nbsp;</p>
 										
-										<div class="hpanel hblue">
-											<div class="panel-body">
-											
-												<button class="btn btn-xs btn-primary btn-outline pull-right">
-													<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-												</button>
-											
-												<h4><i class="fa fa-list-alt" aria-hidden="true"></i> This is a test (98%)</h4>
-												
-												<p>
-													<small>
-														<b>Start Date:</b> July 15th, 2017
-													</small>
-													<small>
-														<b>Due By:</b> July 20th, 2017
-													</small>
-												</p>
-												
-												<p>
-													Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years,
-													sometimes by accident, sometimes on purpose (injected humour and the like).
-												</p>
-												
-												<div class="progress m-t-xs full progress-small  progress-striped active">
-													<div style="width: 99%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class=" progress-bar progress-bar-info">
-													</div>
-												</div>
-												
-												<p>
-													<div class="checkbox checkbox-single checkbox-success">
-														<input type="checkbox" checked>
-														<label>Build interface for project management</label>
-													</div>
-												</p>
-												<p>
-													<div class="checkbox checkbox-single checkbox-success">
-														<input type="checkbox">
-														<label>Build interface for groups</label>
-													</div>
-												</p>
-												<p>
-													<div class="checkbox checkbox-single checkbox-success">
-														<input type="checkbox">
-														<label>Needs a button container</label>
-													</div>
-												</p>
-												<p>
-													<div class="checkbox checkbox-single checkbox-success">
-														<input type="checkbox">
-														<label>Hook up Posts data</label>
-													</div>
-												</p>
-												<p>
-													<div class="checkbox checkbox-single checkbox-success">
-														<input type="checkbox">
-														<label>Complete database work</label>
-													</div>
-												</p>
-												<p>
-													<div class="checkbox checkbox-single checkbox-success">
-														<input type="checkbox">
-														<label>Publish to server</label>
-													</div>
-												</p>
+										<img src="/images/graph-default.png" width="100%" />
 										
-											</div>
-										</div>
+										
 										
 									</div>
 									<div class="col-sm-4 project-info">
@@ -216,6 +152,113 @@
 								
 								
 							</div>
+							<!-- CHATS -->
+							<div class="panel-footer">
+							
+								{{#each desk_comments}}
+									<div class="social-talk">
+										<div class="media social-profile clearfix">
+											<a class="pull-left" href="/people/{{slug owner_username}}">
+												<a href="/people/{{slug owner_username}}">
+													<img src="{{owner_avatar}}" alt="profile-picture">
+												</a>
+											</a>
+											<div class="media-body">
+												<span class="font-bold">
+													<span class="capitalize">
+														<a href="/people/{{slug owner_username}}">
+															{{owner_fullname}}
+														</a>
+													</span>
+												</span>
+												<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+												<div class="social-content">
+													{{content}}  
+												</div>
+											</div>
+										</div>
+									</div>
+								{{/each}}	
+								
+								<div class="social-form">
+									<form name="comment" class="comment" autocomplete="off">
+										<input type="hidden" name="parent_id" value="{{_id}}" />
+										<input type="text"   name="content" class="form-control" placeholder="Your comment" />
+									</form>
+								</div>
+								
+							</div>
+							<!-- CHATS -->
+							
+						</div>	
+							
+							
+						<div class="hpanel hblue">
+							<div class="panel-body">
+							
+								<button class="btn btn-xs btn-primary btn-outline pull-right">
+									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+								</button>
+							
+								<h4><i class="fa fa-list-alt" aria-hidden="true"></i> This is a test (98%)</h4>
+								
+								<p>
+									<small>
+										<b>Start Date:</b> July 15th, 2017
+									</small>
+									<small>
+										<b>Due By:</b> July 20th, 2017
+									</small>
+								</p>
+								
+								<p>
+									Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years,
+									sometimes by accident, sometimes on purpose (injected humour and the like).
+								</p>
+								
+								<div class="progress m-t-xs full progress-small  progress-striped active">
+									<div style="width: 99%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class=" progress-bar progress-bar-info">
+									</div>
+								</div>
+								
+								<p>
+									<div class="checkbox checkbox-single checkbox-success">
+										<input type="checkbox" checked>
+										<label>Build interface for project management</label>
+									</div>
+								</p>
+								<p>
+									<div class="checkbox checkbox-single checkbox-success">
+										<input type="checkbox">
+										<label>Build interface for groups</label>
+									</div>
+								</p>
+								<p>
+									<div class="checkbox checkbox-single checkbox-success">
+										<input type="checkbox">
+										<label>Needs a button container</label>
+									</div>
+								</p>
+								<p>
+									<div class="checkbox checkbox-single checkbox-success">
+										<input type="checkbox">
+										<label>Hook up Posts data</label>
+									</div>
+								</p>
+								<p>
+									<div class="checkbox checkbox-single checkbox-success">
+										<input type="checkbox">
+										<label>Complete database work</label>
+									</div>
+								</p>
+								<p>
+									<div class="checkbox checkbox-single checkbox-success">
+										<input type="checkbox">
+										<label>Publish to server</label>
+									</div>
+								</p>
+						
+							</div>
 							
 							<!-- CHATS -->
 							<div class="panel-footer">
@@ -256,6 +299,8 @@
 							<!-- CHATS -->
 							
 						</div>
+						
+						
 					</div>
 					{{> sidebar_right}}
 					

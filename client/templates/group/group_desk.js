@@ -8,6 +8,11 @@ Router.route('/group/:group_slug',{
 		
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );
+		var group = Posts.findOne({type:"groups"});
+		console.log(group);
+		
 		Meteor.subscribe('posts', 'group_desk',  ToSeoUrl(Router.current().params.group_slug) );
 		Meteor.subscribe('posts', "group_desk_posts", ToSeoUrl(Router.current().params.group_slug) ); 
 	},
@@ -23,6 +28,9 @@ Router.route('/group/:group_slug/desk',{
 		
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );
+		
 		Meteor.subscribe('posts', 'group_desk',  ToSeoUrl(Router.current().params.group_slug) );
 		Meteor.subscribe('posts', "group_desk_posts", ToSeoUrl(Router.current().params.group_slug) ); 
 	},
@@ -41,74 +49,61 @@ Template.group_desk.rendered = function() {
 // skyrooms Helper
 Template.group_desk.helpers({
 	
-	group_slug(){
-		return Router.current().params.group_slug; 
-	},
-	
 	group_desk() {
-		return Posts.findOne({});
-		//return Meteor.users.findOne({ "profile.username":Router.current().params.user_slug }); 
+		
+		// Find all the groups on screen, then find our membership status
+		var groups = Posts.find({type:"groups"});
+		groups.forEach(function(group){
+			Meteor.subscribe('postsmeta', 'group_meta', group._id );
+			Meteor.subscribe('posts', 'group_member_by_group_id', Meteor.userId(), group._id );
+		});
+		
+		return groups;
 	},
 	
-	
-	desk_posts() {
-		return Posts.find({type:"desk_posts"}, {sort: { createdAt: -1 } });
-	},
-	
-	post_attachment(){
-		Meteor.subscribe('postsmeta', "post_attachment", this._id);
-		return Postsmeta.find({type: "post_attachment", parent_id:this._id});
-	},
-	
-	desk_comments(){
-		// SUBSCRIBE TO POSTMETA: parent_id
-		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
-		return Postsmeta.find({parent_id:this._id});
-	},
-	HasOwnerAvatar(){
-		if(this.owner_avatar != "undefined"){
-			return true;
-		}
-	},
-	
-	noColleagueStatus(){
-		var posts = Posts.findOne({title:this._id });
-		if(posts){
-		}else{
-			return "notFound";
-		}
-	},	
-	colleagueStatus(userId) {	
-		return Posts.find({title:this._id}); 
-	},
-	checkStatus(status){
-		var posts = Posts.findOne({_id:this._id, type:"colleagues" });
-		if(posts.status == status){
-			return true;
-		}else{
-			return false;
-		}
+	group_slug(){
+		
+		return Router.current().params.group_slug; 
 	},
 	
 	slug(string){
 		return ToSeoUrl(string);
 	},
 	
-	// Google Map helper.
-	mapOptions2: function() {
-		console.log("mapOptions called.");
-		if (GoogleMaps.loaded()) {
-		  return {
-			center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
-			zoom: 8,
-			disableDefaultUI: true, 
-			draggable: true,
-			scrollwheel: true,
-			disableDoubleClickZoom: true,
-		  };
-		  
+	isMember(){
+		return true;
+	},
+	
+	meta_group_image(){
+		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
+		var meta = Postsmeta.findOne({title:"meta_group_image", parent_id:this._id});
+		if(meta){ 
+			console.log(meta);
+			return meta.content;
+		}else{
+			return false;
 		}
 	},
+	
+	the_group_title(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group.title;
+		} else {
+			return false;
+		}
+	},
+	
+	the_group_content(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group.content;
+		} else {
+			return false;
+		}
+	},
+	
+	
   
 });
 

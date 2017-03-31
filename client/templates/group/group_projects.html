@@ -40,9 +40,9 @@
 										
 										<br />
 										<br />
-										<div class="btn btn-sm btn-primary">
+										<a href="/group/{{group_slug}}/projects/category_manager/" class="btn btn-sm btn-primary">
 											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Project Category
-										</div>
+										</a>
 										
 									</div>
 									
@@ -69,47 +69,64 @@
 							</div>
 						</div>
 						
-						<div class="hpanel forum-box">
+						
+						{{#each groups_project_category}}
+							<div class="hpanel forum-box">
 
-							<div class="panel-heading">
-								Moodle Projects 
-								<div class="btn btn-xs btn-primary btn-outline pull-right">
-									<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Project
-								</div>
-								<div class="btn btn-xs btn-primary btn-outline pull-right">
-									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-								</div>
-							</div>
-
-							<div class="panel-body">
-								<div class="row">
-
-									<div class="col-md-9 forum-heading">
-										<a href="/group/{{group_slug}}/projects/details/{{_id}}">
-											<h4>
-												<i class="fa fa-folder-open-o" aria-hidden="true"></i> Complete Project Manager
-											</h4>
-										</a>
-										<div class="desc">
-											This is the description section that needs to be present on all things.
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-md-9">
+											<h1 class="text-primary"><b>{{title}}</b></h1>
+											<h4>{{content}}</h4>
+										</div>
+										<div class="col-md-3">
+											<form>
+												<input type="hidden" name="groups_project_category_id" value="{{_id}}" />
+												<input type="hidden" name="action" value="add_project" />
+												<button type="submit" class="btn btn-xs btn-primary btn-outline pull-right">
+													<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Project
+												</button>
+											</form>
+											<a href="/group/{{group_slug}}/projects/category_manager/{{_id}}" class="btn btn-xs btn-primary btn-outline pull-right">
+												<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+											</a>
 										</div>
 									</div>
-									<div class="col-md-1 forum-info">
-										<span class="number">3</span>
-										<small>Task Lists</small>
-									</div>
-									<div class="col-md-1 forum-info">
-										<span class="number">63%</span>
-										<small>Complete</small>
-									</div>
-									<div class="col-md-1 forum-info">
-										<span class="number">6</span>
-										<small>People</small>
-									</div>
+									
 								</div>
-							</div>
 
-						</div>
+								{{#each groups_project}}
+									<div class="panel-body">
+										<div class="row">
+
+											<div class="col-md-9 forum-heading">
+												<a href="/group/{{group_slug}}/projects/details/{{_id}}">
+													<h4>
+														<i class="fa fa-folder-open-o" aria-hidden="true"></i> {{title}}
+													</h4>
+												</a>
+												<div class="desc">
+													{{content}}
+												</div>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="number">0</span>
+												<small>Task Lists</small>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="number">0%</span>
+												<small>Complete</small>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="number">0</span>
+												<small>People</small>
+											</div>
+										</div>
+									</div>
+								{{/each}}
+
+							</div>
+						{{/each}}
 						
 					</div>
 					{{> sidebar_right}}
