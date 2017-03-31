@@ -71,7 +71,11 @@
 									<div class="hpanel hgreen contact-panel">
 										<div class="panel-body">
 											<center>
-												<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" style="width:100%; height:205px;"/>
+												{{#if meta_group_image}}
+													<img alt="logo" class="img-circle m-b" src="{{meta_group_image}}" width="100%" style="width:100%; height:205px;"/>
+												{{else}}
+													<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" style="width:100%; height:205px;"/>
+												{{/if}}
 											</center>
 											<h3>
 												<a href="/meet/{{owner_username}}/{{slug title}}">

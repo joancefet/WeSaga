@@ -184,7 +184,7 @@ Template.screen.rendered = function() {
 		}, 300);
 	});
 	
-	$('.animate-panel').animatePanel();
+	// $('.animate-panel').animatePanel();
 	
 	
 }

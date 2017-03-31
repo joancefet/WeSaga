@@ -166,7 +166,15 @@
 												<i class="fa fa-commenting-o" aria-hidden="true"></i> Message
 											</button> 
 										
-										
+											{{#if groupAdmin}}
+												<form class="btn-form-top btn-form">
+													<input type="hidden" name="user_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="remove_from_group" />
+													<button type="submit" class="btn btn-danger btn-block btn-sm">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Remove from Group
+													</button>
+												</form>
+											{{/if}}
 										
 											
 										</div>
@@ -175,7 +183,7 @@
 								</div>
 								{{/each}}
 							{{else}}
-								We didn't find any one by that name or email address.
+								<h4 class="text-white search_container_message">No Members Found</h4>
 							{{/if}}
 						</div> 
 						

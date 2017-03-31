@@ -99,17 +99,20 @@ if (Meteor.isServer) {
 		if(action == "groups"){
 			return Posts.find({type:action, _id: userId}, { sort: { createdAt: -1 } });			
 		}
+		if(action == "group_by_id"){
+			return Posts.find({type:"groups", _id: userId}, { sort: { createdAt: -1 } });			
+		}
 		if(action == "group_by_slug"){
 			return Posts.find({type:"groups", slug: userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "groups_all"){
-			return Posts.find({type:"groups"}, { sort: { createdAt: -1 } });			
+			return Posts.find({type:"groups", status:"publish"}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_members_all_by_slug"){
 			return Posts.find({type:"group_member", slug:userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_member"){
-			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
+			return Posts.find({type:"group_member", owner_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		if(action == "group_member_user_profile"){
 			return Meteor.users.find({_id: userId}); //TODO Restrict by fields, lower data use // UserId is slug
@@ -324,7 +327,8 @@ Meteor.methods({
 	},
 	
 	// GROUPS
-	'posts.leaveGroup'(groupId, userId) {
+	// ======
+	'posts.leave_group'(groupId, userId) {
 		check(groupId, String);
 		check(userId, String);
 		console.log("LEAVE GROUP: "+groupId);

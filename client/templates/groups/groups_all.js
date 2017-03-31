@@ -151,32 +151,28 @@ Template.groups_all.events({
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Confirm",
 				
-			},
-				function(){
-					
-					// Remove to accepted for Me
-					Meteor.call('posts.removeByParent',
-						target.group_id.value,
-						Meteor.userId(),
-					);
+			}).then(function (result) {
 				
-					setTimeout(function(){
-					
-						swal({
-							title: "You have left this Group",
-							text: "",
-							type: "warning",
-							confirmButtonColor: "#DD6B55",
-							confirmButtonText: "Close",
-							showCancelButton: false,
-						});
-					
-					},200);
-						
-				}
-					
+				// Leave the group
+				Meteor.call('posts.leave_group',
+					target.group_id.value,
+					Meteor.userId(),
+				);
+			
+				setTimeout(function(){
 				
-			);
+					swal({
+						title: "You have left this Group",
+						text: "",
+						type: "warning",
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Close",
+						showCancelButton: false,
+					});
+				
+				},200);
+					
+			});
 
 			
 		} 
@@ -194,6 +190,7 @@ Template.groups_all.helpers({
 		// Find all the groups on screen, then find our membership status
 		var groups = Posts.find({type:"groups"});
 		groups.forEach(function(group){
+			Meteor.subscribe('postsmeta', 'group_meta', group._id );
 			Meteor.subscribe('posts', 'group_member_by_group_id', Meteor.userId(), group._id );
 		});
 		
@@ -208,7 +205,9 @@ Template.groups_all.helpers({
 		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
 		var meta = Postsmeta.findOne({title:"meta_group_image", parent_id:this._id});
 		if(meta){ 
-			return meta;
+			return meta.content;
+		}else{
+			return false;
 		}
 	},
 	

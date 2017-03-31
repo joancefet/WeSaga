@@ -114,7 +114,7 @@ Template.buzz.helpers({
 	colleagues_post() {
 		
 		// Find ID's of Colleagues
-		var colleagueIds = Posts.find({	type:"colleagues" }).map(function(person){ 
+		var colleagueIds = Posts.find({	type:"colleagues", status:"accepted" }).map(function(person){ 
 			return person.title; 
 		});
 		

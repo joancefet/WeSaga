@@ -3,7 +3,8 @@ import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
 // ROUTER
 //=========
-Router.route('/groups/manage',{
+
+Router.route('/groups/manage/',{
 	data:function(){
 		
 		if( !Meteor.user()){
@@ -11,7 +12,28 @@ Router.route('/groups/manage',{
 		}
 	},
 	waitOn: function(){
-		Meteor.subscribe('posts', 'groups', Meteor.userId()); 
+		
+	},
+	template:'screen',
+	yieldTemplates: {
+		'groups_manager': {to: 'content'},
+	}
+	
+});
+
+Router.route('/groups/manage/:groupId',{
+	data:function(){
+		
+		if( !Meteor.user()){
+			Router.go('/');
+		}
+	},
+	waitOn: function(){
+		
+		if( Router.current().params.groupId != "" ){
+			Meteor.subscribe('posts', 'group_by_id',  Router.current().params.groupId );
+		}
+		
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -21,8 +43,6 @@ Router.route('/groups/manage',{
 });
 
 Template.groups_manager.rendered = function() {
-	
-	
 	
 };
 
@@ -161,18 +181,16 @@ Template.groups_manager.events({
 		
 		swal({
 			title: "Delete this group?",
-			text: "Users will see a 'group Room Closed' message",
+			text: "(The group will become archieved for 2 months in case you change your mind)",
 			type: "warning",
 			showCancelButton: true,
 			cancelButtonText: "Cancel",
 			confirmButtonColor: "#c0392b",
 			confirmButtonText: "Delete group",
-			
-		},
-		function(){				
-			
-			Meteor.call('posts.remove',
-				Router.current().params.roomId,
+		}).then(function (result) {			
+			console.log("TRASH GROUP: "+Router.current().params.groupId);
+			Meteor.call('posts.trash',
+				Router.current().params.groupId,
 			);
 			Router.go('/groups',);
 			
@@ -181,3 +199,70 @@ Template.groups_manager.events({
 	},
 	
 });
+
+
+// skyrooms Helper
+Template.groups_manager.helpers({
+	
+	
+	slug(title){
+		return ToSeoUrl(title); 
+	},
+	
+	groups() {
+		
+		var groupIds = Posts.find({	type:"groups" }).map(function(group){
+			// Meteor.subscribe('posts', 'groups', group.parent_id ); 			
+			// Meteor.subscribe('posts', 'group_member_role', group.parent_id ); 			
+			Meteor.subscribe('postsmeta', 'group_meta', group._id ); 			
+			return group.parent_id; 
+			
+		});
+		
+		return Posts.find({type:"groups", status:{$ne:"trash"}});
+	},
+	
+	the_group_id(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group._id;
+		} else {
+			return false;
+		}
+	},
+	
+	the_group_title(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group.title;
+		} else {
+			return false;
+		}
+	},
+	
+	the_group_content(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group.content;
+		} else {
+			return false;
+		}
+	},
+	
+	meta_listing(){
+		return Postsmeta.findOne({title:"meta_listing"});
+	},
+	
+	meta_group_image(){
+		
+		var meta = Postsmeta.findOne({title:"meta_group_image"});
+		if(meta){ 
+			return meta.content;
+		}else{
+			return false;
+		}
+	},
+	
+  
+});
+

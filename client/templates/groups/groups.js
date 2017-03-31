@@ -11,32 +11,11 @@ Router.route('/groups',{
 		}
 	},
 	waitOn: function(){
-		
 		Meteor.subscribe('posts', 'group_member', Meteor.userId() ); 
 	},
 	template:'screen',
 	yieldTemplates: {
 		'groups': {to: 'content'},
-	}
-	
-});
-
-// EXISTING ROUTE
-Router.route('/groups/manage/:groupId',{
-
-	data:function(){
-		
-		if( !Meteor.user() ){
-			Router.go('/');
-		}
-	},
-	waitOn: function(){
-		Meteor.subscribe('posts', 'groups', Meteor.userId() ); 
-		Meteor.subscribe('postsmeta', 'groups_meta', Router.current().params.groupId ); 
-	},
-	template:'screen',
-	yieldTemplates: {
-		'groups_manager': {to: 'content'},
 	}
 	
 });
@@ -99,11 +78,12 @@ Template.groups.helpers({
 			
 			Meteor.subscribe('posts', 'groups', group.parent_id ); 			
 			Meteor.subscribe('posts', 'group_member_role', group.parent_id ); 			
+			Meteor.subscribe('postsmeta', 'group_meta', group.parent_id ); 			
 			return group.parent_id; 
 			
 		});
 		
-		return Posts.find({ type:"groups", "_id": { "$in": groupIds }}, {sort: { _id: -1 }} );
+		return Posts.find({ type:"groups", "_id": { "$in": groupIds }, status:{"$ne":"trash"} }, {sort: { _id: -1 }} );
 		
 	},
 	
@@ -115,7 +95,9 @@ Template.groups.helpers({
 		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
 		var meta = Postsmeta.findOne({title:"meta_group_image", parent_id:this._id});
 		if(meta){ 
-			return meta;
+			return meta.content;
+		}else{
+			return false;
 		}
 	},
 	
@@ -127,6 +109,16 @@ Template.groups.helpers({
 			return false;
 		}
 	},
+	
+	groupAdmin(){
+		var admin = Posts.findOne({parent_id:this._id, type:"group_member_role", "status":"admin", owner_id:Meteor.userId() });
+		if(admin){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
   
 });
 

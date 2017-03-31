@@ -123,7 +123,6 @@ Template.people_desk.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
 			});
 			
 			// Add Notification and Meta data		
@@ -175,7 +174,7 @@ Template.people_desk.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// 1-OWNER) owner_id:, type:colleague, status:"waiting"
@@ -210,7 +209,7 @@ Template.people_desk.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Update to accepted for Owner
@@ -246,44 +245,39 @@ Template.people_desk.events({
 			swal({
 				title: "Really remove this Colleague?",
 				text: "",
-				type: "warning",
+				type: "question",
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Confirm",
-				closeOnConfirm: true
-			},
-				function(){
-					
-					swal.close();
-					
-					// Remove to accepted for Me
-					Meteor.call('posts.remove',
-						target.post_id.value,
-						"accepted"
-					);
-					
-					// Remove to accepted for Colleague
-					Meteor.call('posts.removeByTitle',
-						target.owner_id.value,
-						"accepted"
-					);
 				
-					setTimeout(function(){
-					
-						swal({
-							title: "You no longer Colleagues",
-							text: "",
-							type: "danger",
-							confirmButtonColor: "#DD6B55",
-							confirmButtonText: "Close",
-						});
-					
-					},100);
-						
-				}
-					
+			}).then(function (result) {
 				
-			);
+				swal.close();
+				
+				// Remove to accepted for Me
+				Meteor.call('posts.remove',
+					target.post_id.value,
+					"accepted"
+				);
+				
+				// Remove to accepted for Colleague
+				Meteor.call('posts.removeByTitle',
+					target.owner_id.value,
+					"accepted"
+				);
+			
+				setTimeout(function(){
+				
+					swal({
+						title: "You no longer Colleagues",
+						text: "",
+						type: "error",
+						showCancelButton: false,
+					});
+				
+				},100);
+					
+			});
 
 			
 		} 

@@ -234,6 +234,55 @@ Template.group_people.events({
 			);
 
 			
+		}
+		
+		// ---------------
+		// Remove From Group
+		// ---------------
+		if(target.action.value == "remove_from_group"){
+			
+			swal({
+				title: "Remove from Group?",
+				text: "",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Confirm",
+			},
+				function(){
+					
+					swal.close();
+					
+					// Remove to accepted for Me
+					// Meteor.call('posts.remove',
+						// target.post_id.value,
+						// "accepted"
+					// );
+					
+					// // Remove to accepted for Colleague
+					// Meteor.call('posts.removeByTitle',
+						// target.owner_id.value,
+						// "accepted"
+					// );
+				
+					setTimeout(function(){
+					
+						swal({
+							title: "Removed from Group",
+							text: "",
+							type: "danger",
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "Close",
+						});
+					
+					},100);
+						
+				}
+					
+				
+			);
+
+			
 		} 
 		
 	}
@@ -261,8 +310,8 @@ Template.group_people.helpers({
 		// Subscribe to those users
 		var members = Posts.find({type:"group_member", status:"accepted"});
 		members.forEach(function(member){
-			console.log(member);
 			Meteor.subscribe('posts', 'group_member_user_profile', member.owner_id );
+			Meteor.subscribe('posts', 'group_member_role', member.owner_id);
 		});
 		
 		return Meteor.users.find({ _id:{$ne:Meteor.userId()} }); // All users except ME
@@ -294,6 +343,14 @@ Template.group_people.helpers({
 	checkStatus(status){
 		var posts = Posts.findOne({_id:this._id, type:"colleagues" });
 		if(posts.status == status){
+			return true;
+		}else{
+			return false;
+		}
+	},
+	groupAdmin(){
+		var admin = Posts.findOne({slug:ToSeoUrl(Router.current().params.group_slug), type:"group_member_role", "status":"admin", owner_id:Meteor.userId() });
+		if(admin){
 			return true;
 		}else{
 			return false;
