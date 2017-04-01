@@ -1,0 +1,109 @@
+
+<!-- 
+#
+# TEMPLATE: GROUPS MANAGER
+#
+# -->
+<template name="group_projects_task_manager">
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+		
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+					
+					<div class="col-md-8">
+						
+						<div class="row">
+						
+							<div class="col-lg-8">
+								<div class="hpanel hgreen ">
+									<div class="panel-body">
+										
+										{{#with groups_task_list}}
+											<form class="form-horizontal create_skyroom" id="">
+											
+												<input type="hidden" name="the_group_project_id" class="form-control" required="" disabled value="{{the_group_project_id}}" />
+											
+												
+												<!-- ADD TASKS -->
+												<form>
+													<!-- group ID -->
+													{{#if the_group_task_list_id}}
+														<input type="hidden" name="the_group_task_list_id" class="form-control" required="" disabled value="{{the_group_task_list_id}}" />
+													{{else}}
+														<input type="hidden" name="the_group_task_list_id" class="form-control" required="" disabled value="new" />
+													{{/if}}
+													<!-- -->
+													
+													<div class="add_task btn btn-primary">
+														<i class="fa fa-check-square-o" aria-hidden="true"></i> Add New Task
+													</div>
+												</form>
+												<hr />
+												
+												<!-- LIST TASKS -->
+												{{#each tasks}}
+													<div class="row">
+														<div class="col-md-11">
+															<input type="text" class="form-control resume_skill" name="resume_skill" value="{{title}}" id="{{_id}}" placeholder="Task Details...">
+														</div>
+														<div class="col-md-1">
+															<form class="skill_delete">
+																<input type="hidden" name="skill_id" value="{{_id}}" />
+																<button type="submit" class="btn btn-danger">
+																	<i class="fa fa-times-circle-o" aria-hidden="true"></i>
+																</button>
+															</form>
+														</div>
+													</div>
+												{{/each}}
+												
+												
+												<div class="form-group">
+													<div class="col-md-12">														
+													
+														{{#if the_group_task_list_id}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Changes to Tasks
+															</button>
+														{{else}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-check-square-o" aria-hidden="true"></i> Create Task List
+															</button>
+														{{/if}}
+														
+														<a href="/group/{{group_slug}}/projects/details/{{group_project_slug}}" class="btn btn-danger2 pull-right" type="submit">
+															<i class="fa fa-times" aria-hidden="true"></i> Cancel
+														</a>
+														
+													</div>
+												</div>
+											
+											</form>
+										{{/with}}
+										
+									</div>
+									
+								</div>
+							</div>
+							
+					
+						</div>
+					
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+		
+
+
+</template>

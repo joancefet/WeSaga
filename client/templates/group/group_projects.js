@@ -8,17 +8,20 @@ Router.route('/group/:group_slug/projects',{
 		
 	},
 	waitOn: function(){
+		
+		// group_by_slug
 		Meteor.subscribe('posts', 'group_by_slug',  ToSeoUrl(Router.current().params.group_slug) );
+		
 		var group = Posts.findOne({type:"groups"});
 	
+		// groups_project_category_by_parent_id
 		Meteor.subscribe('posts', 'groups_project_category_by_parent_id',  group._id );
+		
 		var group_project_categories = Posts.find({type:"groups_project_category"});
 		group_project_categories.forEach(function(project_category){
-			console.log("JOIN ON: "+project_category._id);
 			Meteor.subscribe('posts', 'groups_project_by_parent_id', project_category._id);
 		});
 		
-		Meteor.subscribe('posts', 'groups_project_by_parent_id',  ToSeoUrl(Router.current().params.group_slug) );
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -74,17 +77,10 @@ Template.group_projects.helpers({
 		return Router.current().params.group_slug; 
 	},
 	groups_project_category(){
-		
-		var groups_categories = Posts.find({type:"groups_project_category"});
-		groups_categories.forEach(function(project){
-			// Meteor.subscribe('posts', 'group_member_user_profile', member.owner_id );
-			// Meteor.subscribe('posts', 'group_member_role', member.owner_id);
-		});
-		
-		return groups_categories;
+		return Posts.find({type:"groups_project_category"});
 	},
 	groups_project(){
-		return Posts.find({type:"groups_project"});
+		return Posts.find({type:"groups_project", parent_id:this._id});
 	}
   
 });

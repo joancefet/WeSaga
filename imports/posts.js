@@ -206,12 +206,55 @@ if (Meteor.isServer) {
 		if(action == "groups_project_category"){
 			return Posts.find({type:action, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
+		if(action == "groups_project_category_by_id"){
+			return Posts.find({type:"groups_project_category", _id: userId}, { sort: { createdAt: -1 } });			
+		}
 		if(action == "groups_project_category_by_parent_id"){
 			return Posts.find({type:"groups_project_category", parent_id: userId}, { sort: { createdAt: -1 } });			
 		}
 		
+		if(action == "groups_project_by_id"){
+			return Posts.find({type:"groups_project", _id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
 		if(action == "groups_project_by_parent_id"){
 			return Posts.find({type:"groups_project", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		
+		// PROJECT COMMENTS
+		// =======
+		if(action == "group_projects_comment_by_id"){
+			return Posts.find({type:"group_projects_comment", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 }, limit:8 });			
+		}
+		
+		
+		// WORKERS
+		// =======
+		if(action == "project_worker_by_parent_id"){
+			return Posts.find({type:"project_worker", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "project_worker_user_profile"){
+			return Meteor.users.find({_id: userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		}
+		
+		// TASK LIST
+		// =======
+		if(action == "groups_task_list_by_id"){
+			return Posts.find({type:"groups_task_list", _id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "groups_task_list_by_parent_id"){
+			return Posts.find({type:"groups_task_list", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		
+		// TASK LIST COMMENTS
+		// =======
+		if(action == "groups_task_list_comments_by_parent_id"){
+			return Posts.find({type:"groups_task_list_comments", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 }, limit:8 });			
+		}
+		
+		// TASKS
+		// =======
+		if(action == "tasks_by_parent_id"){
+			return Posts.find({type:"task", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 }, limit:40 });			
 		}
 		
 		
@@ -282,6 +325,17 @@ Meteor.methods({
 			
 		}
 	  
+	},
+	
+	// CheckBoxes
+	'posts.updateCheckbox'(update_id,isChecked){
+		Posts.update(update_id,
+			{$set: {
+				updatedAt: Date.now(), 
+				content:isChecked,
+				}
+			}
+		);
 	},
 	
 	// Colleagues
@@ -371,6 +425,7 @@ Meteor.methods({
 		Posts.remove({owner_id:userId, parent_id:group_parent_id});
 		
 	},
+	
 	
 
 });
