@@ -89,19 +89,19 @@
 												<form class="btn-form">
 													<input type="hidden" name="group_id" value="{{_id}}" />
 													<input type="hidden" name="action" value="cancel" />
-													<button type="submit" class="btn btn-warning btn-block btn-sm">
+													<button type="submit" class="btn btn-warning btn-block ">
 														<i class="fa fa-handshake-o" aria-hidden="true"></i> Cancel Request
 													</button>
 												</form>
 											{{/if}}
 											
 											{{#if groupsStatus "accepted"}}
-												<a href="/group/{{slug title}}" class="btn btn-info btn-block btn-sm">
+												<a href="/group/{{slug title}}" class="btn btn-info btn-block ">
 													<i class="fa fa-handshake-o" aria-hidden="true"></i> View Group
 												</a>
 												
 												{{#if groupAdmin}}
-													<a href="/groups/manage/{{_id}}" class="btn btn-warning btn-block btn-sm">
+													<a href="/groups/manage/{{_id}}" class="btn btn-warning btn-block ">
 														<i class="fa fa-cogs" aria-hidden="true"></i> Edit Group
 													</a>
 												{{/if}}
@@ -109,7 +109,7 @@
 											{{/if}}
 											
 											
-											<div class="btn btn-primary btn-sm btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/group/{{slug title}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
+											<div class="btn btn-primary  btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/group/{{slug title}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
 												<i class="fa fa-share-alt" aria-hidden="true"></i> Share
 											</div>
 											<script async src="https://static.addtoany.com/menu/page.js"></script>

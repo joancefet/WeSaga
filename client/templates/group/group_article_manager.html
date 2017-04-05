@@ -1,0 +1,220 @@
+
+<!-- 
+#
+# TEMPLATE: GROUPS MANAGER
+#
+# -->
+<template name="group_article_manager">
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+		
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+					
+					<div class="col-md-8">
+						
+						<div class="row">
+						
+							<div class="col-lg-12">
+								
+								<div class="hpanel">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-9">
+											
+												<a href="/group/{{group_slug}}/desk" class="btn btn-primary">
+													<i class="fa fa-id-card" aria-hidden="true"></i> Desk
+												</a>
+												<a href="/group/{{group_slug}}/projects" class="btn btn-primary">
+													<i class="fa fa-briefcase" aria-hidden="true"></i> Projects
+												</a>
+												<a href="/group/{{group_slug}}/people" class="btn btn-primary">
+													<i class="fa fa-address-book-o" aria-hidden="true"></i> People
+												</a>
+												<a href="/group/{{group_slug}}/articles" class="btn btn-info">
+													<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
+												</a>
+												
+												<br />
+												<br />
+												<a href="/group/{{group_slug}}/articles/" class="btn btn-sm btn-info">
+													<i class="fa fa-file-text-o" aria-hidden="true"></i> Create New Article
+												</a>
+												
+											</div>
+											
+											<div class="col-md-3">
+											
+												<form class="search_start">
+													<div class="input-group">
+														<input class="form-control search_value" type="text" placeholder="Search...">
+														
+														<div class="input-group-btn ">
+															<button type="submit" class="btn btn-default">
+																<i class="fa fa-search"></i>
+															</button>
+														</div>
+														
+													</div>
+													
+													<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+												</form>
+											
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								
+								<div class="hpanel">
+									<div class="panel-body">
+									
+										<form class="form-horizontal create_skyroom" id="" autocomplete="off">
+										
+											<input type="hidden" name="the_group_id" class="form-control" required="" disabled value="{{the_group_id}}" />
+											<input type="hidden" name="the_article_id" class="form-control" required="" disabled value="{{the_article_id}}" />
+											
+											<!-- Article Name -->
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Article Title</label>
+												<div class="col-sm-10">
+												
+													{{#if the_article_title}}
+														<input type="text" name="title" class="form-control" placeholder="" required=""  value="{{the_article_title}}" />
+														<small>Found at /group/{{group_slug}}/article/{{slug the_article_title}}</small>
+													{{else}}
+														<input type="text" name="title" class="form-control" placeholder="" required="" />
+														<small>Found at /group/{{group_slug}}/article/your-new-article</small>
+													{{/if}}
+													
+												</div>
+											</div>
+											<div class="hr-line-dashed"></div>
+											<!-- Article Name -->
+											
+											<!-- Article Name -->
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Short Description</label>
+												<div class="col-sm-10">
+													
+													{{#if the_article_content}}
+														<input type="text" name="content" class="form-control" placeholder="" required=""  value="{{the_article_content}}" />
+													{{else}}
+														<input type="text" name="content" class="form-control" placeholder="" required="" />
+													{{/if}}
+													<small>This is used for SEO and social network purposes</small>
+													
+												</div>
+											</div>
+											<div class="hr-line-dashed"></div>
+											<!-- Article Name -->
+											
+											
+											<!-- SEO Image -->
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Article Image</label>
+												<div class="col-sm-10">
+												
+													<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
+													
+												</div>
+											</div>
+											<div class="hr-line-dashed"></div>
+											
+											<div class="form-group">
+												{{#if article_image}}
+													<img src="{{article_image}}"  width="100%" />
+													{{else}}
+													<img src="/images/article_cover_default.jpg"  width="100%" />
+												{{/if}}
+											</div>
+											<div class="hr-line-dashed"></div>
+											<!-- SEO Image -->
+										
+											<!-- Article -->
+											<div class="form-group">
+											
+												(Please use Imgur to upload your media. We are working on integrating file management here)
+											
+												{{#if article_content}}
+													<textarea id="article_content" cols="40" rows="22" style="width:100%;" >{{article_content}}</textarea>
+												{{else}}
+													<textarea id="article_content" cols="40" rows="22" style="width:100%;" ></textarea>
+												{{/if}}
+												
+												<script>
+													
+													setTimeout(function(){
+														tinymce.EditorManager.editors = []; //we need to remove the old instances. 
+														// TinyMCE has to be done this way for compatibilty reasons. :/
+														
+														//Set "About" section to a TinyMCE editor.
+														tinymce.init({
+														  plugins: "image, link, autolink, media, autoresize, codesample, textcolor, colorpicker, table",
+														  selector: 'textarea#article_content',
+														  element_format: "html",
+														  remove_linebreaks : true,
+														  convert_newlines_to_brs: true,
+														  skin_url: 'tinymce/lightgray',
+														  menubar: false,
+														  statusbar: false,
+														  toolbar: 'formatselect | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | table | image | link | media | codesample',
+														  
+														});
+													},1000);
+													
+												</script>
+											</div>
+											<div class="hr-line-dashed"></div>
+											
+											<!-- SUBMIT -->
+											<div class="form-group">
+												<div class="col-md-12">														
+												
+													{{#if the_article_id}}
+														<button type="submit" class="btn btn-success">
+															<i class="fa fa-floppy-o" aria-hidden="true"></i> Update Article
+														</button>
+														<div id="article_delete" class="btn btn-danger">
+															<i class="fa fa-trash" aria-hidden="true"></i> Delete Article
+														</div>
+													{{else}}
+														<button type="submit" class="btn btn-success">
+															<i class="fa fa-check-square-o" aria-hidden="true"></i> Publish Article
+														</button>
+													{{/if}}
+													
+													<a href="/group/{{group_slug}}/articles/" class="btn btn-danger2 pull-right" type="submit">
+														<i class="fa fa-times" aria-hidden="true"></i> Cancel
+													</a>
+													
+												</div>
+											</div>
+											<!-- SUBMIT -->
+											
+										</form>
+										
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+									
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+		
+
+
+</template>

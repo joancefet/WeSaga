@@ -63,7 +63,7 @@ if (Meteor.isServer) {
 		}
 		
 		if(action == "people_all"){
-			return Meteor.users.find({},{limit:8}); //TODO Restrict by fields, lower data use
+			return Meteor.users.find({},{limit:50}); //TODO Restrict by fields, lower data use
 		}
 		
 		if(action == "people_search"){
@@ -200,6 +200,27 @@ if (Meteor.isServer) {
 			}
 		}	
 		
+		// ARTICLES
+		// =======
+		if(action == "articles_by_group_slug"){
+			return Posts.find({type:"article", status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "articles_by_slug"){
+			return Posts.find({type:"article", slug:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "articles_by_group_parent_id"){
+			return Posts.find({type:"article", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "article_by_id"){
+			return Posts.find({type:"article", _id:userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "article_content_by_article_id"){
+			return Posts.find({type:"article_content", parent_id:userId}, { sort: { createdAt: -1 } });			
+		}
+		if(action == "article_image_by_article_id"){
+			return Posts.find({type:"article_image", parent_id:userId}, { sort: { createdAt: -1 } });			
+		}
+		
 		
 		// PROJECTS
 		// =======
@@ -295,7 +316,7 @@ Meteor.methods({
 				updatedAt: Date.now(),
 				timeAgo: new Date().toISOString(),
 				menu_order: 0,
-				slug: ToSeoUrl(title),
+				slug: ToSeoUrl(title)+"-"+guid(),
 				
 				title: title,
 				content: content,

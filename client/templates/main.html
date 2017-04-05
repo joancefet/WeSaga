@@ -42,7 +42,7 @@
 		
 		<!-- OneSignal Manifest-->
 		<link rel="manifest" href="/manifest.json">
-		
+		<!--
 		<script>
 			var OneSignal = window.OneSignal || [];
 			OneSignal.push(["init", {
@@ -56,10 +56,21 @@
 				  enable: true /* Set to false to hide */
 			  }
 			}]);
-		</script>
+			
+			OneSignal.setDefaultNotificationUrl("https://www.skyrooms.io");
+			OneSignal.setDefaultTitle("SkyRooms");
+			
+			const data = {
+				contents: {
+					en: 'Hey! Wazup? We miss you.',  
+				},
+			};
+
+			OneSignal.Notifications.create([playersId], data);
+			
+		</script> -->
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-		
 	</head>
 
 </template>
@@ -152,20 +163,6 @@
 
 		});
 		*/
-	</script>
-	
-	<!-- OneSignal Manifest-->
-	<link rel="manifest" href="/manifest.json">
-	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async ></script>
-	<script>
-		  var OneSignal = window.OneSignal || [];
-			OneSignal.push(["init", {
-			  appId: "ba62f6a5-2cce-41c7-8139-b4026c6b1daf",
-			  autoRegister: false, /* Set to true to automatically prompt visitors */
-			  notifyButton: {
-				  enable: true /* Set to false to hide */
-			  }
-			}]);
 	</script>
 	
 </template>

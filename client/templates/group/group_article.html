@@ -1,0 +1,116 @@
+<!-- 
+#
+# TEMPLATE: GROUPS
+#
+# -->
+<template name="group_article"> 
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					<!-- GROUPS LIST MANAGER -->
+					<div class="col-lg-8">
+					
+						{{#each article}}
+						<div class="hpanel blog-article-box">
+							<div class="panel-heading">
+								<h1 class="text-info"><b>{{title}}</b></h1>
+								<h2>{{content}}</h2>
+								
+									<h5>
+										<a href="/people/andrewnormore817">										
+											<img class="img-circle m-b" src="{{owner_avatar}}" width="100px" height="100px">
+										</a>
+										<a href="/group/microsoft/">
+											<img class="img-circle m-b" src="/images/meeting-default.jpg" width="100px" height="100px">
+										</a>
+										
+										<br />
+										Created by: <a href="/people/{{owner_username}}" class="text-info"><b>{{owner_fullname}}</b></a> in <a href="/group/microsoft/" class="text-info"><b>SkyRooms Dev</b></a>
+
+										<time class="text-muted timeago" datetime="{{timeAgo}}"> {{timeAgo}}</time>
+										<!-- <br />
+										<i class="fa fa-eye"> </i> <b>142</b> views and <i class="fa fa-comments-o"> </i> <b>22</b> comments -->
+									</h5>
+									
+									<div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="display: flex; justify-content: center;"  data-a2a-url="https://www.skyrooms.io/group/{{group_slug}}/article/{{the_article_slug}}" data-a2a-title="{{title}}">
+										<a class="a2a_button_facebook"></a>
+										<a class="a2a_button_twitter"></a>
+										<a class="a2a_button_google_plus"></a>
+										<a class="a2a_button_pinterest"></a>
+										<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+									</div>
+									<script async src="https://static.addtoany.com/menu/page.js"></script>
+									
+							</div>
+							
+							<h3 class="open_graph_image" style="padding:0px; margin:0px;">
+								{{#if article_image}}
+									<img src="{{article_image}}"  width="100%" />
+								{{/if}}
+							</h3>
+							
+							<div class="panel-body article_content">
+								{{#each article_content}}
+									{{{content}}}
+								{{/each}}
+							</div>
+							
+							<!-- CHATS -->
+							<div class="panel-footer">
+							
+								<div class="social-talk">
+									<div class="media social-profile clearfix">
+										<a class="pull-left" href="/people/{{slug owner_username}}">
+											<a href="/people/{{slug owner_username}}">
+												<img src="{{owner_avatar}}" alt="profile-picture">
+											</a>
+										</a>
+										<div class="media-body">
+											<span class="font-bold">
+												<span class="capitalize">
+													<a href="/people/{{slug owner_username}}">
+														{{owner_fullname}}
+													</a>
+												</span>
+											</span>
+											<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+											<div class="social-content">
+												{{content}}  
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="social-form">
+									<form autocomplete="off">
+										<input type="hidden" name="the_group_project_id" value="{{the_group_project_id}}" />
+										<input type="hidden" name="action" value="comment" />
+										<input type="text"   name="content" class="form-control comment_container" placeholder="Your comment" />
+									</form>
+								</div>
+								
+							</div>
+							<!-- CHATS -->
+						
+						</div>
+						{{/each}}
+						
+					</div> 
+					{{> sidebar_right}}
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+
+</template>
+

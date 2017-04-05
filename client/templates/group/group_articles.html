@@ -38,6 +38,12 @@
 											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
 										</a>
 										
+										<br />
+										<br />
+										<a href="/group/{{group_slug}}/articles/manager/" class="btn btn-sm btn-primary">
+											<i class="fa fa-file-text-o" aria-hidden="true"></i> Create New Article
+										</a>
+										
 									</div>
 									
 									<div class="col-md-3">
@@ -63,47 +69,57 @@
 							</div>
 						</div>
 						
-						<div class="row">
+						<div class="row row_equalize_height">
 						
+							{{#each article_in_group}}
 							<div class="col-md-3">
 								<div class="hpanel blog-box">
 									<div class="panel-heading">
 										<div class="media clearfix">
 											<a class="pull-left">
-												<img src="/images/default.jpg" alt="profile-picture">
+												<img src="{{owner_avatar}}" alt="profile-picture">
 											</a>
 											<div class="media-body">
-												<small>Created by: <span class="font-bold">Anna Smith</span> </small>
-												<br>
-												<small class="text-muted">10.07.2015, 02:12 am</small>
+												<small>Created by: <span class="font-bold">{{owner_fullname}}</span> </small>
+												<br />
+												<small>
+													<time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time>
+												</small>
 											</div>
 										</div>
 									</div>
 									<div class="panel-image">
-										<img class="img-responsive" src="https://www.prestashop.com/blog/en/files/2015/07/blog_post-657x345.jpg" alt="">
-										<div class="title">
-											<a href="blog_details.html"> <h4>Standard chunk of Lorem Ipsum</h4></a>
-											<small>Even slightly believable</small>
-										</div>
+										<a href="/group/{{group_slug}}/article/{{slug}}"> 
+											{{#if article_image}}
+												<img src="{{article_image}}"  width="100%" />
+												{{else}}
+												<img src="/images/article_cover_default.jpg"  width="100%" />
+											{{/if}}
+										</a>
 									</div>
 									<div class="panel-body">
-										<p>
-											Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-										</p>
-										<p>
-											Etiam aliquam elit vestibulum, convallis risus at, rutrum ex. Aliquam erat volutpat. Morbi blandit nisi a magna vestibulum, eget volutpat risus sodales.
-										</p>
-										<a href="blog_details.html" class="btn btn-primary btn-xs">Read more</a>
+										<div class="title">
+											<h4 class="text-info"><b>{{title}}</b></h4>
+											<h5>{{content}}</h5>
+										</div>
+										
+										<a href="/group/{{group_slug}}/article/{{slug}}" class="btn btn-info btn-block">
+											<i class="fa fa-eye"></i> Read
+										</a>
+										<a href="/group/{{group_slug}}/articles/manager/{{_id}}" class="btn btn-warning btn-block">
+											<i class="fa fa-cogs"></i> Edit
+										</a>
 									</div>
-									<div class="panel-footer">
+									<!-- <div class="panel-footer">
 											<span class="pull-right">
 												<i class="fa fa-comments-o"> </i> 10 comments
 											</span>
 										<i class="fa fa-eye"> </i> 62 views
-									</div>
+									</div> -->
 								</div>
 
 							</div>
+							{{/each}}
 							
 						</div> 
 						
@@ -113,6 +129,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<!-- Main Wrapper -->
 
 </template>
