@@ -11,12 +11,28 @@ Router.route('/groups',{
 		}
 	},
 	waitOn: function(){
-		Meteor.subscribe('posts', 'group_member', Meteor.userId() ); 
+		
+		// Clear any search filters from /groups/all
+		if(window.subscription_group_search){ 
+			window.subscription_group_search.stop(); 
+		}
+		
+		Meteor.subscribe('posts', 'group_member_by_user_id', Meteor.userId() ); 
+		var memberships = Posts.find({type:"group_member"});
+		
+		memberships.forEach(function(membership){
+			
+			Meteor.subscribe('posts', 'group_by_id', membership.parent_id ); 
+			Meteor.subscribe('posts', 'group_member_role_by_group_id', membership.parent_id ); 
+			Meteor.subscribe('posts', 'group_image_by_group_id', membership.parent_id ); 
+			
+		});
+		
 	},
 	template:'screen',
 	yieldTemplates: {
 		'groups': {to: 'content'},
-	}
+	},
 	
 });
 
@@ -73,39 +89,27 @@ Template.groups.events({
 Template.groups.helpers({
 	
 	groups() { 
-	
-		var groupIds = Posts.find({	type:"group_member" }).map(function(group){
-			
-			Meteor.subscribe('posts', 'groups', group.parent_id ); 			
-			Meteor.subscribe('posts', 'group_member_role', group.parent_id ); 			
-			Meteor.subscribe('postsmeta', 'group_meta', group.parent_id ); 			
-			return group.parent_id; 
-			
-		});
-		
-		return Posts.find({ type:"groups", "_id": { "$in": groupIds }, status:{"$ne":"trash"} }, {sort: { _id: -1 }} );
-		
+		return Posts.find({ type:"groups" }, {sort: { _id: -1 }} );
 	},
 	
-	slug(title){
-		return ToSeoUrl(title); 
-	},
-	
-	meta_group_image(){
-		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
-		var meta = Postsmeta.findOne({title:"meta_group_image", parent_id:this._id});
-		if(meta){ 
-			return meta.content;
+	group_image(){
+		var image = Posts.findOne({title:"group_image", parent_id:this._id});
+		if(image){ 
+			return image.content;
 		}else{
 			return false;
 		}
 	},
 	
 	groupsStatus(status){
-		var posts = Posts.findOne({parent_id:this._id, type:"group_member"});
-		if(posts.status == status){
-			return true;
-		}else{
+		var post = Posts.findOne({parent_id:this._id, type:"group_member"});
+		if(post){
+			if(post.status == status){
+				return true;
+			}else{
+				return false;
+			}
+		} else { 
 			return false;
 		}
 	},

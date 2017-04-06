@@ -32,12 +32,6 @@ if (Meteor.isServer) {
 			return Postsmeta.find({type:action, parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //
 		}
 		
-		// GROUPS
-		// =======
-		if(action == "group_meta"){
-			return Postsmeta.find({type:"group_meta", parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //
-		}
-		
 		// RESUME
 		// ======
 		if(action == "resume_education_date1"){

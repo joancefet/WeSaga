@@ -33,20 +33,16 @@
 									<div class="panel-body">
 										
 										{{#with groups}}
-											<form class="form-horizontal create_skyroom" id="">
+											<form class="form-horizontal create_skyroom" id="" autocomplete="off">
 											
 												<div class="form-group">
 													<label class="col-sm-2 control-label"></label>
 													<div class="col-sm-10">
 														
-														{{#if meta_group_image}}
-															<div class="imageUploadPreview imageUploadPreview">
-																<img alt="logo" class="img-circle m-b m-t-md" src="{{meta_group_image}}"  style="height:205px; width:205px;" />
-															</div>
+														{{#if group_image}}
+															<img alt="logo" class="img-circle m-b " src="{{group_image}}" style="width:205px; height:205px;"/>
 														{{else}}
-															<div class="imageUploadPreview imageUploadPreview">
-																<img alt="logo" class="img-circle m-b m-t-md" src="/images/meeting-default.jpg"  style="height:205px; width:205px;" />
-															</div>
+															<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" style="width:205px; height:205px;"/>
 														{{/if}}
 														
 													</div>
@@ -119,15 +115,15 @@
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Public or Unlisted?</label>
 														<div class="col-sm-10">
-															<select class="form-control m-b" name="meta_listing" id="meta_listing" required="">
+															<select class="form-control m-b" name="group_listing" id="group_listing" required="">
 																<option value="public">Public</option>
 																<option value="private">Unlisted</option>
 															</select>
 															
-															{{#if meta_listing}}
-																{{#with meta_listing}}
+															{{#if group_listing}}
+																{{#with group_listing}}
 																	<script>
-																		$("#meta_listing").val('{{content}}');
+																		$("#group_listing").val('{{content}}');
 																	</script>
 																{{/with}}
 															{{else}}

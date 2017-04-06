@@ -30,10 +30,12 @@ Router.route('/groups/manage/:groupId',{
 	},
 	waitOn: function(){
 		
-		if( Router.current().params.groupId != "" ){
-			Meteor.subscribe('posts', 'group_by_id',  Router.current().params.groupId );
-		}
-		
+		Meteor.subscribe('posts', 'group_image_by_group_id', Router.current().params.groupId ); 
+		Meteor.subscribe('posts', 'group_by_id',  Router.current().params.groupId );
+		Meteor.subscribe('posts', 'group_member_by_group_id',  Router.current().params.groupId );
+		Meteor.subscribe('posts', 'group_member_role_by_group_id',  Router.current().params.groupId );
+		Meteor.subscribe('posts', 'group_listing_by_group_id',  Router.current().params.groupId );
+			
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -72,78 +74,86 @@ Template.groups_manager.events({
 			"groups",
 			"",
 			"publish"
-			,function(error, result, event){
+			,function(error, parent_id, event){
 				
 				// group Meta Data
 				// -----------------
 				
-				returned_group_id = result; 
-				
-				var update_meta_by_parent = false;
-				if(group_id != "new"){ 
-					update_meta_by_parent = true; 
-				}
-				
 				// Image
 				if($("#fileInput").prop('files')){
 					
-					console.log("Starting Upload");
+					group_image_id = "new";
+					group = Posts.findOne({type:"group_image"}); 
+					if(group){
+						group_image_id = group._id;
+					}
 					
 					Cloudinary.upload( $("#fileInput").prop('files'), function(error, result){
 						
 						// meta_group_image	
-						Meteor.call('postsmeta.update',
-							group_id,
+						Meteor.call('posts.update',
+							group_image_id,
 							"me",
-							"meta_group_image",
+							"group_image",
 							"https://res.cloudinary.com/skyroomsio/image/upload/c_thumb,h_256,w_256/v1489424858/"+result.public_id+"."+result.format,
-							"group_meta",
-							returned_group_id,
+							"group_image",
+							parent_id,
 							"publish",
-							update_meta_by_parent
 						);
-						
-						console.log("Upload Complete: "+group_id);
 						
 					});
 				}
 				
-				// Become a member of this group
-				Meteor.call('posts.update',
-					"new",
-					"me",
-					target.title.value,
-					"",
-					"group_member",
-					returned_group_id,
-					"accepted"
-				);
+				// Are we already a member? 
+				// No: create membership
+				// Yes: Skip membership
+				group_id = "new";
+				var group = Posts.findOne({type:"groups"}); 
+				if(group){
+					group_id =  group._id;
+				}
+				if(group_id == "new"){
+					
+					// Become a member of this group
+					Meteor.call('posts.update',
+						"new",
+						"me",
+						target.title.value,
+						"",
+						"group_member",
+						parent_id,
+						"accepted"
+					);
+					
+					// Become group admin
+					Meteor.call('posts.update',
+						"new",
+						"me",
+						target.title.value,
+						"",
+						"group_member_role",
+						parent_id,
+						"admin"
+					);
+				}
 				
-				// Become group admin
+				// group_listing	
+				group_listing_id = "new";
+				var group_listing = Posts.findOne({type:"group_listing"}); 
+				if(group_listing){
+					group_listing_id =  group_listing._id;
+				}
 				Meteor.call('posts.update',
-					"new",
+					group_listing_id,
 					"me",
-					target.title.value,
 					"",
-					"group_member_role",
-					returned_group_id,
-					"admin"
-				);
-				
-				// meta_listing	
-				Meteor.call('postsmeta.update',
-					group_id,
-					"me",
-					"meta_listing",
-					target.meta_listing.value,
-					"group_meta",
-					returned_group_id,
+					target.group_listing.value,
+					"group_listing",
+					parent_id,
 					"publish",
-					update_meta_by_parent
 				);
 				
 				// All Done
-				Router.go("/groups");
 				
 				if(group_id == "new"){
 					swal({
@@ -154,6 +164,8 @@ Template.groups_manager.events({
 						cancelButtonText: "Cancel",
 						confirmButtonText: "Close",
 						
+					}).then(function (result) {
+						Router.go("/groups");
 					});
 				}else{
 					swal({
@@ -163,7 +175,8 @@ Template.groups_manager.events({
 						showCancelButton: false,
 						cancelButtonText: "Cancel",
 						confirmButtonText: "Close",
-						
+					}).then(function (result) {
+						Router.go("/groups");
 					});
 				}
 				
@@ -249,15 +262,14 @@ Template.groups_manager.helpers({
 		}
 	},
 	
-	meta_listing(){
-		return Postsmeta.findOne({title:"meta_listing"});
+	group_listing(){
+		return Posts.findOne({type:"group_listing"});
 	},
 	
-	meta_group_image(){
-		
-		var meta = Postsmeta.findOne({title:"meta_group_image"});
-		if(meta){ 
-			return meta.content;
+	group_image(){
+		var image = Posts.findOne({title:"group_image"});
+		if(image){ 
+			return image.content;
 		}else{
 			return false;
 		}

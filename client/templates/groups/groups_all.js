@@ -8,13 +8,29 @@ Router.route('/groups/all',{
 		
 	},
 	waitOn: function(){
+		
+		
 		window.subscription_group_search = "";
-		window.subscription_group = Meteor.subscribe('posts', 'groups_all');
+		window.subscription_group_all 	 = Meteor.subscribe('posts', 'groups_all');
+		
+		var groups = Posts.find({type:"groups"});		
+		groups.forEach(function(group){
+			// Meteor.subscribe('posts', 'group_by_id', membership.parent_id ); 
+			Meteor.subscribe('posts', 'group_member_role_by_group_id', group.parent_id ); 
+			Meteor.subscribe('posts', 'group_image_by_group_id', group.parent_id ); 
+			
+		});
+		
+		Meteor.subscribe('posts', 'group_member_by_user_id', Meteor.userId() ); 
+		
 	},
 	template:'screen',
 	yieldTemplates: {
 		'groups_all': {to: 'content'},
-	}
+	},
+	onStop: function() {
+		window.subscription_group_all = "";
+    }
 	
 });
 
@@ -37,11 +53,12 @@ Template.groups_all.events({
 		$(".show_loader").show();
 		$(".search_container_message").html("");
 		
-		window.subscription_group.stop();
+		window.subscription_group_all.stop();
 		
 		if(window.subscription_group_search){ 
 			window.subscription_group_search.stop(); 
 		}
+		
 		window.subscription_group_search = Meteor.subscribe('posts', 'group_search', $(".search_value").val());
 		
 		setTimeout(function(){
@@ -186,26 +203,13 @@ Template.groups_all.events({
 Template.groups_all.helpers({
 	
 	groups() { 
-	
-		// Find all the groups on screen, then find our membership status
-		var groups = Posts.find({type:"groups"});
-		groups.forEach(function(group){
-			Meteor.subscribe('postsmeta', 'group_meta', group._id );
-			Meteor.subscribe('posts', 'group_member_by_group_id', Meteor.userId(), group._id );
-		});
-		
-		return groups;
+		return Posts.find({type:"groups"});
 	},
 	
-	slug(title){
-		return ToSeoUrl(title); 
-	},
-	
-	meta_group_image(){
-		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
-		var meta = Postsmeta.findOne({title:"meta_group_image", parent_id:this._id});
-		if(meta){ 
-			return meta.content;
+	group_image(){
+		var image = Posts.findOne({title:"group_image", parent_id:this._id});
+		if(image){ 
+			return image.content;
 		}else{
 			return false;
 		}
@@ -213,10 +217,14 @@ Template.groups_all.helpers({
 	
 	groupsStatus(status){
 		
-		var posts = Posts.findOne({parent_id:this._id, type:"group_member"});
-		if(posts.status == status){
-			return true;
-		}else{
+		var post = Posts.findOne({type:"group_member", parent_id:this._id});
+		if(post){
+			if(post.status == status){
+				return true;
+			}else{
+				return false;
+			}
+		} else { 
 			return false;
 		}
 		

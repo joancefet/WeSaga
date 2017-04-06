@@ -91,8 +91,6 @@ Template.group_article_manager.events({
 				// Image
 				if($("#fileInput").prop('files')){
 					
-					console.log("Starting Upload");
-					
 					Cloudinary.upload( $("#fileInput").prop('files'), function(error, result){
 						
 						article_image_id = "new";
@@ -114,8 +112,6 @@ Template.group_article_manager.events({
 							"publish",
 							result,
 						);
-						
-						console.log("Upload Complete for article: "+parent_id);
 						
 					});
 				}

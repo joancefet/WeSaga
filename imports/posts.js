@@ -7,27 +7,27 @@ export const Posts = new Mongo.Collection('posts');
 // Publish
 if (Meteor.isServer) {
 	
-	Meteor.publish('posts', function(action, userId, parent_id) {
+	Meteor.publish('posts', function(PARAM_1, PARAM_2, PARAM_3) {
 		
-		check(action, String);		
-		//if(parent_id){ check(parent_id, String); }
+		check(PARAM_1, String);		
+		//if(PARAM_3){ check(PARAM_3, String); }
 		
-		if(action == "notify"){
-			return Posts.find({type:action, owner_id:userId}, {sort: { createdAt: -1 }, limit:20 });
+		if(PARAM_1 == "notify"){
+			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, {sort: { createdAt: -1 }, limit:20 });
 		}
 		
-		// if(action == "all"){
+		// if(PARAM_1 == "all"){
 			// return Posts.find({}, {sort: { createdAt: -1 }, limit:10 });
 		// }
 		
-		if(action == "notes"){
-			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10  });			
+		if(PARAM_1 == "notes"){
+			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10  });			
 		}
 		
 		// DESK
 		// =======
-		if(action == "desk_posts"){
-			return Posts.find({type:action, owner_id:userId}, { sort: { createdAt: -1 }, limit:10 });
+		if(PARAM_1 == "desk_posts"){
+			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
 		}
 		
 		
@@ -35,42 +35,42 @@ if (Meteor.isServer) {
 		
 		// RESUMES
 		// =======
-		if(action == "resume_owner"){
-			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		if(PARAM_1 == "resume_owner"){
+			return Meteor.users.find({"profile.username": PARAM_2}); //TODO Restrict by fields, lower data use // PARAM_2 is slug
 		}
 		
-		if(action == "resume_skill"){
-			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		if(PARAM_1 == "resume_skill"){
+			return Posts.find({type:"resume_skill", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
 		}
 		
-		if(action == "resume_education"){
-			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		if(PARAM_1 == "resume_education"){
+			return Posts.find({type:"resume_education", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
 		}
 		
-		if(action == "resume_experience"){
-			return Posts.find({type:action, owner_username:userId},{ sort: { createdAt: 1 }, limit:10 }); //
+		if(PARAM_1 == "resume_experience"){
+			return Posts.find({type:"resume_experience", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
 		}
 		
 		
 		
 		// PEOPLE
 		// =======
-		if(action == "people_desk_posts"){
+		if(PARAM_1 == "people_desk_posts"){
 			
-			var user = Meteor.users.findOne({"profile.username":userId}); 
+			var user = Meteor.users.findOne({"profile.username":PARAM_2}); 
 			// We can add view permissions here :)
 			return Posts.find({type:"desk_posts", owner_id:user._id}, { sort: { createdAt: -1 }, limit:10 });
 		}
 		
-		if(action == "people_all"){
+		if(PARAM_1 == "people_all"){
 			return Meteor.users.find({},{limit:50}); //TODO Restrict by fields, lower data use
 		}
 		
-		if(action == "people_search"){
+		if(PARAM_1 == "people_search"){
 			
 			var search_type = 'name';
-			var query_email = userId.split("@");
-			var query_name  = userId.split(" ");
+			var query_email = PARAM_2.split("@");
+			var query_name  = PARAM_2.split(" ");
 			
 			console.log(query_email);
 			console.log(query_name);
@@ -80,8 +80,8 @@ if (Meteor.isServer) {
 			}
 			
 			if(search_type == "email"){
-				console.log("SEARCHING FOR EMAIL: "+userId);
-				return Meteor.users.find({"emails.address":userId}, {limit:6}); //TODO Restrict by fields, lower data use
+				console.log("SEARCHING FOR EMAIL: "+PARAM_2);
+				return Meteor.users.find({"emails.address":PARAM_2}, {limit:6}); //TODO Restrict by fields, lower data use
 			}
 			
 			if(search_type =="name"){
@@ -97,83 +97,94 @@ if (Meteor.isServer) {
 			}
 		}	
 		
-		if(action == "people_desk"){
-			return Meteor.users.find({"profile.username": userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		if(PARAM_1 == "people_desk"){
+			return Meteor.users.find({"profile.username": PARAM_2}); //TODO Restrict by fields, lower data use // PARAM_2 is slug
 		}
 		
 		// COLLEAGUES
 		// =======
-		if(action == "colleagues"){
-			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "colleagues"){
+			return Posts.find({type:"colleagues", owner_id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		
 		// MEETINGS
 		// =======
-		if(action == "meetings"){
-			return Posts.find({type:action, owner_id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "meetings"){
+			return Posts.find({type:"meetings", owner_id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		
-		if(action == "meetings_by_url"){
-			return Posts.find({type:"meetings", slug:userId}, { sort: { createdAt: -1 } }); // UserId is a slug in this exception... lazy...			
+		if(PARAM_1 == "meetings_by_url"){
+			return Posts.find({type:"meetings", slug:PARAM_2}, { sort: { createdAt: -1 } }); // PARAM_2 is a slug in this exception... lazy...			
 		}
 		
 		// GROUPS
 		// =======
-		if(action == "groups"){
-			return Posts.find({type:action, _id: userId}, { sort: { createdAt: -1 } });			
+		
+		if(PARAM_1 == "groups"){
+			return Posts.find({type:"groups", _id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_by_id"){
-			return Posts.find({type:"groups", _id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_all"){
+			return Posts.find({type:"groups", status:"publish"}, { sort: { createdAt: -1 }, limit:4*4 });			
 		}
-		if(action == "group_by_slug"){
-			return Posts.find({type:"groups", slug: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "group_by_id"){
+			return Posts.find({type:"groups", _id: PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "groups_all"){
-			return Posts.find({type:"groups", status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "group_by_slug"){
+			return Posts.find({type:"groups", slug: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_members_all_by_slug"){
-			return Posts.find({type:"group_member", slug:userId}, { sort: { createdAt: -1 } });			
+		
+		if(PARAM_1 == "group_member_by_group_id"){
+			return Posts.find({type:"group_member", _id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_member"){
-			return Posts.find({type:"group_member", owner_id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "group_member_role_by_group_id"){
+			return Posts.find({type:"group_member_role", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_member_user_profile"){
-			return Meteor.users.find({_id: userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		if(PARAM_1 == "group_listing_by_group_id"){
+			return Posts.find({type:"group_listing", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_member_by_group_id"){
-			return Posts.find({type:"group_member", owner_id: userId, parent_id: parent_id}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "group_image_by_group_id"){
+			return Posts.find({type:"group_image", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_member_all_by_group_id"){
-			return Posts.find({type:"group_member", parent_id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "group_image"){
+			return Posts.find({type:"group_image"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_member_role"){
-			return Posts.find({type:"group_member_role", parent_id: userId}, { sort: { createdAt: -1 } });			
+		
+		if(PARAM_1 == "group_member_by_user_id"){
+			return Posts.find({type:"group_member", owner_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_member_role_by_user_id"){
-			return Posts.find({type:"group_member_role", owner_id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "group_members_all_by_slug"){
+			return Posts.find({type:"group_member", slug:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "group_desk"){
-			return Posts.find({type:action, slug: userId}, { sort: { createdAt: -1 } });			
+		
+		if(PARAM_1 == "group_member_user_profile"){
+			return Meteor.users.find({_id: PARAM_2}); //TODO Restrict by fields, lower data use // PARAM_2 is slug
 		}
-		if(action == "group_search"){
-			
-			var search_query = userId; // Need to rename the parameters soon...
-			
-			console.log("SEARCHING FOR GROUP: "+search_query);
-			
-			return Posts.find({type:"groups","title":{ $regex : new RegExp(search_query, "i") } }, {limit:8}); //TODO Restrict by fields, lower data use
-			
+		
+		if(PARAM_1 == "group_member_all_by_group_id"){
+			return Posts.find({type:"group_member", parent_id: PARAM_2}, { sort: { createdAt: -1 } });			
+		}
+		if(PARAM_1 == "group_member_role"){
+			return Posts.find({type:"group_member_role", parent_id: PARAM_2}, { sort: { createdAt: -1 } });			
+		}
+		if(PARAM_1 == "group_member_role_by_user_id"){
+			return Posts.find({type:"group_member_role", owner_id: PARAM_2}, { sort: { createdAt: -1 } });			
+		}
+		if(PARAM_1 == "group_desk"){
+			return Posts.find({type:"group_desk", slug: PARAM_2}, { sort: { createdAt: -1 } });			
+		}
+		if(PARAM_1 == "group_search"){
+			return Posts.find({type:"groups","title":{ $regex : new RegExp(PARAM_2, "i") }, limit:4 });
 		}	
 		
-		if(action == "group_people_all"){
+		if(PARAM_1 == "group_people_all"){
 			return Meteor.users.find({},{limit:8}); //TODO Restrict by fields, lower data use
 		}
 		
-		if(action == "group_people_search"){
+		if(PARAM_1 == "group_people_search"){
 			
 			var search_type = 'name';
-			var query_email = userId.split("@");
-			var query_name  = userId.split(" ");
+			var query_email = PARAM_2.split("@");
+			var query_name  = PARAM_2.split(" ");
 			
 			console.log(query_email);
 			console.log(query_name);
@@ -183,8 +194,8 @@ if (Meteor.isServer) {
 			}
 			
 			if(search_type == "email"){
-				console.log("SEARCHING FOR EMAIL: "+userId);
-				return Meteor.users.find({"emails.address":userId}, {limit:6}); //TODO Restrict by fields, lower data use
+				console.log("SEARCHING FOR EMAIL: "+PARAM_2);
+				return Meteor.users.find({"emails.address":PARAM_2}, {limit:6}); //TODO Restrict by fields, lower data use
 			}
 			
 			if(search_type =="name"){
@@ -202,80 +213,80 @@ if (Meteor.isServer) {
 		
 		// ARTICLES
 		// =======
-		if(action == "articles_by_group_slug"){
+		if(PARAM_1 == "articles_by_group_slug"){
 			return Posts.find({type:"article", status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "articles_by_slug"){
-			return Posts.find({type:"article", slug:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "articles_by_slug"){
+			return Posts.find({type:"article", slug:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "articles_by_group_parent_id"){
-			return Posts.find({type:"article", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "articles_by_group_parent_id"){
+			return Posts.find({type:"article", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "article_by_id"){
-			return Posts.find({type:"article", _id:userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "article_by_id"){
+			return Posts.find({type:"article", _id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "article_content_by_article_id"){
-			return Posts.find({type:"article_content", parent_id:userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "article_content_by_article_id"){
+			return Posts.find({type:"article_content", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "article_image_by_article_id"){
-			return Posts.find({type:"article_image", parent_id:userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "article_image_by_article_id"){
+			return Posts.find({type:"article_image", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		
 		
 		// PROJECTS
 		// =======
-		if(action == "groups_project_category"){
-			return Posts.find({type:action, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_project_category"){
+			return Posts.find({type:"groups_project_category", status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "groups_project_category_by_id"){
-			return Posts.find({type:"groups_project_category", _id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_project_category_by_id"){
+			return Posts.find({type:"groups_project_category", _id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "groups_project_category_by_parent_id"){
-			return Posts.find({type:"groups_project_category", parent_id: userId}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_project_category_by_parent_id"){
+			return Posts.find({type:"groups_project_category", parent_id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		
-		if(action == "groups_project_by_id"){
-			return Posts.find({type:"groups_project", _id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_project_by_id"){
+			return Posts.find({type:"groups_project", _id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "groups_project_by_parent_id"){
-			return Posts.find({type:"groups_project", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_project_by_parent_id"){
+			return Posts.find({type:"groups_project", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
 		
 		// PROJECT COMMENTS
 		// =======
-		if(action == "group_projects_comment_by_id"){
-			return Posts.find({type:"group_projects_comment", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 }, limit:8 });			
+		if(PARAM_1 == "group_projects_comment_by_id"){
+			return Posts.find({type:"group_projects_comment", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 }, limit:8 });			
 		}
 		
 		
 		// WORKERS
 		// =======
-		if(action == "project_worker_by_parent_id"){
-			return Posts.find({type:"project_worker", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "project_worker_by_parent_id"){
+			return Posts.find({type:"project_worker", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "project_worker_user_profile"){
-			return Meteor.users.find({_id: userId}); //TODO Restrict by fields, lower data use // UserId is slug
+		if(PARAM_1 == "project_worker_user_profile"){
+			return Meteor.users.find({_id: PARAM_2}); //TODO Restrict by fields, lower data use // PARAM_2 is slug
 		}
 		
 		// TASK LIST
 		// =======
-		if(action == "groups_task_list_by_id"){
-			return Posts.find({type:"groups_task_list", _id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_task_list_by_id"){
+			return Posts.find({type:"groups_task_list", _id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
-		if(action == "groups_task_list_by_parent_id"){
-			return Posts.find({type:"groups_task_list", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 } });			
+		if(PARAM_1 == "groups_task_list_by_parent_id"){
+			return Posts.find({type:"groups_task_list", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 } });			
 		}
 		
 		// TASK LIST COMMENTS
 		// =======
-		if(action == "groups_task_list_comments_by_parent_id"){
-			return Posts.find({type:"groups_task_list_comments", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 }, limit:8 });			
+		if(PARAM_1 == "groups_task_list_comments_by_parent_id"){
+			return Posts.find({type:"groups_task_list_comments", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 }, limit:8 });			
 		}
 		
 		// TASKS
 		// =======
-		if(action == "tasks_by_parent_id"){
-			return Posts.find({type:"task", parent_id:userId, status:"publish"}, { sort: { createdAt: -1 }, limit:40 });			
+		if(PARAM_1 == "tasks_by_parent_id"){
+			return Posts.find({type:"task", parent_id:PARAM_2, status:"publish"}, { sort: { createdAt: -1 }, limit:40 });			
 		}
 		
 		
@@ -298,7 +309,7 @@ Meteor.methods({
 		
 		if(author == "me") { author = Meteor.userId(); }
 		if(parent_id === null){ parent_id = "not_set"; }
-		if(status === null){ parent_id = "published"; }
+		if(status === null){ status = "published"; }
 		// console.log("POST UPDATE, LOOKING FOR: "+update_id);
 		// var exists = Posts.find({_id:update_id});
 		// console.log("EXISTS: "+exists);
@@ -423,16 +434,16 @@ Meteor.methods({
 	
 	// GROUPS
 	// ======
-	'posts.leave_group'(groupId, userId) {
+	'posts.leave_group'(groupId, PARAM_2) {
 		check(groupId, String);
-		check(userId, String);
+		check(PARAM_2, String);
 		console.log("LEAVE GROUP: "+groupId);
-		Posts.remove({type:"group_member", parent_id:groupId, owner_id:userId});
+		Posts.remove({type:"group_member", parent_id:groupId, owner_id:PARAM_2});
 	},
 	
-	'posts.group_accept'(userId, group_parent_id) {
+	'posts.group_accept'(PARAM_2, group_parent_id) {
 		
-		Posts.update({owner_id:userId, parent_id:group_parent_id},
+		Posts.update({owner_id:PARAM_2, parent_id:group_parent_id},
 			{$set: {
 				updatedAt: Date.now(), 
 				status:"accepted",
@@ -441,9 +452,9 @@ Meteor.methods({
 		);
 		
 	},
-	'posts.group_decline'(userId, group_parent_id) {
+	'posts.group_decline'(PARAM_2, group_parent_id) {
 		
-		Posts.remove({owner_id:userId, parent_id:group_parent_id});
+		Posts.remove({owner_id:PARAM_2, parent_id:group_parent_id});
 		
 	},
 	

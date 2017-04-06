@@ -15,6 +15,7 @@ Router.route('/group/:group_slug',{
 		
 		Meteor.subscribe('posts', 'group_desk',  ToSeoUrl(Router.current().params.group_slug) );
 		Meteor.subscribe('posts', "group_desk_posts", ToSeoUrl(Router.current().params.group_slug) ); 
+		
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -28,11 +29,7 @@ Router.route('/group/:group_slug/desk',{
 		
 	},
 	waitOn: function(){
-		
-		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );
-		
-		Meteor.subscribe('posts', 'group_desk',  ToSeoUrl(Router.current().params.group_slug) );
-		Meteor.subscribe('posts', "group_desk_posts", ToSeoUrl(Router.current().params.group_slug) ); 
+		Router.go('/group/'+ToSeoUrl(Router.current().params.group_slug));
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -54,7 +51,6 @@ Template.group_desk.helpers({
 		// Find all the groups on screen, then find our membership status
 		var groups = Posts.find({type:"groups"});
 		groups.forEach(function(group){
-			Meteor.subscribe('postsmeta', 'group_meta', group._id );
 			Meteor.subscribe('posts', 'group_member_by_group_id', Meteor.userId(), group._id );
 		});
 		
