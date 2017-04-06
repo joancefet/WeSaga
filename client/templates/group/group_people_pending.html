@@ -1,0 +1,210 @@
+<!-- 
+#
+# TEMPLATE: GROUPS
+#
+# -->
+<template name="group_people_pending"> 
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					<!-- GROUPS LIST MANAGER -->
+					<div class="col-lg-8">
+					
+						<div class="hpanel">
+							<div class="panel-body">
+								
+								<div class="row">
+									<div class="col-md-9">
+									
+										<a href="/group/{{group_slug}}/desk" class="btn btn-primary">
+											<i class="fa fa-id-card" aria-hidden="true"></i> Desk
+										</a>
+										<a href="/group/{{group_slug}}/projects" class="btn btn-primary">
+											<i class="fa fa-briefcase" aria-hidden="true"></i> Projects
+										</a>
+										<a href="/group/{{group_slug}}/people" class="btn btn-info">
+											<i class="fa fa-address-book-o" aria-hidden="true"></i> People
+										</a>
+										<a href="/group/{{group_slug}}/articles" class="btn btn-primary">
+											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
+										</a>
+										
+										<br />
+										<br />
+										<a href="/group/{{group_slug}}/people/" class="btn btn-sm btn-info">
+											<i class="fa fa-bell" aria-hidden="true"></i> Pending Group Requests
+										</a>
+										
+									</div>
+									
+									<div class="col-md-3">
+									
+										<form class="search_start">
+											<div class="input-group">
+												<input class="form-control search_value" type="text" placeholder="Search...">
+												
+												<div class="input-group-btn ">
+													<button type="submit" class="btn btn-default">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
+												
+											</div>
+											
+											<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+										</form>
+									
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+						<center class="show_loader" style="display:none;">
+							<div class="loader"></div>
+						</center>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<h4 class="text-white search_container_message">Showing Pending Group Requests</h4>
+							</div>
+						</div> 
+						
+						<div class="row search_container">
+							{{#if people}}
+								{{#each people}}
+								<div class="col-lg-3">
+									<div class="hpanel hgreen">
+										<div class="panel-body">
+											
+											<a href="/people/{{profile.username}}">
+												{{#if profile.avatar}}
+													<center>
+														<img alt="logo" class="img-circle m-b" src="{{profile.avatar}}" width="100%" style="width:100%; height:205px;"  />
+													</center>
+												{{else}}
+													<center>
+														<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100%" style="width:100%; height:205px;" />
+													</center>
+												{{/if}}
+											</a>
+											
+											<h3>
+												<center>
+													<a href="/people/{{profile.username}}">
+														{{profile.name_first}}
+														<br />
+														{{profile.name_last}}
+													</a>
+												</center>
+											</h3>
+											{{#if profile.location}}
+												<div class="text-muted font-bold m-b-xs">Location</div>
+											{{/if}}
+											
+											<p style="display:none;">
+												SkyRooms - Test user
+											</p>
+											
+											<form class="btn-form-top btn-form">
+												<input type="hidden" name="owner_id" value="{{_id}}" />
+												<input type="hidden" name="group_id" value="{{group_id}}" />
+												<input type="hidden" name="action" value="group_accept" />
+												<button type="submit" class="btn btn-success btn-block ">
+													<i class="fa fa-handshake-o" aria-hidden="true"></i> ACCEPT
+												</button>
+											</form>
+											<form class="btn-form-top btn-form">
+												<input type="hidden" name="owner_id" value="{{_id}}" />
+												<input type="hidden" name="group_id" value="{{group_id}}" />
+												<input type="hidden" name="action" value="group_decline" />
+												<button type="submit" class="btn btn-danger btn-block ">
+													<i class="fa fa-handshake-o" aria-hidden="true"></i> DECLINE
+												</button>
+											</form>
+											
+											<hr />
+											
+											<!-- View Desk -->
+											<a href="/people/{{profile.username}}"  class="btn btn-primary btn-block btn-sm">
+												<i class="fa fa-id-card" aria-hidden="true"></i> View Desk
+											</a>
+											
+											{{#if noColleagueStatus "notFound"}}
+												<form class="btn-form-top btn-form">
+													<input type="hidden" name="user_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="add" />
+													<button type="submit" class="btn btn-success btn-block btn-sm">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Add Colleague
+													</button>
+												</form>
+											{{else}}
+												
+												{{#each colleagueStatus}}
+												
+													{{#if checkStatus "request"}}
+														<form class="btn-form-top btn-form">
+															<input type="hidden" name="post_id" value="{{_id}}" />
+															<input type="hidden" name="parent_id" value="{{parent_id}}" />
+															<input type="hidden" name="title" value="{{title}}" />
+															<input type="hidden" name="action" value="accept" />
+															<button type="submit" class="btn btn-success btn-block btn-sm">
+																<i class="fa fa-handshake-o" aria-hidden="true"></i> Accept
+															</button>
+														</form>
+													{{/if}}
+													{{#if checkStatus "waiting"}}
+														<form class="btn-form-top btn-form">
+															<input type="hidden" name="post_id" value="{{_id}}" />
+															<input type="hidden" name="parent_id" value="{{parent_id}}" />
+															<input type="hidden" name="owner_id" value="{{owner_id}}" />
+															<input type="hidden" name="action" value="cancel" />
+															<button type="submit" class="btn btn-warning btn-block btn-sm">
+																<i class="fa fa-handshake-o" aria-hidden="true"></i> Cancel Request
+															</button>
+														</form>
+													{{/if}}
+												{{/each}}
+												
+											{{/if}}
+											
+											<button type="submit" class="btn btn-block btn-sm btn-info">
+												<i class="fa fa-phone-square" aria-hidden="true"></i> Call
+											</button> 
+											
+											<button type="submit" class="btn btn-block btn-sm btn-info">
+												<i class="fa fa-commenting-o" aria-hidden="true"></i> Message
+											</button> 
+										
+										
+										
+											
+										</div>
+										
+									</div>
+								</div>
+								{{/each}}
+							{{else}}
+								We didn't find any one by that name or email address.
+							{{/if}}
+						</div> 
+						
+					</div> 
+					{{> sidebar_right}}
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+
+</template>
+

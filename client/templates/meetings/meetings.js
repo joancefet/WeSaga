@@ -40,6 +40,13 @@ Template.meetings.helpers({
 	},
 	slug(title){
 		return ToSeoUrl(title); 
-	}
+	},
+	meta_meeting_image(){
+		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
+		var meta = Postsmeta.findOne({title:"meta_meeting_image", parent_id:this._id});
+		if(meta){ 
+			return meta;
+		}
+	},
 	
 });

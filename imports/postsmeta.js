@@ -22,8 +22,7 @@ if (Meteor.isServer) {
 		
 		if(action == "post_attachment"){
 			return Postsmeta.find({type:"post_attachment", parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 });
-		}
-		
+		}		
 		
 		if(action == "notify_meta"){
 			return Postsmeta.find({parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //, 
@@ -32,6 +31,28 @@ if (Meteor.isServer) {
 		if(action == "meeting_meta"){
 			return Postsmeta.find({type:action, parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //
 		}
+		
+		// RESUME
+		// ======
+		if(action == "resume_education_date1"){
+			return Postsmeta.find({type:action, owner_username:parent_id},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(action == "resume_education_date2"){
+			return Postsmeta.find({type:action, owner_username:parent_id},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(action == "resume_education_type"){
+			return Postsmeta.find({type:action, owner_username:parent_id},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(action == "resume_experience_group"){
+			return Postsmeta.find({type:action, owner_username:parent_id},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		if(action == "resume_experience_date1"){
+			return Postsmeta.find({type:action, owner_username:parent_id},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(action == "resume_experience_date2"){
+			return Postsmeta.find({type:action, owner_username:parent_id},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
 		
 	});
 	
@@ -55,7 +76,7 @@ Meteor.methods({
 		
 			// UPDATE EXISTING POST			
 			
-			if(update_by_parent){
+			if(update_by_parent != "method_2"){
 				
 				// Update by Parent
 				Postsmeta.update({parent_id:parent_id, title:title},
@@ -68,6 +89,25 @@ Meteor.methods({
 					}
 				);
 				console.log("-------++ UPDATE BY POSTMETA PARENT: "+update_id);
+				console.log(title);
+			} else if(update_by_parent == "method_2"){
+				
+				// Update by Parent
+				Postsmeta.update({parent_id:parent_id, type:type},
+					{$set: {
+						updatedAt: Date.now(), 
+						title:title,
+						content:content,
+						type:type,
+						status:status,
+						}
+					}
+				);
+				
+				console.log("-------++ METHOD 2: "+update_id);
+				console.log(title);
+				console.log(update_by_parent);
+				
 			} else {
 				
 				// Update by _id
@@ -90,7 +130,7 @@ Meteor.methods({
 			// NEW POST
 			var new_id = Postsmeta.insert({
 				owner_id: author,
-				owner_username: Meteor.user().username,
+				owner_username: Meteor.user().profile.username,
 				owner_fullname: Meteor.user().profile.name_first +" "+Meteor.user().profile.name_last,
 				owner_avatar: ""+Meteor.user().profile.avatar, 
 				createdAt: Date.now(),
@@ -112,17 +152,12 @@ Meteor.methods({
 	},
   
   
-  // REMOVE (todo)
-  'postsmeta.remove'(taskId) {
-    check(taskId, String);
-	
-	const task = postsmeta.findOne(taskId);
-    if (task.private && task.owner !== this.userId) {
-      // If the task is private, make sure only the owner can delete it
-      throw new Meteor.Error('not-authorized');
-    }
-	
-  },
+    // REMOVE (todo)
+    'postsmeta.remove'(postId) {
+		check(postId, String);
+		console.log("REMOVE POST: "+postId);
+		Postsmeta.remove({_id:postId});
+	},
   
 });
 

@@ -1,10 +1,19 @@
-
 <!-- 
 #
-# TEMPLATE: HEADER
+# TEMPLATE: SCREEN
 #
 # -->
-<template name="header">
+<template name="screen">
+
+	{{> head}}
+
+	{{> yield region="content"}}
+	
+	{{> footer}}
+
+</template> 
+
+<template name="head">
 
 	<head>
 
@@ -20,11 +29,11 @@
 		<meta name="twitter:card" value="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself">
 
 		<!-- Open Graph data -->
-		<meta property="og:title" content="SkyRooms.IO" />
+		<meta property="og:title" content="HEADER" />
 		<meta property="og:type" content="article" />
 		<meta property="og:url" content="https://www.skyrooms.io" />
 		<meta property="og:image" content="https://www.skyrooms.io/images/og_facebook.jpg" />
-		<meta property="og:description" content="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself" />
+		<meta property="og:description" content="LOADED FROM HEADER" />
 
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 		<!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
@@ -33,39 +42,38 @@
 		
 		<!-- OneSignal Manifest-->
 		<link rel="manifest" href="/manifest.json">
-		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async ></script>
+		<!--
 		<script>
-			  var OneSignal = window.OneSignal || [];
-				OneSignal.push(["init", {
-				  appId: "ba62f6a5-2cce-41c7-8139-b4026c6b1daf",
-				  autoRegister: false, /* Set to true to automatically prompt visitors */
-				  notifyButton: {
-					  enable: true /* Set to false to hide */
-				  }
-				}]);
-		</script>
+			var OneSignal = window.OneSignal || [];
+			OneSignal.push(["init", {
+			  appId: "c7c0a812-c0cc-405c-bc16-7de68e4da968",
+			  autoRegister: true, /* Set to true to automatically prompt visitors */
+			  subdomainName: 'skyrooms',   
+			  httpPermissionRequest: {
+				enable: true
+			  },
+			  notifyButton: {
+				  enable: true /* Set to false to hide */
+			  }
+			}]);
+			
+			OneSignal.setDefaultNotificationUrl("https://www.skyrooms.io");
+			OneSignal.setDefaultTitle("SkyRooms");
+			
+			const data = {
+				contents: {
+					en: 'Hey! Wazup? We miss you.',  
+				},
+			};
+
+			OneSignal.Notifications.create([playersId], data);
+			
+		</script> -->
 		
-		
-		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	</head>
 
 </template>
-
-
-<!-- 
-#
-# TEMPLATE: SCREEN
-#
-# -->
-<template name="screen">
-
-	{{> header}}
-
-	{{> yield region="content"}}
-	
-	{{> footer}}
-
-</template> 
 
 
 <!-- 
@@ -74,8 +82,7 @@
 #
 # -->
 <template name="not_found">
-	{{> header}}
-
+	
 	<div class="back-link">
 		<a href="index.html" class="btn btn-primary">Back to Dashboard</a>
 	</div>

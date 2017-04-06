@@ -1,0 +1,248 @@
+<!-- 
+#
+# TEMPLATE: desk
+#
+# -->
+<template name="resume">
+
+	{{> preloader}}
+	
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					{{#if resume}}
+						{{#with resume}}
+				
+							<div class="col-md-8 social-board">
+							
+								<div class="hpanel hgreen hide-for-print">
+									<div class="panel-body">
+										<a href="/people/{{profile.username}}" class="btn btn-primary">
+											View Profile
+										</a>
+										{{#if my_resume}}
+										<a href="/desk/edit" class="btn btn-success">
+											Edit Resume
+										</a>
+										{{/if}}
+										<a href="" class="btn btn-primary pull-right" onClick="window.print();">
+											<i class="fa fa-print" aria-hidden="true"></i> Print
+										</a>
+										<div style="margin-right:4px;" class="btn btn-primary pull-right a2a_dd" data-a2a-url="https://www.skyrooms.io/resume/{{profile.username}}" data-a2a-title="Please View My Resume">
+											<i class="fa fa-share-alt" aria-hidden="true"></i> Share
+										</div>
+										<script async src="https://static.addtoany.com/menu/page.js"></script>
+									</div>
+								</div>
+								
+								<!-- USER CARD  -->
+								<div class="hpanel hgreen user_resume">
+									<div class="panel-body">
+										
+										<div class="row">
+											<div class="col-md-2">
+												
+												{{#if profile.avatar}}
+													<img alt="logo" class="img-circle m-b" src="{{profile.avatar}}" width="100%" height="150px" style="max-width:150px;"/>
+												{{else}}
+													<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100%" height="150px" style="max-width:150px;" />
+												{{/if}}
+												
+											</div>
+											
+											<div class="col-md-4">
+												<h2 class="text-info"><b>{{profile.name_first}} {{profile.name_last}}</b></h2>
+												<h5>{{profile.resume_phone}}</h5>
+												<h5>{{profile.resume_email}}</h5>
+												<h5>{{profile.location_name}}</h5>
+											</div>
+											
+											<div class="col-md-4">
+											</div>
+											
+										</div>	
+										
+										<!-- SECTION -->
+										<div class="row">
+											<div class="col-md-12">
+												
+												<h2 class="text-info">Career Objective</h2>
+												
+												<div class="hpanel hblue">
+													<div class="panel-body">
+														
+														<div class="row">
+															<div class="col-sm-12">
+																{{{profile.resume_objective}}}
+															</div>
+														</div>
+														
+													</div>
+												</div>
+												
+											</div>
+										</div>
+										
+										<!-- SECTION -->
+										{{#if resume_skills}}
+										<div class="row">
+											<div class="col-md-12">
+											
+												<h2 class="text-info">Skills and Key Strengths</h2>
+												
+												<div class="hpanel hblue">
+													<div class="panel-body">
+														
+														<div class="row">
+															<div class="col-sm-12">
+																<ul>
+																{{#each resume_skills}}
+																	<li>
+																		{{title}}
+																	</li> 
+																{{/each}}
+																</ul>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											
+											</div>
+										</div>
+										{{/if}}
+										
+										<!-- SECTION -->
+										{{#if resume_education}}
+										<div class="row">
+											<div class="col-md-12">
+												
+												<h2 class="text-info">Education, Certification and Training</h2>
+												
+												{{#each resume_education}}
+													<div class="row">
+														<div class="col-md-12">
+														
+															<div class="hpanel hblue">
+																<div class="panel-body">
+																	
+																	<div class="row">
+																		<div class="col-sm-12">
+																			<h4>
+																				
+																				<span class="text-primary">
+																					{{title}}
+																				</span>
+																				
+																				{{#each resume_education_type}}
+																					<h5 style="display:inline">, {{title}}</h5>
+																				{{/each}}
+																				<br />
+																				<small>
+																				{{#each resume_education_date1}}
+																					{{title}}
+																				{{/each}}
+																				-
+																				{{#each resume_education_date2}}
+																					{{title}}
+																				{{/each}}
+																				</small>
+																			</h4>
+																			
+																			{{{content}}}
+																			
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+															
+														</div>
+													</div>
+												{{/each}}
+												
+											</div>
+										</div>
+										{{/if}}
+										
+										<!-- SECTION -->
+										{{#if resume_experience}}
+										<div class="row">
+											<div class="col-md-12">
+												<h2 class="text-info">Professional Work Experience</h2>
+												
+												{{#each resume_experience}}
+													<div class="row">
+														<div class="col-md-12">
+														
+															<div class="hpanel hblue">
+																<div class="panel-body">
+																	
+																	<div class="row">
+																		<div class="col-sm-12">
+																			<h4>
+																				
+																				<span class="text-primary">
+																					{{title}}
+																				</span>
+																				
+																				{{#each resume_experience_group}}
+																					<h5 style="display:inline"> at {{title}}</h5>
+																				{{/each}}
+																				<br />
+																				<small>
+																				{{#each resume_experience_date1}}
+																					{{title}}
+																				{{/each}}
+																				-
+																				{{#each resume_experience_date2}}
+																					{{title}}
+																				{{/each}}
+																				</small>
+																			</h4>
+																			
+																			{{{content}}}
+																			
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+															
+														</div>
+													</div>
+												{{/each}}
+												
+												
+											</div>
+										</div>
+										{{/if}}
+										
+									</div>
+
+								</div>
+								<!-- USER CARD -->  
+								
+							</div>
+							
+							{{> sidebar_right}}
+							
+						{{/with}}
+					{{else}}
+						User has not built a resume
+					{{/if}}
+				
+				</div>	
+			</div>			
+		</div>
+		<!-- Main Wrapper -->
+	
+
+</template>
+

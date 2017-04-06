@@ -1,0 +1,140 @@
+<!-- 
+#
+# TEMPLATE: GROUPS
+#
+# -->
+<template name="group_projects"> 
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					<!-- GROUPS LIST MANAGER -->
+					<div class="col-lg-8">
+					
+						<div class="hpanel">
+							<div class="panel-body">
+								
+								<div class="row">
+									<div class="col-md-9">
+									
+										<a href="/group/{{group_slug}}/desk" class="btn btn-primary">
+											<i class="fa fa-id-card" aria-hidden="true"></i> Desk
+										</a>
+										<a href="/group/{{group_slug}}/projects" class="btn btn-info">
+											<i class="fa fa-briefcase" aria-hidden="true"></i> Projects
+										</a>
+										<a href="/group/{{group_slug}}/people" class="btn btn-primary">
+											<i class="fa fa-address-book-o" aria-hidden="true"></i> People
+										</a>
+										<a href="/group/{{group_slug}}/articles" class="btn btn-primary">
+											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
+										</a>
+										
+										<br />
+										<br />
+										<a href="/group/{{group_slug}}/projects/category_manager/" class="btn btn-sm btn-primary">
+											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Project Category
+										</a>
+										
+									</div>
+									
+									<div class="col-md-3">
+									
+										<form class="search_start">
+											<div class="input-group">
+												<input class="form-control search_value" type="text" placeholder="Search...">
+												
+												<div class="input-group-btn ">
+													<button type="submit" class="btn btn-default">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
+												
+											</div>
+											
+											<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+										</form>
+									
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+						
+						{{#each groups_project_category}}
+							<div class="hpanel forum-box">
+
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-md-9">
+											<h3 class="text-primary"><b>{{title}}</b></h3>
+											<h4>{{content}}</h4>
+										</div>
+										<div class="col-md-3">
+											<form>
+												<input type="hidden" name="groups_project_category_id" value="{{_id}}" />
+												<input type="hidden" name="action" value="add_project" />
+												<button type="submit" class="btn btn-xs btn-primary btn-outline pull-right">
+													<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Project
+												</button>
+											</form>
+											<a href="/group/{{group_slug}}/projects/category_manager/{{_id}}" class="btn btn-xs btn-primary btn-outline pull-right">
+												<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+											</a>
+										</div>
+									</div>
+									
+								</div>
+
+								{{#each groups_project}}
+									<div class="panel-body">
+										<div class="row">
+
+											<div class="col-md-9 forum-heading">
+												<a href="/group/{{group_slug}}/projects/details/{{_id}}">
+													<h4>
+														<i class="fa fa-folder-o" aria-hidden="true"></i> {{title}}
+													</h4>
+												</a>
+												<div class="desc">
+													{{content}}
+												</div>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="number">0</span>
+												<small>Task Lists</small>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="number">0%</span>
+												<small>Complete</small>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="number">0</span>
+												<small>People</small>
+											</div>
+										</div>
+									</div>
+								{{/each}}
+
+							</div>
+						{{/each}}
+						
+					</div>
+					{{> sidebar_right}}
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+
+</template>
+

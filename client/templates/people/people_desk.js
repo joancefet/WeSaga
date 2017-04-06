@@ -23,10 +23,14 @@ Router.route('/people/:user_slug',{
 Template.people_desk.events({
 	
 	// Submit New Post
-	'click .btn-success'(event) {
+	'click .people_submit_new_post'(event) {
 		
 		event.preventDefault();
 		const target = event.target;
+		
+		if( $(".newPostContent").val().length < 1 ){
+			return;
+		}
 		
 		Meteor.call('posts.update',
 			"new",
@@ -119,7 +123,6 @@ Template.people_desk.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
 			});
 			
 			// Add Notification and Meta data		
@@ -171,7 +174,7 @@ Template.people_desk.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// 1-OWNER) owner_id:, type:colleague, status:"waiting"
@@ -206,7 +209,7 @@ Template.people_desk.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Update to accepted for Owner
@@ -242,44 +245,39 @@ Template.people_desk.events({
 			swal({
 				title: "Really remove this Colleague?",
 				text: "",
-				type: "warning",
+				type: "question",
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Confirm",
-				closeOnConfirm: true
-			},
-				function(){
-					
-					swal.close();
-					
-					// Remove to accepted for Me
-					Meteor.call('posts.remove',
-						target.post_id.value,
-						"accepted"
-					);
-					
-					// Remove to accepted for Colleague
-					Meteor.call('posts.removeByTitle',
-						target.owner_id.value,
-						"accepted"
-					);
 				
-					setTimeout(function(){
-					
-						swal({
-							title: "You no longer Colleagues",
-							text: "",
-							type: "danger",
-							confirmButtonColor: "#DD6B55",
-							confirmButtonText: "Close",
-						});
-					
-					},100);
-						
-				}
-					
+			}).then(function (result) {
 				
-			);
+				swal.close();
+				
+				// Remove to accepted for Me
+				Meteor.call('posts.remove',
+					target.post_id.value,
+					"accepted"
+				);
+				
+				// Remove to accepted for Colleague
+				Meteor.call('posts.removeByTitle',
+					target.owner_id.value,
+					"accepted"
+				);
+			
+				setTimeout(function(){
+				
+					swal({
+						title: "You no longer Colleagues",
+						text: "",
+						type: "error",
+						showCancelButton: false,
+					});
+				
+				},100);
+					
+			});
 
 			
 		} 
@@ -337,6 +335,22 @@ Template.people_desk.helpers({
 	
 	slug(string){
 		return ToSeoUrl(string);
-	}
+	},
+	
+	// Google Map helper.
+	mapOptions2: function() {
+		console.log("mapOptions called.");
+		if (GoogleMaps.loaded()) {
+		  return {
+			center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
+			zoom: 8,
+			disableDefaultUI: true, 
+			draggable: true,
+			scrollwheel: true,
+			disableDoubleClickZoom: true,
+		  };
+		  
+		}
+	},
 	
 });

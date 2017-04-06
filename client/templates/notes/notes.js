@@ -49,13 +49,10 @@ Template.notes.events({
 
 Template.notes.onDestroyed(function() {
 	
-	// GET TINY MCE CONTENT
-	content = tinyMCE.get('notepad').getContent();
-	
 	// Update User Profile
 	Meteor.users.update(Meteor.userId(), {
 		$set: {
-			"profile.notes": content,
+			"profile.notes": tinyMCE.get('notepad').getContent(),
 		}
 	}); 
 	

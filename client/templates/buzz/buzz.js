@@ -33,8 +33,12 @@ Template.buzz.rendered = function() {
 Template.buzz.events({
 	
 	// Submit New Post
-	'click .btn-success'(event) {
+	'click .buzz_submit_new_post'(event) {
 		event.preventDefault();
+		
+		if( $(".newPostContent").val().length < 1 ){
+			return;
+		}
 		
 		Meteor.call('posts.update',
 			"new",
@@ -110,7 +114,7 @@ Template.buzz.helpers({
 	colleagues_post() {
 		
 		// Find ID's of Colleagues
-		var colleagueIds = Posts.find({	type:"colleagues" }).map(function(person){ 
+		var colleagueIds = Posts.find({	type:"colleagues", status:"accepted" }).map(function(person){ 
 			return person.title; 
 		});
 		

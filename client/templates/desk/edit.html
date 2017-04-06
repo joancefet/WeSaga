@@ -7,8 +7,6 @@
 
 	{{> preloader}}
 	
-	<body class="fixed-sidebar">
-		
 		<!-- Navigation -->
 			{{> account_navigation}}
 		<!-- Navigation -->
@@ -33,44 +31,69 @@
 												<img alt="logo" class="img-circle m-b m-t-md" src="{{currentUser.profile.avatar}}"  width="100%">
 											</div>
 											
-											<div>
-												<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
-											</div>
+											<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
 											
-											<hr />
+											<input type="text" class="form-control update_name_first" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
 											
-											<h3>
-												<a href="" class="font-uppercase">{{currentUser.profile.username}}</a>
-											</h3>
-											
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="firstName" value="{{currentUser.profile.name_first}}" placeholder="First name">
-											</div>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
-											</div>
-											
-											
-											
-		
-										</center>
+											<input type="text" class="form-control update_name_last" name="lastName" value="{{currentUser.profile.name_last}}" placeholder="Last name">
 										
+											<hr />
+										
+											<div class="desk_save_all btn btn-lg btn-block btn-success">
+												<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Profile
+											</div>
+											<a href="/resume/{{currentUser.profile.username}}" class="btn btn-block btn-primary">
+												<i class="fa fa-times-circle-o" aria-hidden="true"></i> View Resume
+											</a>
+											<a href="/desk" class="btn btn-block btn-danger">
+												<i class="fa fa-times-circle-o" aria-hidden="true"></i> Cancel Changes
+											</a>
+											
+											
+										</center>
 										
 									</div>
 									
 									<div class="col-lg-4">
-										<h2>About You</h2>
-										<textarea id="aboutUser" cols="40" rows="15" ></textarea>
+										<h2>About Me</h2>
+										<p>Use this oppourtunity to briefly tell people about yourself and what you do. It is public to EVERYONE on the internet.</p>
+										
+										<textarea id="user_about" cols="40" rows="22" style="width:100%;" >{{currentUser.profile.about}}</textarea>
+										<script>
+											
+											setTimeout(function(){
+												// TinyMCE has to be done this way for compatibilty reasons. :/
+												tinymce.EditorManager.editors = []; //we need to remove the old instances. 
+												
+												//Set "About" section to a TinyMCE editor.
+												tinymce.init({
+												  selector: 'textarea#user_about',
+												  element_format: "html",
+												  remove_linebreaks : true,
+												  convert_newlines_to_brs: true,
+												  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+												  menubar: false,
+												  statusbar: false,
+												  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+												  maxLength : 600
+												});
+											},1000);
+											
+										</script>
 									</div>
 									
 									<div class="col-lg-4">
 										<section id="map">
-										<button id="update_location" type="button" class="btn btn-primary btn-xs">Update Location</button>
-										<div class="pull-right text-muted font-bold m-b-xs">{{currentUser.profile.locName}}</div>
-										<div class="map-container">
-											{{> googleMap name="editMap" options=mapOptions}}
-										</div>
-									</section>
+											
+											<div class="pull-right text-muted font-bold m-b-xs">
+												{{currentUser.profile.location_name}}
+											</div>
+											
+											<div class="map-container">
+												{{> googleMap name="editMap" options=mapOptions}}
+											</div>
+											
+										</section>
 									</div>
 									
 								</div>
@@ -78,25 +101,345 @@
 							</div>
 							
 						</div>
+						
+						<div class="hpanel hgreen">
+							<div class="panel-body">
+								
+								<!-- SECTION -->
+								<div class="row">
+									<div class="col-md-12">
+										<h2><b>Contact Information</b></h2>
+										<div class="save_contact btn btn-success">
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+										</div>
+										<hr />
+										
+										<input type="text" class="form-control update_resume_phone" name="resume_phone" value="{{currentUser.profile.resume_phone}}" placeholder="Phone Number">
+										
+										<input type="text" class="form-control update_resume_email" name="resume_email" value="{{currentUser.profile.resume_email}}" placeholder="Email Address">
+										
+										<select class="form-control m-b update_resume_privacy" name="resume_privacy">
+											<option value="">Select Resume Privacy</option>
+											<optgroup label="Private">
+												<option value="me">Only Me</option>
+												<option value="colleagues">Share with Colleagues</option>
+												<option value="groups">Share with Group Members</option>
+											</optgroup>
+											<optgroup label="Public">
+												<option value="everything">Everyone can see everything</option>
+												<option value="everything_email_phone">Every can see everything - except phone and email</option>
+											</optgroup>
+										</select>
+										
+										<script>
+												$('select.update_resume_privacy').val("{{currentUser.profile.resume_privacy}}");
+										</script>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+						
+						<div class="hpanel hgreen">
+							<div class="panel-body">
+								
+								<!-- SECTION -->
+								<div class="row">
+									<div class="col-md-12">
+										<h2><b>Career Objective</b></h2>
+										<div class="save_objective btn btn-success">
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Objective
+										</div>
+										<hr />
+											
+										<textarea id="resume_objective" cols="40" rows="22" style="width:100%;" >{{currentUser.profile.resume_objective}}</textarea>
+										<script>
+											
+											setTimeout(function(){
+												// TinyMCE has to be done this way for compatibilty reasons. :/
+												
+												//Set "About" section to a TinyMCE editor.
+												tinymce.init({
+												  selector: 'textarea#resume_objective',
+												  element_format: "html",
+												  remove_linebreaks : true,
+												  convert_newlines_to_brs: true,
+												  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+												  menubar: false,
+												  statusbar: false,
+												  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+												  maxLength : 600
+												});
+											},1000);
+											
+										</script>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+						<div class="hpanel hgreen">
+							<div class="panel-body">
+								
+								<!-- SECTION -->
+								<div class="row">
+									<div class="col-md-12">
+										<h2><b>Skills and Key Strengths</b></h2>
+										<hr />
+										
+										<div class="add_skill btn btn-warning">
+											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add New
+										</div>
+										<div class="save_skill btn btn-success pull-right">
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Skills
+										</div>
+										<hr />
+										
+										{{#each resume_skills}}
+											<div class="row">
+												<div class="col-md-11">
+													<input type="text" class="form-control resume_skill" name="resume_skill" value="{{title}}" id="{{_id}}" placeholder="Skill...">
+												</div>
+												<div class="col-md-1">
+													<form class="skill_delete">
+														<input type="hidden" name="skill_id" value="{{_id}}" />
+														<button type="submit" class="btn btn-danger">
+															<i class="fa fa-times-circle-o" aria-hidden="true"></i>
+														</button>
+													</form>
+												</div>
+											</div>
+										{{/each}}
+										
+									</div>
+								</div>
+							
+							</div>
+						</div>
+							
+						<div class="hpanel hgreen">
+							<div class="panel-body">
+									
+								<!-- SECTION -->
+								<div class="row">
+									<div class="col-md-12">
+										<h2><b>Education, Certification and Training</b></h2>
+										<hr />
+										
+										<div class="add_education btn btn-warning">
+											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Education
+										</div>
+										<hr />
+										
+										{{#each resume_education}}
+											<div class="row well ">
+												<div class="col-md-11">
+												
+													<form class="form_resume_education">
+													
+														<input type="hidden" name="resume_id" value="{{_id}}" />
+													
+														<h5>Title:</h5>
+														<input required type="text" class="form-control resume_education_title" name="resume_education_title" value="{{title}}" placeholder="" />
+														<hr />
+														
+														<h5>Education Type:</h5>
+														{{#each resume_education_type}}
+															<select required  class="form-control m-b" id="{{_id}}" name="resume_education_type">
+																<option value="">Select Education Type</option>
+																<optgroup label="Degree">
+																	<option value="Associate Degree">Associate Degree</option>
+																	<option value="Bachelors Degree">Bachelors Degree</option>
+																	<option value="Masters Degree">Masters Degree</option>
+																	<option value="Doctorate Degree">Doctorate Degree</option>
+																</optgroup>
+																<optgroup label="Certificate">
+																	<option value="Diploma">Diploma</option>
+																	<option value="Certificate">Certificate</option>
+																</optgroup>
+																<option value="Other">Other</option>
+															</select>
+															<script>
+																$('select#{{_id}}').val("{{title}}");
+															</script>
+														{{/each}}
+														<hr />
+														
+														<h5>Details:</h5>
+														<textarea class="resume_education_content" name="resume_education_content" cols="40" rows="12" style="width:100%;" >{{content}}</textarea>
+														<script>
+															
+															setTimeout(function(){
+																// TinyMCE has to be done this way for compatibilty reasons. :/
+																
+																//Set "About" section to a TinyMCE editor.
+																tinymce.init({
+																  selector: 'textarea.resume_education_content',
+																  element_format: "html",
+																  remove_linebreaks : true,
+																  convert_newlines_to_brs: true,
+																  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+																  menubar: false,
+																  statusbar: false,
+																  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+																  maxLength : 600
+																});
+															},1000);
+															
+														</script>
+														<hr />
+														
+														<h5>Start Date:</h5>
+														{{#each resume_education_date1}}
+															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_education_date1" name="resume_education_date1" value="{{title}}" placeholder="MM/DD/YYYY" />
+															<script>
+																$('#{{_id}}_datepicker').datepicker({});
+															</script>
+														{{/each}}
+														<hr />
+														
+														<h5>Completion Date:</h5>
+														{{#each resume_education_date2}}
+															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_education_date2" name="resume_education_date2" value="{{title}}" placeholder="MM/DD/YYYY" />
+															<script>
+																$('#{{_id}}_datepicker').datepicker({});
+															</script>
+														{{/each}}
+														<hr />
+														
+														<button type="submit" class="btn btn-success pull-right">Update</button>
+														
+													</form>
+													
+												</div>
+										
+												<div class="col-md-1">
+													<form class="skill_delete">
+														<input type="hidden" name="skill_id" value="{{_id}}" />
+														<button type="submit" class="btn btn-danger">
+															<i class="fa fa-times-circle-o" aria-hidden="true"></i>
+														</button>
+													</form>
+												</div>
+											</div>
+										{{/each}}
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+							
+						<div class="hpanel hgreen">
+							<div class="panel-body">
+								
+								<!-- SECTION -->
+								<div class="row">
+									<div class="col-md-12">
+										<h2><b>Professional Work Experience</b></h2>
+										<hr />
+										
+										<div class="add_experience btn btn-warning">
+											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Experience
+										</div>
+										<div class="save_experience btn btn-success pull-right">
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Experience
+										</div>
+										<hr />
+										
+										{{#each resume_experience}}
+											<div class="row well ">
+												<div class="col-md-11">
+												
+													<form class="form_resume_experience">
+													
+														<input type="hidden" name="resume_id" value="{{_id}}" />
+													
+														<h5>Title:</h5>
+														<input required type="text" class="form-control resume_education_title" name="resume_experience_title" value="{{title}}" placeholder="" />
+														<hr />
+														
+														<h5>Group, Company or Organization:</h5>
+														{{#each resume_experience_group}}
+															<input required type="text" class="form-control resume_experience_group" name="resume_experience_group" value="{{title}}" placeholder="" />
+															<hr />
+														{{/each}}
+														
+														<h5>Details:</h5>
+														<textarea class="resume_experience_content" name="resume_experience_content" cols="40" rows="12" style="width:100%;" >{{content}}</textarea>
+														<script>
+															
+															setTimeout(function(){
+																// TinyMCE has to be done this way for compatibilty reasons. :/
+																
+																//Set "About" section to a TinyMCE editor.
+																tinymce.init({
+																  selector: 'textarea.resume_experience_content',
+																  element_format: "html",
+																  remove_linebreaks : true,
+																  convert_newlines_to_brs: true,
+																  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+																  menubar: false,
+																  statusbar: false,
+																  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+																  maxLength : 600
+																});
+															},1000);
+															
+														</script>
+														<hr />
+														
+														<h5>Start Date:</h5>
+														{{#each resume_experience_date1}}
+															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_experience_date1" name="resume_experience_date1" value="{{title}}" placeholder="MM/DD/YYYY" />
+															<script>
+																$('#{{_id}}_datepicker').datepicker({});
+															</script>
+														{{/each}}
+														<hr />
+														
+														<h5>End Date:</h5>
+														{{#each resume_experience_date2}}
+															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_experience_date2" name="resume_experience_date2" value="{{title}}" placeholder="MM/DD/YYYY" />
+															<script>
+																$('#{{_id}}_datepicker').datepicker({});
+															</script>
+														{{/each}}
+														<hr />
+														
+														
+														<button type="submit" class="btn btn-success pull-right">Update</button>
+														
+													</form>
+													
+												</div>
+										
+												<div class="col-md-1">
+													<form class="skill_delete">
+														<input type="hidden" name="skill_id" value="{{_id}}" />
+														<button type="submit" class="btn btn-danger">
+															<i class="fa fa-times-circle-o" aria-hidden="true"></i>
+														</button>
+													</form>
+												</div>
+											</div>
+										{{/each}}
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+					
 					</div>
 					<!-- Main Wrapper -->
 					
-					<!--Error Modal-->
-					<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header text-center">
-									<h4 class="modal-title">Error</h4>
-								</div>
-								<div class="modal-body">
-									All fields are required.
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					{{> sidebar_right}}
 				
 			
 				</div>
@@ -104,6 +447,5 @@
 		</div>
 		<!-- Main Wrapper -->
 	
-	</body>
 </template>
 

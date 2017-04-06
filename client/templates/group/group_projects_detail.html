@@ -1,0 +1,376 @@
+<!-- 
+#
+# TEMPLATE: GROUPS
+#
+# -->
+<template name="group_projects_details"> 
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					<!-- GROUPS LIST MANAGER -->
+					<div class="col-lg-8">
+					
+						<div class="hpanel">
+							<div class="panel-body">
+								
+								<div class="row">
+									<div class="col-md-9">
+									
+										<a href="/group/{{group_slug}}/desk" class="btn btn-primary">
+											<i class="fa fa-id-card" aria-hidden="true"></i> Desk
+										</a>
+										<a href="/group/{{group_slug}}/projects" class="btn btn-info">
+											<i class="fa fa-briefcase" aria-hidden="true"></i> Projects
+										</a>
+										<a href="/group/{{group_slug}}/people" class="btn btn-primary">
+											<i class="fa fa-address-book-o" aria-hidden="true"></i> People
+										</a>
+										<a href="/group/{{group_slug}}/articles" class="btn btn-primary">
+											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
+										</a>
+										
+										<br />
+										<br />
+										<a href="/group/{{group_slug}}/projects" class="btn btn-sm btn-primary">
+											<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Return to All Projects
+										</a>
+										
+									</div>
+									
+									<div class="col-md-3">
+									
+										<form class="search_start">
+											<div class="input-group">
+												<input class="form-control search_value" type="text" placeholder="Search...">
+												
+												<div class="input-group-btn ">
+													<button type="submit" class="btn btn-default">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
+												
+											</div>
+											
+											<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+										</form>
+									
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+						<div class="hpanel hblue">
+							<div class="panel-body">
+								
+								<div class="row">
+									<div class="col-sm-8">
+										<h3 class="text-primary">
+											<b>
+												<i class="fa fa-folder-open-o" aria-hidden="true"></i> {{the_group_project_title}} 0%
+											</b>
+										</h3>
+										<!--
+										<p>
+											<small>
+												<b>Start Date:</b> July 15th, 2017
+											</small>
+											<small>
+												<b>Due By:</b> July 20th, 2017
+											</small>
+										</p>
+										-->
+										<h4>
+											{{the_group_project_content}}
+										</h4>
+										
+										<div class="progress m-t-xs full progress-striped active">
+											<div style="width: 62%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class=" progress-bar progress-bar-info">
+											</div>
+										</div>
+										
+										
+										<a href="/group/{{group_slug}}/projects/list_manager/{{the_group_project_id}}" class="btn btn-sm btn-primary">
+											<i class="fa fa-list" aria-hidden="true"></i> Add Task List
+										</a>
+										<p>&nbsp;</p>
+										
+										<img src="/images/graph-default.png" width="100%" />
+										
+										
+										
+									</div>
+									<div class="col-sm-4 project-info">
+									
+										<a href="/group/{{group_slug}}/projects/details_manager/{{the_group_project_id}}" class="btn btn-xs btn-primary btn-outline pull-right">
+											<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+										</a>
+										<a href="/group/{{group_slug}}/projects/worker_manager/{{the_group_project_id}}" class="btn btn-xs btn-primary btn-outline pull-right">
+											<i class="fa fa-user-plus" aria-hidden="true"></i> Assign Worker
+										</a>
+										
+										<br />
+										
+										<div>
+											<p>
+												<span class="label label-info">Added</span> Task Example
+												<br />
+												<small>Tues March 25 at 11:54 pm</small>
+											</p>
+											<p>
+												<span class="label label-success">Completed</span> Task Example
+												<br />
+												<small>Tues March 25 at 11:54 pm</small>
+											</p>
+											<p>
+												<span class="label label-info">Added</span> Task Example
+												<br />
+												<small>Tues March 25 at 11:54 pm</small>
+											</p>
+											
+										</div>
+										
+									</div>
+								</div>
+								
+								
+							</div>
+							
+							<!-- CHATS -->
+							<div class="panel-footer">
+							
+								{{#each project_comments}}
+									<div class="social-talk">
+										<div class="media social-profile clearfix">
+											<a class="pull-left" href="/people/{{slug owner_username}}">
+												<a href="/people/{{slug owner_username}}">
+													<img src="{{owner_avatar}}" alt="profile-picture">
+												</a>
+											</a>
+											<div class="media-body">
+												<span class="font-bold">
+													<span class="capitalize">
+														<a href="/people/{{slug owner_username}}">
+															{{owner_fullname}}
+														</a>
+													</span>
+												</span>
+												<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+												<div class="social-content">
+													{{content}}  
+												</div>
+											</div>
+										</div>
+									</div>
+								{{/each}}	
+								
+								<div class="social-form">
+									<form autocomplete="off">
+										<input type="hidden" name="the_group_project_id" value="{{the_group_project_id}}" />
+										<input type="hidden" name="action" value="comment" />
+										<input type="text"   name="content" class="form-control comment_container" placeholder="Your comment" />
+									</form>
+								</div>
+								
+							</div>
+							<!-- CHATS -->
+							
+						</div>	
+						
+						<div class="row search_container">
+							{{#if people}}
+								{{#each people}}
+									{{#if project_worker}}
+									<div class="col-lg-3">
+										<div class="hpanel hgreen">
+											<div class="panel-body">
+												
+												<a href="/people/{{profile.username}}">
+													{{#if profile.avatar}}
+														<center>
+															<img alt="logo" class="img-circle m-b" src="{{profile.avatar}}" width="100%" style="width:100%; height:205px;"  />
+														</center>
+													{{else}}
+														<center>
+															<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100%" style="width:100%; height:205px;" />
+														</center>
+													{{/if}}
+												</a>
+												
+												<h3>
+													<center>
+														<a href="/people/{{profile.username}}">
+															{{profile.name_first}}
+															<br />
+															{{profile.name_last}}
+														</a>
+													</center>
+												</h3>
+												
+												<!-- View Desk -->
+												<a href="/people/{{profile.username}}"  class="btn btn-primary btn-block btn-sm">
+													<i class="fa fa-id-card" aria-hidden="true"></i> View Desk
+												</a>
+												
+												<button type="submit" class="btn btn-block btn-sm btn-info">
+													<i class="fa fa-phone-square" aria-hidden="true"></i> Call
+												</button> 
+												
+												<button type="submit" class="btn btn-block btn-sm btn-info">
+													<i class="fa fa-commenting-o" aria-hidden="true"></i> Message
+												</button> 
+												
+												
+											</div>
+											
+										</div>
+									</div>
+									{{/if}}
+								{{/each}}
+							{{else}}
+								<h4 class="text-white search_container_message">No Members Found</h4>
+							{{/if}}
+						</div> 
+							
+							
+						{{#each groups_task_list}}
+							<div class="hpanel hblue">
+								<div class="panel-body">
+								
+									<a href="/group/{{group_slug}}/projects/list_manager/{{the_group_project_id}}/{{_id}}" class="btn btn-xs btn-primary btn-outline pull-right">
+										<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+									</a>
+									<form autocomplete="off">
+										<input type="hidden" name="the_task_list_id" value="{{_id}}" />
+										<input type="hidden" name="action" value="task_add" />
+										
+										<button class="btn btn-xs btn-primary btn-outline pull-right">
+											<i class="fa fa-check-square-o" aria-hidden="true"></i> Add Task
+										</button>
+									</form>
+								
+									<h4>
+										<i class="fa fa-list-alt" aria-hidden="true"></i> {{title}} (0%)
+									</h4>
+									
+									<!--
+									<p>
+										<small>
+											<b>Start Date:</b> July 15th, 2017
+										</small>
+										<small>
+											<b>Due By:</b> July 20th, 2017
+										</small>
+									</p>
+									-->
+									
+									<p>
+										{{content}}
+									</p>
+									
+									<div class="progress m-t-xs full progress-small  progress-striped active">
+										<div style="width: 99%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class=" progress-bar progress-bar-info">
+										</div>
+									</div>
+									
+									{{#each task}}
+									<div class="row">
+										<div class="col-md-12">
+										
+											<span class="checkbox checkbox-single checkbox-success" style="display:inline;">
+												{{#if task_checked}}
+													<input type="checkbox" id="{{_id}}" class="task_checkbox" checked>
+												{{else}}
+													<input type="checkbox"  id="{{_id}}" class="task_checkbox">
+												{{/if}}
+												<label>&nbsp;</label>
+											</span>
+											
+											<input type="text" class="form-control" value="{{title}}" name="task_title" id="{{_id}}" placeholder="Task Details..." style="display:inline; width:80%;" />
+											 
+											<form style="display:inline;" >
+												<input type="hidden" name="the_task_list_id" value="{{_id}}" />
+												<input type="hidden" name="task_id" value="{{_id}}" />
+												<input type="hidden" name="action" value="task_update" />
+												<button type="submit" class="btn btn-success btn-sm">
+													<i class="fa fa-floppy-o" aria-hidden="true"></i>
+												</button>
+											</form>
+											
+											<form class="skill_delete" style="display:inline;" >
+												<input type="hidden" name="the_task_list_id" value="{{_id}}" />
+												<input type="hidden" name="task_id" value="{{_id}}" />
+												<input type="hidden" name="action" value="task_delete" />
+												<button type="submit" class="btn btn-danger btn-sm">
+													<i class="fa fa-times-circle-o" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+									</div>
+									
+									{{/each}}
+									
+								</div>
+								
+								<!-- CHATS -->
+								<div class="panel-footer">
+								
+									{{#each groups_task_list_comments}}
+										<div class="social-talk">
+											<div class="media social-profile clearfix">
+												<a class="pull-left" href="/people/{{slug owner_username}}">
+													<a href="/people/{{slug owner_username}}">
+														<img src="{{owner_avatar}}" alt="profile-picture">
+													</a>
+												</a>
+												<div class="media-body">
+													<span class="font-bold">
+														<span class="capitalize">
+															<a href="/people/{{slug owner_username}}">
+																{{owner_fullname}}
+															</a>
+														</span>
+													</span>
+													<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+													<div class="social-content">
+														{{content}}  
+													</div>
+												</div>
+											</div>
+										</div>
+									{{/each}}	
+									
+									<div class="social-form">
+										<form autocomplete="off">
+											<input type="hidden" name="the_task_list_id" value="{{_id}}" />
+											<input type="hidden" name="action" value="task_list_comment" />
+											<input type="text"   name="content" class="form-control comment_container" placeholder="Your comment" />
+										</form>
+									</div>
+									
+								</div>
+								<!-- CHATS -->
+								
+							</div>
+						{{/each}}
+						
+					</div>
+					{{> sidebar_right}}
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+
+</template>
+

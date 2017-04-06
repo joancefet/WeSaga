@@ -58,7 +58,6 @@ Template.meetings_manage.events({
 		event.preventDefault();
 		const target = event.target;
 		
-		
 		var meeting_id = "unset";
 		if(target.the_meeting_id.value){
 			meeting_id = target.the_meeting_id.value;
@@ -75,7 +74,7 @@ Template.meetings_manage.events({
 			"meetings",
 			"",
 			"publish"
-			,function(error, result){
+			,function(error, result, event){
 				
 				// Meeting Meta Data
 				// -----------------
@@ -85,6 +84,30 @@ Template.meetings_manage.events({
 				var update_meta_by_parent = false;
 				if(meeting_id != "new"){ 
 					update_meta_by_parent = true; 
+				}
+				
+				// Image
+				if($("#fileInput").prop('files')){
+					
+					console.log("Starting Upload");
+					
+					Cloudinary.upload( $("#fileInput").prop('files'), function(error, result){
+						
+						// meta_meeting_image	
+						Meteor.call('postsmeta.update',
+							meeting_id,
+							"me",
+							"meta_meeting_image",
+							"https://res.cloudinary.com/skyroomsio/image/upload/c_thumb,h_256,w_256/v1489424858/"+result.public_id+"."+result.format,
+							"meeting_meta",
+							returned_meeting_id,
+							"publish",
+							update_meta_by_parent
+						);
+						
+						console.log("Upload Complete: "+meeting_id);
+						
+					});
 				}
 				
 				// meta_password	
@@ -158,8 +181,7 @@ Template.meetings_manage.events({
 					returned_meeting_id,
 					"publish",
 					update_meta_by_parent
-				);
-				
+				);				
 				
 				// All Done
 				Router.go("/meetings");
@@ -232,6 +254,9 @@ Template.meetings_manage.helpers({
 	},
 	
 	// Meta Data
+	meta_meeting_image(){
+		return Postsmeta.findOne({title:"meta_meeting_image"});
+	},
 	meta_password(){
 		return Postsmeta.findOne({title:"meta_password"});
 	},

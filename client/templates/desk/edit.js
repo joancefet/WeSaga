@@ -1,13 +1,28 @@
+import { Posts } 					from '../../../imports/posts.js';
+import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
-
+// ROUTER
+//=========
 Router.route('/desk/edit',{
 	data:function(){
 		
-		if( Meteor.user() && Meteor.user().profile.guest ){
+		if( !Meteor.user()){
 			Router.go('/');
-		} else {
-			Router.go('/desk/edit');
 		}
+	},
+	waitOn: function(){
+		
+		Meteor.subscribe('posts', "resume_skill", Meteor.user().profile.username ); 
+		Meteor.subscribe('posts', "resume_education", Meteor.user().profile.username ); 
+			Meteor.subscribe('postsmeta', "resume_education_date1", Meteor.user().profile.username );
+			Meteor.subscribe('postsmeta', "resume_education_date2", Meteor.user().profile.username );	
+			Meteor.subscribe('postsmeta', "resume_education_type", Meteor.user().profile.username );
+		Meteor.subscribe('posts', "resume_experience", Meteor.user().profile.username ); 
+			Meteor.subscribe('postsmeta', "resume_experience_group", Meteor.user().profile.username );
+			Meteor.subscribe('postsmeta', "resume_experience_date1", Meteor.user().profile.username );
+			Meteor.subscribe('postsmeta', "resume_experience_date2", Meteor.user().profile.username );	
+			Meteor.subscribe('postsmeta', "resume_experience_type", Meteor.user().profile.username );
+		return;
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -16,65 +31,15 @@ Router.route('/desk/edit',{
 	
 });
 
-var MAP_ZOOM = 15;
-
 // ------------------
 // ACCOUNT
 // ------------------
 Template.deskedit.rendered = function() {
 	
-	//Init datepickers. Month and year only.
-	$( "#fromDate, #toDate" ).datepicker({ 
-	   changeMonth: true,
-	   changeYear: true,
-	   showButtonPanel: true,
-	   dateFormat: 'M yy',            
-	   onClose: function(dateText, inst) { 
-		   var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-		   var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();             
-		   $(this).datepicker('setDate', new Date(year, month, 1));
-	   },
-	   beforeShow : function(input, inst) {
-		   if ((datestr = $(this).val()).length > 0) {
-			   year = datestr.substring(datestr.length-4, datestr.length);
-			   month = jQuery.inArray(datestr.substring(0, datestr.length-5), $(this).datepicker('option', 'monthNames'));
-			   $(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
-			   $(this).datepicker('setDate', new Date(year, month, 1));    
-		   }
-		   var other = this.id == "fromDate" ? "#toDate" : "#fromDate";
-		   var option = this.id == "fromDate" ? "maxDate" : "minDate";        
-		   if ((selectedDate = $(other).val()).length > 0) {
-			   year = selectedDate.substring(selectedDate.length-4, selectedDate.length);
-			   month = jQuery.inArray(selectedDate.substring(0, selectedDate.length-5), $(this).datepicker('option', 'monthNames'));
-			   $(this).datepicker( "option", option, new Date(year, month, 1));
-		   }
-	   }
-	});
-	
-	//Change datepicker icons.
-	$('.ui-icon-circle-triangle-w').toggleClass('pe-7s-angle-left ui-icon-circle-triangle-w');
-	
-	//Set "About" section to a TinyMCE editor.
-	tinymce.init({
-	  selector: 'textarea',
-	  skin_url: '/packages/teamon_tinymce/skins/lightgray',
-	  menubar: false,
-	  toolbar: 'insert | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
-	});
-	
 	//Load Google Map
 	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
 	
-	//Waiting for user to become available. Setting TinyMCE content.
-	//==============================================================
-	Meteor.subscribe("userList", function() {
-		tinyMCE.get('aboutUser').setContent(Meteor.user().profile.aboutUser);
-		Meteor.call('skyrooms.howMany', Meteor.userId(), function(e,r){
-			console.log("Rooms: " + r);
-			$('#skyroomsCount').html(r);
-		});
-	});
-
+	
 };
 
 
@@ -82,7 +47,6 @@ Template.deskedit.rendered = function() {
 // Initialize file uploader
 // ========================
 Template.deskedit.onCreated(function () {
-  this.currentUpload = new ReactiveVar(false);
   
   //Place Marker on User Location.
   GoogleMaps.ready('editMap', function(map) {
@@ -92,50 +56,7 @@ Template.deskedit.onCreated(function () {
       map: map.instance
     });
   });
-});
-
-// profileImages
-// =============
-var uploadFiles = new FilesCollection({
-	collectionName: 'uploadFiles',
-	allowClientCode: false, // Disallow remove files from Client
-	onBeforeUpload: function (file) {
-		// Allow upload files under 10MB, and only in png/jpg/jpeg formats
-		if (file.size <= 1024*1024*2 && /png|jpg|jpeg/i.test(file.extension)) {
-			return true;
-		} else {
-			return 'Please upload image, with size equal or less than 2MB';
-		}
-	}
-});
-
-
-//Desk Edit Helpers
-// ==============
-Template.deskedit.helpers({
-	// Google Map helper.
-	mapOptions: function() {
-		console.log("mapOptions called.");
-		if (GoogleMaps.loaded()) {
-		  return {
-			center: new google.maps.LatLng(Meteor.user().profile.locLat, Meteor.user().profile.locLng),
-			zoom: 8,
-			disableDefaultUI: true, 
-			draggable: false,
-			scrollwheel: false,
-			disableDoubleClickZoom: true,
-		  };
-		  console.log("There was NOT an error!");
-		} else {
-			console.log("There was an error!");
-		}
-	},
-	  
-	expByUser(){
-		console.log("expByUser");
-		return UserExperience.find({"ownerId":Meteor.userId()}, {sort: { fromStamp: -1 }});
-	},
-	
+  
 });
 
 // Events
@@ -165,232 +86,434 @@ Template.deskedit.events({
 		
 		console.log("COMPLETE");
 		
-		
-		// if (event.currentTarget.files && event.currentTarget.files[0]) {
-		
-		  // // We upload only one file, in case
-		  // // multiple files were selected
-		  // var upload = uploadFiles.insert({
-			// file: event.currentTarget.files[0],
-			// streams: 'dynamic',
-			// chunkSize: 'dynamic'
-		  // }, false);
-
-		  // upload.on('start', function () {
-			// template.currentUpload.set(this);
-		  // });
-
-		  // upload.on('end', function (error, fileObj) {
-			// if (error) {
-			  // alert('Error during upload: ' + error);
-			// } else {
-				// // console.log(fileObj._id);
-				// // console.log(event.currentTarget.files[0]);
-			  // //alert('File "' + fileObj.name + '" successfully uploaded');
-			  
-			// }
-			
-			
-			// // console.log("1) PRECACHING IMAGE: "+"https://dlnde5a0p49uc.cloudfront.net/files"+fileObj._id+event.currentTarget.files[0].extensionWithDot);
-			// $.ajax({
-			  // url: ""+fileObj._id+event.currentTarget.files[0].extensionWithDot,
-			  // context: document.body
-			// }).done(function() {
-				
-			// });
-		  
-			// setTimeout(function(){
-				// // Update The users profile image
-				
-				// // console.log("3) UPDATING DATABASE NOW: "+Meteor.userId());
-				// Meteor.users.update({_id:Meteor.userId()}, { $set:{"profile.avatar":fileObj._id+event.currentTarget.files[0].extensionWithDot}} ) // Had to use the current event for some reason
-				// template.currentUpload.set(false);
-				
-				// setTimeout(function(){
-					// $( ".imageUploadPreview" ).removeClass( "loader" );
-					// $( ".imageUploadPreview img" ).removeClass( "loader_background" );
-				// },3000);
-				
-			// },3000);
-			
-
-		  // });
-
-		  // upload.start();
-		// }
 	},
 	
-	'click #update_location': function(event){
-		$.getJSON('https://freegeoip.net/json/') 
-     .done (function(location)
-     {
-          //$('#country').html(location.country_name);
-          //$('#country_code').html(location.country_code);
-          //$('#region').html(location.region_name);
-          //$('#region_code').html(location.region_code);
-          //$('#city').html(location.city);
-		  //alert(location.city);
-          //$('#latitude').html(location.latitude);
-          //$('#longitude').html(location.longitude);
-          //$('#timezone').html(location.time_zone);
-          //$('#ip').html(location.ip);
-		  Meteor.users.update(Meteor.userId(), {
-		  $set: {
-			"profile.locLat": location.latitude,
-			"profile.locLng": location.longitude,
-			"profile.locName": location.city + ", " + location.region_name + ", " + location.country_name,
-		  }
-		});
-     });
-	},
-	
-	//Present check div and box.
-	'click #presentCheck': function(event) {
-		if($('#presentCheck').attr('aria-pressed') == 'true'){
-			console.log("Uncheck!");
-			$('#presentCheck').attr('aria-pressed', 'false');
-			$('#presentCheck').addClass('btn-default');
-			$('#toDate').val('');
-			$('#toDate').prop('readonly', false);
-		} else {
-			console.log("Check!");
-			$('#presentCheck').removeAttr('aria-pressed');
-			$('#presentCheck').attr('aria-pressed', 'true');
-			$('#presentCheck').removeClass('btn-default');
-			$('#toDate').val('Present');
-			$('#toDate').prop('readonly', true);
-		}
-	},
-	
-	//Save experience.
-	'click #addExperience': function(event) {
-		if($('#fromDate').val() == "" || $('#toDate').val() == "" || $('#newOrg').val() == "" || $('#newTitle').val() == "" || tinymce.get('newDesc').getContent() == ""){
-			$("#errorModal").modal();
-			console.log("Error");
-		} else { 
-			var fromStamp = new Date($('#fromDate').val()).getTime();
-			console.log(fromStamp);
-			
-			Meteor.call('userExperience.insert',
-				$('#fromDate').val(),
-				fromStamp,
-				$('#toDate').val(),
-				$('#newOrg').val(),
-				$('#newTitle').val(),
-				tinymce.get('newDesc').getContent(),
-			);
-			
-			$('#fromDate').val("");
-			$('#toDate').val("");
-			$('#newOrg').val("");
-			$('#newTitle').val("");
-			tinymce.get('newDesc').setContent("");
-			if($('#presentCheck').attr('aria-pressed') == 'true'){
-				console.log("Uncheck!");
-				$('#presentCheck').attr('aria-pressed', 'false');
-				$('#presentCheck').addClass('btn-default');
-				$('#toDate').val('');
-				$('#toDate').prop('readonly', false);
-			}
-			
-		}
+	'click .desk_save_all': function(event){
 		
-	},
-	
-	//Edit experience
-	'click .edit': function(event){
-		var xpId = event.currentTarget.id.slice(0,-5);
-		var entry = Meteor.call('userExperience.getOne', xpId, function(e,r){
-			console.log(r.fromDate);
-		
-			$('#fromDate').val(r.fromDate);
-			$('#toDate').val(r.toDate);
-			$('#newOrg').val(r.org);
-			$('#newTitle').val(r.title);
-			tinymce.get('newDesc').setContent(r.description);
-			$('#addExperience').html('Update Experience');
-			$('#addExperience').attr('id', 'update-' + r._id);
-			
-			if(r.toDate == "Present"){
-				console.log("Check!");
-				$('#presentCheck').removeAttr('aria-pressed');
-				$('#presentCheck').attr('aria-pressed', 'true');
-				$('#presentCheck').removeClass('btn-default');
-				$('#toDate').val('Present');
-				$('#toDate').prop('readonly', true);
-			}
+		// Update working location
+		// TODO: Change this to Google Maps API so user can enter data. This is quick and dirty.
+		$.getJSON('https://freegeoip.net/json/').done(function(location){
+			//$('#country').html(location.country_name);
+			//$('#country_code').html(location.country_code);
+			//$('#region').html(location.region_name);
+			//$('#region_code').html(location.region_code);
+			//$('#city').html(location.city);
+			//alert(location.city);
+			//$('#latitude').html(location.latitude);
+			//$('#longitude').html(location.longitude);
+			//$('#timezone').html(location.time_zone);
+			//$('#ip').html(location.ip);
+			Meteor.users.update(Meteor.userId(), {
+				$set: {
+					"profile.location_latitude": location.latitude,
+					"profile.location_longitude": location.longitude,
+					"profile.location_name": location.city + ", " + location.region_name + ", " + location.country_name,
+				}
+			});
 		});
 		
-		
-	},
-	
-	//Save Edited Experience
-	'click .updateExp': function(event){
-		if($('#fromDate').val() == "" || $('#toDate').val() == "" || $('#newOrg').val() == "" || $('#newTitle').val() == "" || tinymce.get('newDesc').getContent() == ""){
-			$("#errorModal").modal();
-			console.log("Error");
-		} else { 
-			var fromStamp = new Date($('#fromDate').val()).getTime();
-			console.log(event.currentTarget.id.substring(7));
-			
-			Meteor.call('userExperience.update',
-				event.currentTarget.id.substring(7),
-				$('#fromDate').val(),
-				fromStamp,
-				$('#toDate').val(),
-				$('#newOrg').val(),
-				$('#newTitle').val(),
-				tinymce.get('newDesc').getContent(),
-			);
-			
-			$('#fromDate').val("");
-			$('#toDate').val("");
-			$('#newOrg').val("");
-			$('#newTitle').val("");
-			tinymce.get('newDesc').setContent("");
-			if($('#presentCheck').attr('aria-pressed') == 'true'){
-				console.log("Uncheck!");
-				$('#presentCheck').attr('aria-pressed', 'false');
-				$('#presentCheck').addClass('btn-default');
-				$('#toDate').val('');
-				$('#toDate').prop('readonly', false);
-			}
-			$('#'+event.currentTarget.id).html('Add Experience');
-		}
-	},
-	
-	//Delete Experience
-	'click .delete': function(event){
-		var xpId = event.currentTarget.id.slice(0,-7);
-		console.log(xpId);
-		
-		Meteor.call('userExperience.remove',
-			xpId,
-		);
-	},
-	
-	'click .skyrooms_logout': function(event){
-		event.preventDefault();
-		Meteor.logout();
-		Router.go('/');
-	},
-	
-	//Update profile.
-	'click #saveProfile'(event){
-		event.preventDefault();
-		
+		// Update profile data
 		Meteor.users.update(Meteor.userId(), {
-		  $set: {
-			"profile.firstName": $('[name=firstName]').val(),
-			"profile.lastName": $('[name=lastName]').val(),
-			"profile.birthday": $('[name=birthday]').val(),
-			"profile.aboutUser": tinymce.get('aboutUser').getContent(),
-			"profile.FacebookURL": $('#fbAcct').val(),
-			"profile.TwitterURL": $('#twAcct').val(),
-			"profile.LinkedInURL": $('#liAcct').val(),
-		  }
+			$set: {
+				"profile.name_first": $(".update_name_first").val(),
+				"profile.name_last": $(".update_name_last").val(),
+				"profile.about": tinyMCE.get('user_about').getContent(),
+			}
 		});
-		Router.go('/buzz');
+		
+		swal({
+			title: "Profile Updated",
+			text: "",
+			type: "success",
+			showCancelButton: false,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Close",
+			closeOnConfirm: true
+		});
 		
 	},
+	
+	
+	
+	// =============
+	// RESUME EVENTS
+	// =============
+	
+	// save_contact
+	'click .save_contact': function(event){
+		Meteor.users.update(Meteor.userId(), {
+			$set: {
+				"profile.resume_phone": $('.update_resume_phone').val(),
+				"profile.resume_email": $('.update_resume_email').val(),
+				"profile.resume_privacy": $('.update_resume_privacy').val(),
+			}
+		});
+		
+		swal({
+			title: "Updated",
+			text: "Your profile has been updated.",
+			type: "success",
+			showCancelButton: false,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Close",
+			closeOnConfirm: true
+		});
+		
+	},
+	
+	// Objective
+	'click .save_objective': function(event){
+		Meteor.users.update(Meteor.userId(), {
+			$set: {
+				"profile.resume_objective": tinyMCE.get('resume_objective').getContent(),
+			}
+		});
+		
+		swal({
+			title: "Objective Updated",
+			text: "Your resume has been updated.",
+			type: "success",
+			showCancelButton: false,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Close",
+			closeOnConfirm: true
+		});
+		
+	},
+	
+	// Skills
+	'click .add_skill': function(event){
+	
+		Meteor.call('posts.update',
+			"new",
+			"me",
+			"New Skill",
+			"", 
+			"resume_skill",
+			Meteor.userId(),
+			"publish",
+		);
+	
+	},
+	'click .save_skill': function(event){
+		
+		// For Each Skill
+		$(".resume_skill").each(function(skill) {
+			console.log(this.id);
+			
+			Meteor.call('posts.update',
+				this.id,
+				"me",
+				this.value,
+				"",
+				"resume_skill",
+				Meteor.userId(),
+				"publish",
+			);
+			
+		});
+		
+		swal({
+			title: "Skills Updated",
+			text: "Your resume has been updated.",
+			type: "success",
+			showCancelButton: false,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Close",
+			closeOnConfirm: true
+		});
+		
+	},
+	'submit .skill_delete':function(event){
+		
+		event.preventDefault();
+		const target = event.target;
+		
+		Meteor.call('posts.remove',
+			target.skill_id.value
+		);
+		
+	},
+	
+	// Education
+	'click .add_education': function(event){
+	
+		Meteor.call('posts.update',
+			"new",
+			"me",
+			"",
+			"", 
+			"resume_education",
+			Meteor.userId(),
+			"publish",
+			function(error, parent_post_id){
+				
+				Meteor.call('postsmeta.update',
+					"new",
+					"me",
+					"",
+					"", 
+					"resume_education_date1",
+					parent_post_id,
+					"publish",
+				);
+				Meteor.call('postsmeta.update',
+					"new",
+					"me",
+					"",
+					"", 
+					"resume_education_date2",
+					parent_post_id,
+					"publish",
+				);
+				Meteor.call('postsmeta.update',
+					"new",
+					"me",
+					"",
+					"", 
+					"resume_education_type",
+					parent_post_id,
+					"publish",
+				);
+				
+			}
+		);
+		
+	},
+	'submit .form_resume_education': function(event){
+		
+		event.preventDefault();
+		const target = event.target;
+			
+		console.log(target.resume_id.value);
+		console.log(target.resume_education_title.value);
+		console.log(target.resume_education_content.value);
+		console.log(target.resume_education_date1.value);
+		console.log(target.resume_education_date2.value);
+		console.log(target.resume_education_type.value);
+		
+			
+		Meteor.call('posts.update',
+			target.resume_id.value,
+			"me",
+			target.resume_education_title.value,
+			target.resume_education_content.value,
+			"resume_education",
+			Meteor.userId(),
+			"publish",
+		);
+		
+		// META
+		Meteor.call('postsmeta.update',
+			target.resume_id.value,
+			"me",
+			target.resume_education_date1.value,
+			"", 
+			"resume_education_date1",
+			target.resume_id.value,
+			"publish",
+			"method_2",
+		);
+		Meteor.call('postsmeta.update',
+			target.resume_id.value, 
+			"me",
+			target.resume_education_date2.value,
+			"", 
+			"resume_education_date2",
+			target.resume_id.value,
+			"publish",
+			"method_2",
+		);
+		Meteor.call('postsmeta.update',
+			target.resume_id.value,
+			"me",
+			target.resume_education_type.value,
+			"", 
+			"resume_education_type",
+			target.resume_id.value,
+			"publish",
+			"method_2",
+		);
+			
+		swal({
+			title: "Education Updated",
+			text: "Your resume has been updated.",
+			type: "success",
+			showCancelButton: false,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Close",
+			closeOnConfirm: true
+		});
+		
+	},
+	
+	// Experience
+	'click .add_experience': function(event){
+	
+		Meteor.call('posts.update',
+			"new",
+			"me",
+			"",
+			"", 
+			"resume_experience",
+			Meteor.userId(),
+			"publish",
+			function(error, parent_post_id){
+				
+				Meteor.call('postsmeta.update',
+					"new",
+					"me",
+					"",
+					"", 
+					"resume_experience_group",
+					parent_post_id,
+					"publish",
+				);
+				Meteor.call('postsmeta.update',
+					"new",
+					"me",
+					"",
+					"", 
+					"resume_experience_date1",
+					parent_post_id,
+					"publish",
+				);
+				Meteor.call('postsmeta.update',
+					"new",
+					"me",
+					"",
+					"", 
+					"resume_experience_date2",
+					parent_post_id,
+					"publish",
+				);
+				
+			}
+		);
+	
+	},
+	'submit .form_resume_experience': function(event){
+		
+		event.preventDefault();
+		const target = event.target;
+			
+		console.log(target.resume_id.value);
+		console.log(target.resume_experience_title.value);
+		console.log(target.resume_experience_content.value);
+		console.log(target.resume_experience_date1.value);
+		console.log(target.resume_experience_date2.value);
+		
+		
+		Meteor.call('posts.update',
+			target.resume_id.value,
+			"me",
+			target.resume_experience_title.value,
+			target.resume_experience_content.value,
+			"resume_experience",
+			Meteor.userId(),
+			"publish",
+		);
+		
+		// META
+		Meteor.call('postsmeta.update',
+			target.resume_id.value,
+			"me",
+			target.resume_experience_group.value,
+			"", 
+			"resume_experience_group",
+			target.resume_id.value,
+			"publish",
+			"method_2",
+		);
+		Meteor.call('postsmeta.update',
+			target.resume_id.value,
+			"me",
+			target.resume_experience_date1.value,
+			"", 
+			"resume_experience_date1",
+			target.resume_id.value,
+			"publish",
+			"method_2",
+		);
+		Meteor.call('postsmeta.update',
+			target.resume_id.value, 
+			"me",
+			target.resume_experience_date2.value,
+			"", 
+			"resume_experience_date2",
+			target.resume_id.value,
+			"publish",
+			"method_2",
+		);
+		
+			
+		swal({
+			title: "experience Updated",
+			text: "Your resume has been updated.",
+			type: "success",
+			showCancelButton: false,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Close",
+			closeOnConfirm: true
+		});
+		
+	},
+	
+	
+});
+
+
+
+
+//Desk Edit Helpers
+// ==============
+Template.deskedit.helpers({
+	
+	// Google Map helper.
+	mapOptions: function() {
+		console.log("mapOptions called.");
+		if (GoogleMaps.loaded()) {
+		  return {
+			center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
+			zoom: 8,
+			disableDefaultUI: true, 
+			draggable: true,
+			scrollwheel: true,
+			disableDoubleClickZoom: true,
+		  };
+		  
+		}
+	},
+	
+	resume_skills(){
+		return Posts.find({type:"resume_skill"});
+	},
+	
+	resume_education(){
+		return Posts.find({type:"resume_education"});
+	},
+	resume_education_date1(){
+		return Postsmeta.find({type:"resume_education_date1", parent_id:this._id});
+	},
+	resume_education_date2(){
+		return Postsmeta.find({type:"resume_education_date2", parent_id:this._id});
+	},
+	resume_education_type(){
+		return Postsmeta.find({type:"resume_education_type", parent_id:this._id});
+	},
+	
+	resume_experience(){
+		return Posts.find({type:"resume_experience"});
+	},
+	resume_experience_group(){
+		return Postsmeta.find({type:"resume_experience_group", parent_id:this._id});
+	},
+	resume_experience_date1(){
+		return Postsmeta.find({type:"resume_experience_date1", parent_id:this._id});
+	},
+	resume_experience_date2(){
+		return Postsmeta.find({type:"resume_experience_date2", parent_id:this._id});
+	},
+	
+	  
 });

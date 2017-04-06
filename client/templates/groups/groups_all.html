@@ -1,0 +1,143 @@
+<!-- 
+#
+# TEMPLATE: GROUPS
+#
+# -->
+<template name="groups_all">
+
+	{{> preloader}}
+		
+		<!-- Navigation -->
+			{{> account_navigation}}
+		<!-- Navigation -->
+
+		<!-- Main Wrapper -->
+		<div id="wrapper">		
+			<div class="content animate-panel">
+				<div class="row">
+				
+					<!-- GROUPS LIST MANAGER -->
+					<div class="col-lg-8">
+					
+						<div class="hpanel">
+							<div class="panel-body">
+							
+								<div class="row">
+									<div class="col-md-9">
+									
+										<a href="/groups" class="btn btn-primary">My Groups</a>
+										<a href="/groups/all" class="btn btn-info">All Groups</a>
+										<a href="/groups/manage" class="btn btn-primary">Create New Group</a>
+										
+									</div>
+									
+									<div class="col-md-3">
+									
+										<form class="search_start">
+											<div class="input-group">
+												<input class="form-control search_value" type="text" placeholder="Search Work Groups...">
+												
+												<div class="input-group-btn ">
+													<button type="submit" class="btn btn-default">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
+												
+											</div>
+											
+											<!-- <div class="search_clear btn btn-primary">Clear Results</div> -->
+										</form>
+									
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					
+						<center class="show_loader" style="display:none;">
+							<div class="loader"></div>
+						</center>
+					
+						<div class="row">
+							<div class="col-md-12">
+								<h4 class="text-white search_container_message">Recent Groups on SkyRooms</h4>
+							</div>
+						</div>
+						
+						<div class="row search_container row_equalize_height">
+						
+							{{#each groups}}
+								<div class="col-lg-3">
+									<div class="hpanel hgreen contact-panel">
+										<div class="panel-body">
+											<center>
+												<a href="/group/{{slug}}">
+													{{#if group_image}}
+														<img alt="logo" class="img-circle m-b" src="{{group_image}}" width="100%" style="width:100%; height:205px;"/>
+													{{else}}
+														<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" style="width:100%; height:205px;"/>
+													{{/if}}
+												</a>
+											</center>
+											<h3>
+												<a href="/meet/{{owner_username}}/{{slug}}">
+													{{title}}
+												</a>
+											</h3>
+											<p>
+												{{content}}
+											</p>
+											
+											<a href="/group/{{slug}}" class="btn btn-primary btn-block ">
+												<i class="fa fa-eye" aria-hidden="true"></i> View
+											</a>
+											
+											{{#if groupsStatus "waiting"}}
+												<form class="btn-form">
+													<input type="hidden" name="group_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="cancel" />
+													<button type="submit" class="btn btn-warning btn-block ">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Cancel Request
+													</button>
+												</form>
+											{{/if}}
+											
+											{{#if groupsStatus "accepted"}}
+												<form class="btn-form">
+													<input type="hidden" name="group_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="remove" />
+													<button type="submit" class="btn btn-danger btn-block ">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Leave Group
+													</button>
+												</form>
+											{{/if}}
+											
+											{{#if noGroupStatus "notMember"}}
+												<form class="btn-form">
+													<input type="hidden" name="group_id" value="{{_id}}" />
+													<input type="hidden" name="action" value="add" />
+													<button type="submit" class="btn btn-success btn-block ">
+														<i class="fa fa-handshake-o" aria-hidden="true"></i> Request To Join
+													</button>
+												</form>
+											{{/if}}
+											
+										</div>
+										
+									</div>
+								</div>
+							{{/each}}
+							
+						</div>
+								
+					</div>
+					
+					{{> sidebar_right}}
+					
+				</div>
+			</div>
+		</div>
+		<!-- Main Wrapper -->
+
+</template>
+

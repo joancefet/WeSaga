@@ -1,12 +1,15 @@
 <template name="account_navigation">
 
-
 	<div id="header">
 
         <nav role="navigation">
-            <div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+            <div class="header-link hide-menu">
+				<i class="fa fa-bars"></i>
+			</div>
             <div class="small-logo">
-                <span class="text-primary"><img src="/images/skyrooms-logo.png" width="150px"/></span>
+                <span class="text-primary">
+					<img src="/images/skyrooms-logo.png" width="150px"/>
+				</span>
             </div>
 			
             <div class="mobile-menu">
@@ -52,7 +55,19 @@
 					<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100px" height="100px" />
 				{{/if}}
 				<br />
-				<span class="font-extra-bold font-uppercase">{{currentUser.profile.name_first}}</span>
+				<span class="font-extra-bold">{{currentUser.profile.name_first}}</span>
+			</div>
+			
+			<div class="btn-group" >
+				<button data-toggle="dropdown" class="btn btn-success btn-xs dropdown-toggle" aria-expanded="false">
+					Online <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" style="left:-44px;">
+					<li><a href="#">Online</a></li>
+					<li><a href="#">Away</a></li>
+					<li><a href="#">Do Not Disturb</a></li>
+					<li><a href="#">Offline</a></li>
+				</ul>
 			</div>
 		{{else}}
 			<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100px" height="100px" />
@@ -113,17 +128,10 @@
 				</span> 
 			</a>		
 		</li>
-		<li class="{{account_navigation_list_active_class 'people'}}">
-			<a href="/people"> 
-				<span class="nav-label">
-					<i class="fa fa-address-book-o" aria-hidden="true"></i> People
-				</span> 
-			</a>
-		</li>
-		<li class="{{account_navigation_list_active_class 'colleagues'}}">
+		<li class="{{account_navigation_list_active_class 'people'}} {{account_navigation_list_active_class 'colleagues'}}"> 
 			<a href="/colleagues"> 
 				<span class="nav-label">
-					<i class="fa fa-handshake-o" aria-hidden="true"></i> Colleagues
+					<i class="fa fa-address-book-o" aria-hidden="true"></i> People
 				</span> 
 			</a>
 		</li>
@@ -149,6 +157,7 @@
 				</span> 
 			</a>
 		</li>
+		<!--
 		<li class="{{account_navigation_list_active_class 'chats'}}">
 			<a href="/chats"> 
 				<span class="nav-label">
@@ -156,6 +165,7 @@
 				</span> 
 			</a>
 		</li>
+		-->
 		
 		<li class="">
 			<a class="skyrooms_logout"> 

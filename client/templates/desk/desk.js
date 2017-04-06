@@ -52,8 +52,12 @@ Template.desk.rendered = function() {
 Template.desk.events({
 	
 	// Submit New Post
-	'click .btn-success'(event) {
+	'click .desk_submit_new_post'(event) {
 		event.preventDefault();
+		
+		if( $(".newPostContent").val().length < 1 ){
+			return;
+		}
 		
 		Meteor.call('posts.update',
 			"new",
@@ -80,6 +84,7 @@ Template.desk.events({
 							"https://res.cloudinary.com/skyroomsio/image/upload/a_0/"+result.public_id+"."+result.format, 
 							"post_attachment",
 							parent_post_id,
+							"publish",
 						);
 						console.log("ADDED post_attachment to:" +parent_post_id);
 					});
@@ -104,7 +109,6 @@ Template.desk.events({
 		event.preventDefault();
 		
 		const target = event.target;
-		console.log(target);
 		
 		Meteor.call('postsmeta.update',
 			"new",

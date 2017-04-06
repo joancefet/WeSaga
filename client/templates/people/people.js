@@ -12,10 +12,8 @@ Router.route('/people',{
 		}
 	},
 	waitOn: function(){
-		if(!Router.current().params.user_slug){
-			window.subscription_people_search = "";
-			window.subscription_people = Meteor.subscribe('posts', 'people_all'); 		
-		}
+		window.subscription_people_search = "";
+		window.subscription_people = Meteor.subscribe('posts', 'people_all'); 		
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -34,30 +32,33 @@ Template.people.rendered = function() {
 // Events
 Template.people.events({
 	
+	// SEARCH
+	// ------
 	'submit .search_start'(event) {
 		
-		$(".people_container").hide(); 
+		event.preventDefault();
+		
+		$(".search_container").hide(); 
 		$(".show_loader").show();
+		$(".search_container_message").html("");
 		
 		window.subscription_people.stop();
 		
-		if(window.subscription_people_search){ window.subscription_people_search.stop(); }
+		if(window.subscription_people_search){ 
+			window.subscription_people_search.stop(); 
+		}
 		window.subscription_people_search = Meteor.subscribe('posts', 'people_search', $(".search_value").val());
 		
 		setTimeout(function(){
-			$(".people_container").show();
+			$(".search_container").show();
 			$(".show_loader").hide();
-		},1000);
+			$(".search_container_message").html("We found the following People");
+		},2000);
 		
 	},
 	
-	'click .search_clear'(){
-		window.subscription_people.stop();
-		
-		window.subscription_people_search.stop();
-		Meteor.subscribe('posts', 'people_search_clear');
-	},
-	
+	// ADD / CANCEL / REMOVE
+	// ---------------------
 	'submit'(event) {
 		event.preventDefault();
 		
@@ -75,11 +76,11 @@ Template.people.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Add Notification and Meta data		
-			var post_id = Meteor.call('posts.update',
+			Meteor.call('posts.update',
 				"new",
 				target.user_id.value,
 				"Colleague Request from "+Meteor.user().profile.username,
@@ -127,7 +128,7 @@ Template.people.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// 1-OWNER) owner_id:, type:colleague, status:"waiting"
@@ -162,7 +163,7 @@ Template.people.events({
 				showCancelButton: false,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Close",
-				closeOnConfirm: true
+				
 			});
 			
 			// Update to accepted for Owner
@@ -202,7 +203,7 @@ Template.people.events({
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
 				confirmButtonText: "Confirm",
-				closeOnConfirm: true
+				
 			},
 				function(){
 					
@@ -248,7 +249,6 @@ Template.people.events({
 Template.people.helpers({
 	
 	people() {
-		//Meteor.subscribe('postsmeta', "notify_meta", this._id); 
 		return Meteor.users.find({ _id:{$ne:Meteor.userId()} }); // All users except ME
 	},
 	
