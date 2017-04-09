@@ -1794,7 +1794,7 @@ body {
   cursor: pointer;
 }
 .hpanel.hgreen .panel-body {
-  border-top: 2px solid #006ec3;
+  border-top: 2px solid #62cb3;
 }
 .hpanel.hblue .panel-body {
   border-top: 2px solid #3498db;
@@ -2135,10 +2135,13 @@ body.fullscreen-panel-mode {
   color: #3498db;
 }
 .text-success {
-  color: #006ec3;
+  color: #62cb3;
 }
 .text-warning {
   color: #ffb606;
+}
+.text-warning2 {
+  color: #e67e22;
 }
 .text-danger {
   color: #e74c3c;
