@@ -57,7 +57,7 @@ Template.landing.events({
 			var submit_tickets = $('#module_tickets_submit').val() * 0.15;
 			
 			if(submit_members <= 5 ){
-				total = 0;
+				total = ( (modules_standard * 0) * submit_members ) + submit_leads + submit_tickets + white_label;
 			}else{
 				total = ( (modules_standard * modules_fee) * submit_members ) + submit_leads + submit_tickets+ white_label;
 			}
