@@ -14,18 +14,54 @@ import { Postsmeta } 				from '../../imports/postsmeta.js';
 // ====================================
 Meteor.startup(function(){
 	
-	// const prerenderio = Npm.require('prerender-node');
-    // const settings = Meteor.settings.PrerenderIO;
-	// prerenderio.set('prerenderServiceUrl', 'https://www.skyrooms.io');
-	// prerenderio.set('prerenderToken', 'YAFC7DBK5iDkboKHKvze');
+	// NOT WORKING
+	SEO.set({
+		defaults: {
+			title: 'Virtual Offices for Business',
+			suffix: 'SkyRooms',
+			separator: '·',
 
-    // if (settings && settings.token && settings.host) {
-        // prerenderio.set('prerenderToken', settings.token);
-        // prerenderio.set('host', settings.host);
-        // prerenderio.set('protocol', 'https');
-        // WebApp.rawConnectHandlers.use(prerenderio);
-    // }
-	
+			description: 'SkyRooms Virtual Offices is a Freemium based Professionals Social Network and Business Management suite',
+			image: 'https://www.skyrooms.io/images/og_facebook.jpg',
+
+			meta: {
+				keywords: ['skyrooms', 'virtual', 'office'], 
+			},
+
+			twitter: {
+				card: 'SkyRooms - Virtual Offices for Business',
+				creator: '@skyrooms'
+				// etc.
+			},
+
+			og: {
+				site_name: 'SkyRooms',
+				description: 'SkyRooms - Virtual Offices for Business',
+				image: 'https://www.skyrooms.io/images/og_facebook.jpg',
+				type:"article",
+				url:"https://www.skyrooms.io",
+				'fb:app_id':"726835877472962",
+			}
+		}
+	});
+		
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"newestOnTop": false,
+		"progressBar": false,
+		"positionClass": "toast-top-right",
+		"preventDuplicates": false,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "15000",
+		"extendedTimeOut": "0",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
 	
 });
 
@@ -139,6 +175,7 @@ Template.onRendered(function () {
 			$('.splash').css('display', 'none');
 			window.skyroom_rendered = true;
 		},2000);		
+		// TODO: Set a global "DATA IS COMPLETE", then remove the lodaer that way.
 	};
 	if( window.skyroom_rendered == true ){
 		//console.log("NO TIMEOUT");
@@ -184,7 +221,7 @@ Template.screen.rendered = function() {
 		}, 300);
 	});
 	
-	// $('.animate-panel').animatePanel();
+	$('.animate-panel').animatePanel();
 	
 	
 }

@@ -44,6 +44,10 @@
 											<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Return to All Projects
 										</a>
 										
+										<a href="/group/{{group_slug}}/projects/list_manager/{{the_group_project_id}}" class="btn btn-sm btn-primary">
+											<i class="fa fa-list" aria-hidden="true"></i> Add Task List
+										</a>
+										
 									</div>
 									
 									<div class="col-md-3">
@@ -69,7 +73,7 @@
 							</div>
 						</div>
 						
-						<div class="hpanel hblue">
+						<div class="hpanel hgreen">
 							<div class="panel-body">
 								
 								<div class="row">
@@ -98,14 +102,65 @@
 											</div>
 										</div>
 										
-										
-										<a href="/group/{{group_slug}}/projects/list_manager/{{the_group_project_id}}" class="btn btn-sm btn-primary">
-											<i class="fa fa-list" aria-hidden="true"></i> Add Task List
-										</a>
 										<p>&nbsp;</p>
 										
-										<img src="/images/graph-default.png" width="100%" />
+										<div>
+											<canvas id="lineOptions" height="50" width="100%" style="width: 100%; height: 100px;"></canvas>
+										</div>
 										
+										<script>
+										
+											/**
+											 * Options for Line chart
+											 */
+											var lineData = {
+												labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+												datasets: [
+													{
+														label: "Activity",
+														fillColor: "rgba(220,220,220,0.5)",
+														strokeColor: "rgba(220,220,220,1)",
+														pointColor: "rgba(220,220,220,1)",
+														pointStrokeColor: "#fff",
+														pointHighlightFill: "#fff",
+														pointHighlightStroke: "rgba(220,220,220,1)",
+														data: [15, 44, 67, 43, 76, 45, 12]
+													},
+													{
+														label: "Completed",
+														fillColor: "rgba(98,203,49,0.5)",
+														strokeColor: "rgba(98,203,49,0.7)",
+														pointColor: "rgba(98,203,49,1)",
+														pointStrokeColor: "#fff",
+														pointHighlightFill: "#fff",
+														pointHighlightStroke: "rgba(26,179,148,1)",
+														data: [7, 32, 18, 26, 42, 33, 6]
+													}
+												]
+											};
+
+											var lineOptions = {
+												scaleShowGridLines : true,
+												scaleGridLineColor : "rgba(0,0,0,.05)",
+												scaleGridLineWidth : 1,
+												bezierCurve : true,
+												bezierCurveTension : 0.4,
+												pointDot : true,
+												pointDotRadius : 4,
+												pointDotStrokeWidth : 1,
+												pointHitDetectionRadius : 20,
+												datasetStroke : true,
+												datasetStrokeWidth : 1,
+												datasetFill : true,
+												responsive: true,
+												multiTooltipTemplate: "<%=datasetLabel%> : <%= value %>",
+											};
+
+
+											var ctx = document.getElementById("lineOptions").getContext("2d");
+											var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+										</script>
+
 										
 										
 									</div>
@@ -122,17 +177,22 @@
 										
 										<div>
 											<p>
-												<span class="label label-info">Added</span> Task Example
+												<span class="label label-info">Added</span> <b>Task Example</b>
 												<br />
 												<small>Tues March 25 at 11:54 pm</small>
 											</p>
 											<p>
-												<span class="label label-success">Completed</span> Task Example
+												<span class="label label-success">Completed</span> <b>Task Example</b>
 												<br />
 												<small>Tues March 25 at 11:54 pm</small>
 											</p>
 											<p>
-												<span class="label label-info">Added</span> Task Example
+												<span class="label label-info">Added</span> <b>Task Example</b>
+												<br />
+												<small>Tues March 25 at 11:54 pm</small>
+											</p>
+											<p>
+												<span class="label label-danger">Overdue</span> <b>Push files to development server</b>
 												<br />
 												<small>Tues March 25 at 11:54 pm</small>
 											</p>
@@ -258,9 +318,9 @@
 										</button>
 									</form>
 								
-									<h4>
+									<h2 class="text-primary font-bold">
 										<i class="fa fa-list-alt" aria-hidden="true"></i> {{title}} (0%)
-									</h4>
+									</h2>
 									
 									<!--
 									<p>

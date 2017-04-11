@@ -25,30 +25,53 @@ Router.route('/resume/:user_slug',{
 			Meteor.subscribe('postsmeta', "resume_experience_date1",ToSeoUrl(Router.current().params.user_slug) );
 			Meteor.subscribe('postsmeta', "resume_experience_date2",ToSeoUrl(Router.current().params.user_slug) );	
 			Meteor.subscribe('postsmeta', "resume_experience_type",ToSeoUrl(Router.current().params.user_slug) );
+			
+		
+		
+		var this_user = Meteor.users.findOne({ "profile.username":Router.current().params.user_slug }); 
+		
+		var seo_title 		=  this_user.profile.name_first+" "+this_user.profile.name_last+"'s Resume";
+		var seo_description = "View "+this_user.profile.name_first+" "+this_user.profile.name_last+"'s Resume on SkyRooms.";
+		var seo_image 		= this_user.profile.avatar;
+		SEO.set({
+			
+			description: seo_description,
+			title: seo_title,
+			image: seo_image,
+			separator: '-',
+
+			meta: {
+				keywords: ['skyrooms', 'virtual', 'office'], 
+			},
+
+			twitter: {
+				card: seo_title+" - "+seo_description,
+				creator: '@skyrooms'
+				// etc.
+			},
+
+			og: {
+				site_name: 'SkyRooms',
+				title: seo_title,
+				description: seo_description,
+				image: seo_image,
+				type:"article",
+				url:"https://www.skyrooms.io",
+				'fb:app_id':"726835877472962",
+			}
+			
+		});
+			
 	},
 	template:'screen',
 	yieldTemplates: {
 		'resume': {to: 'content'},
 	},
 	onAfterAction: function() {
-			
-			SEO.set({
-			  title: "SkyRooms Virtual Offices for Business",
-			  meta: {
-				'description': "Professional Business Tools for your Organziation presented in a familiar way that are free for all users.",
-				'keywords': "skyrooms, free, business, tools, webinar, video, conference, conferencing, resume, builder",
-			  },
-			  og: {
-				'title': "SkyRooms Virtual Offices for Business",
-				'description': "Professional Business Tools for your Organziation presented in a familiar way that are free for all users.",
-				'image':"https://www.skyrooms.io/images/og_facebook.jpg",
-				'url':'https://www.skyrooms.io',
-				'type':'article',
-				'fb:app_id':"726835877472962"
-			  }
-			});
 		
-		}
+
+		
+	}
 	
 });
 
