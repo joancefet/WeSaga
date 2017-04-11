@@ -21,56 +21,28 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<!-- Page title -->
-		<title>SkyRooms | Free Video Conferencing</title>
-		<meta name="description" content="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself" />
-
-		<!-- Twitter Card data -->
-		<meta name="twitter:card" value="SkyRooms is FREE Video & Social Conferencing system. Click this link to join a meeting and see for yourself">
-
-		<!-- Open Graph data -->
-		<meta property="og:title" content="HEADER" />
-		<meta property="og:type" content="article" />
-		<meta property="og:url" content="https://www.skyrooms.io" />
-		<meta property="og:image" content="https://www.skyrooms.io/images/og_facebook.jpg" />
-		<meta property="og:description" content="LOADED FROM HEADER" />
-
-		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-		<!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
-
-		<!-- Vendor styles -->
-		
-		<!-- OneSignal Manifest-->
-		<link rel="manifest" href="/manifest.json">
-		<!--
+		<!-- OneSignal -->
+		<link rel="manifest" href="/onesignal_manifest.json">
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async ></script>
 		<script>
-			var OneSignal = window.OneSignal || [];
-			OneSignal.push(["init", {
-			  appId: "c7c0a812-c0cc-405c-bc16-7de68e4da968",
-			  autoRegister: true, /* Set to true to automatically prompt visitors */
-			  subdomainName: 'skyrooms',   
-			  httpPermissionRequest: {
-				enable: true
-			  },
-			  notifyButton: {
-				  enable: true /* Set to false to hide */
-			  }
-			}]);
-			
-			OneSignal.setDefaultNotificationUrl("https://www.skyrooms.io");
-			OneSignal.setDefaultTitle("SkyRooms");
-			
-			const data = {
-				contents: {
-					en: 'Hey! Wazup? We miss you.',  
-				},
-			};
-
-			OneSignal.Notifications.create([playersId], data);
-			
-		</script> -->
+			  var OneSignal = window.OneSignal || [];
+				OneSignal.push(["init", {
+				  appId: "ba62f6a5-2cce-41c7-8139-b4026c6b1daf",
+				  allowLocalhostAsSecureOrigin: true,
+				  subdomainName: 'skyroomsio',
+				  httpPermissionRequest: {
+					enable: true
+				  },
+				  autoRegister: true, /* Set to true to automatically prompt visitors */
+				  notifyButton: {
+					  enable: true /* Set to false to hide */
+				  },
+				  modalPrompt: true
+				}]);
+		</script>
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+		
 	</head>
 
 </template>
@@ -113,7 +85,7 @@
 		<div class="color-line"></div>
 		<div class="splash-title">
 			<center>
-				<img class="landing-logo" src="/images/skyrooms-logo.png" height="40px" />
+				<img class="landing-logo" src="/images/skyrooms-loader.png" height="80px" />
 				<div class="loader">Loading...</div>
 			</center>
 		</div> 

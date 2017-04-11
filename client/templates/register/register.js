@@ -1,53 +1,80 @@
 
+// REGISTER
+// ------------------
+Router.route('/register',{	
+	
+	data:function(){
+			
+		if( Meteor.user() && Meteor.user().profile.guest ){
+			// Guest landed
+		} else {
+			//Router.go('/account');
+		}
+
+	},
+	waitOn: function(){
+				
+		var seo_title 		=  "Register for FREE"; 
+		var seo_description = "Virtual Offices for Business";
+		var seo_image 		= "https://www.skyrooms.io/images/og_facebook.jpg";
+		SEO.set({
+			
+			description: seo_description,
+			title: seo_title,
+			image: seo_image,
+			separator: '-',
+
+			meta: {
+				keywords: ['skyrooms', 'virtual', 'office'], 
+			},
+
+			twitter: {
+				card: seo_title+" - "+seo_description,
+				creator: '@skyrooms'
+				// etc.
+			},
+
+			og: {
+				site_name: 'SkyRooms',
+				title: seo_title,
+				description: seo_description,
+				image: seo_image,
+				type:"article",
+				url:"https://www.skyrooms.io",
+				'fb:app_id':"726835877472962",
+			}
+			
+		});
+		
+	},
+	template:'screen',
+	yieldTemplates: {
+		'register': {to: 'content'},
+	}
+	
+});
+
+
 Template.register.rendered = function() {
 	
-
+	Ladda.bind( '.ladda-button' );
   
 };
 
 Template.register.events({
+	
+	'click .ladda-button': function(event){
+		setTimeout(function(){
+			Ladda.stopAll();
+		},1000);
+	},
+	
     'submit form': function(event){
 		
         event.preventDefault();
 		
 		// REGISTRATION VALIDATION
-		
-		// Does the username have spaces?
-		// if( $('[name=username]').val().indexOf(' ') >= 0 ){
-			
-			// swal({
-				// title: "User cannot have spaces",
-				// text: "Examples: MyUserName or JamesBond",
-				// type: "error"
-			// });
-				
-			// return;
-		// }
-		
-		// // Username too long
-		// if( $('[name=username]').val().length >= 20 ){
-			
-			// swal({
-				// title: "User name too long",
-				// text: "Please shorten your user name, must be less than 20 characters",
-				// type: "error"
-			// });
-				
-			// return;
-		// }
-		
-		// // Username too short
-		// if( $('[name=username]').val().length <= 2 ){
-			
-			// swal({
-				// title: "User name is Too Short",
-				// text: "Please choose a longer user name, 2 characters or more",
-				// type: "error"
-			// });
-				
-			// return;
-		// }
-		
+	
 		
 		// First Name
 		if( $('[name=name_first]').val().length < 2 ){
@@ -57,7 +84,7 @@ Template.register.events({
 				text: "Your first name is really short...",
 				type: "error"
 			});
-				
+			Ladda.stopAll();
 			return;
 		}
 		
@@ -69,7 +96,7 @@ Template.register.events({
 				text: "Your last name is really short...",
 				type: "error"
 			});
-				
+			Ladda.stopAll();
 			return;
 		}
 		
@@ -81,7 +108,7 @@ Template.register.events({
 				text: "Please check your email address",
 				type: "error"
 			});
-				
+			Ladda.stopAll();	
 			return;
 		}
 		
@@ -94,7 +121,7 @@ Template.register.events({
 				text: "Please re-type your password, it didn't match",
 				type: "error"
 			});
-				
+			Ladda.stopAll();	
 			return;
 		}
 		
@@ -106,7 +133,7 @@ Template.register.events({
 				text: "Please shorten your password, must be less than 30 characters",
 				type: "error"
 			});
-				
+			Ladda.stopAll();	
 			return;
 		}
 		
@@ -118,7 +145,7 @@ Template.register.events({
 				text: "Please choose a longer user name, 6 characters or more",
 				type: "error"
 			});
-				
+			Ladda.stopAll();	
 			return;
 		}
 		
@@ -132,7 +159,7 @@ Template.register.events({
 				text: "Please try another, or click Forgot Password",
 				type: "error"
 			});
-			
+			Ladda.stopAll();
 			return;
 		}
 		
@@ -159,9 +186,9 @@ Template.register.events({
 					text: "",
 					type: "error"
 				});
-				
+				Ladda.stopAll();
 			} else {
-				
+				Ladda.stopAll();
 				Router.go("/desk"); // Redirect user if registration succeeds
 			}
 		});

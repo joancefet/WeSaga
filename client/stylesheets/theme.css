@@ -2501,7 +2501,7 @@ a:focus {
 }
 /* Labels */
 .label-success {
-  background-color: #006ec3;
+  background-color: #62cb31;
 }
 /* LIST GROUP */
 a.list-group-item.active,
@@ -3589,6 +3589,19 @@ ul.h-list li:hover a {
   height: auto;
   padding-top: 50px;
   margin-bottom: 30px;
+}
+.landing-page footer {
+  background: url('/images/wallpaper/wallpaper-crystal.jpg') 50% 0 no-repeat;
+  height: auto;
+  padding-top: 50px;
+  margin-bottom: 30px;
+}
+.landing-page footer a{
+	color:white;
+}
+.landing-page footer a:hover{
+	color:white;
+	text-decoration:underline;
 }
 .landing-page section {
   padding: 50px 0 50px 0;

@@ -2,6 +2,9 @@ import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
 	
+	// Meteor.absoluteUrl("http://skyrooms:3000/");
+	Meteor.absoluteUrl("http://skyrooms:3000/", { rootUrl: process.env.ROOT_URL });
+	
 	import '../imports/posts.js';
 	import '../imports/postsmeta.js';
 	
@@ -21,7 +24,6 @@ Meteor.startup(() => {
 		api_key: '855778861979654',
 		api_secret: 'q1MVzehJji9mZ5iMjEoJiRcTt9g'
 	});
-
 	// // Fix CloudFront certificate issue
 	// // Read: https://github.com/chilts/awssum/issues/164
 	// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
