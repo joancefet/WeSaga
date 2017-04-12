@@ -10,7 +10,6 @@ Router.route('/desk/edit',{
 			Router.go('/');
 		}
 		
-		
 	},
 	waitOn: function(){
 		
