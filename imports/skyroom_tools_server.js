@@ -31,7 +31,13 @@ Meteor.SkyroomTools = {
 		  .substring(1);
 	  }
 	  return s4() + s4();
-	}
+	},
 
+	
+	meta_description: function(text){
+		
+		return (text.replace(/<\/?[^>]+(>|$)/g, "").slice(0,170));
+		
+	} 
 	
 }

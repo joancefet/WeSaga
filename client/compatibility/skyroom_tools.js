@@ -1,4 +1,4 @@
-console.log("Skyroom Tools Loaded");
+console.log("Skyroom Tools Loaded: Client Compatibility");
 
 
 // SEO URL
@@ -33,3 +33,9 @@ function guid() {
   return s4() + s4();
 }
 
+
+function meta_description(text){
+	
+	return (text.replace(/<\/?[^>]+(>|$)/g, "").slice(0,170));
+	
+} 

@@ -14,37 +14,6 @@ import { Postsmeta } 				from '../../imports/postsmeta.js';
 // ====================================
 Meteor.startup(function(){
 	
-	// NOT WORKING
-	SEO.set({
-		defaults: {
-			title: 'Virtual Offices for Business',
-			suffix: 'SkyRooms',
-			separator: '·',
-
-			description: 'SkyRooms Virtual Offices is a Freemium based Professionals Social Network and Business Management suite',
-			image: 'https://www.skyrooms.io/images/og_facebook.jpg',
-
-			meta: {
-				keywords: ['skyrooms', 'virtual', 'office'], 
-			},
-
-			twitter: {
-				card: 'SkyRooms - Virtual Offices for Business',
-				creator: '@skyrooms'
-				// etc.
-			},
-
-			og: {
-				site_name: 'SkyRooms',
-				description: 'SkyRooms - Virtual Offices for Business',
-				image: 'https://www.skyrooms.io/images/og_facebook.jpg',
-				type:"article",
-				url:"https://www.skyrooms.io",
-				'fb:app_id':"726835877472962",
-			}
-		}
-	});
-		
 	toastr.options = {
 		"closeButton": true,
 		"debug": false,

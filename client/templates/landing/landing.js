@@ -1,4 +1,5 @@
 Router.route('/', {
+	path: '/',
 	data:function(){
 		
 		if( Meteor.user() ){
@@ -7,38 +8,6 @@ Router.route('/', {
 		
 	},
 	waitOn: function(){
-				
-		var seo_title 		=  "SkyRooms Virtual Offices for Business";
-		var seo_description = "SkyRooms Virtual Offices is a Freemium based Professionals Social Network and Business Management suite";
-		var seo_image 		= "https://www.skyrooms.io/images/og_facebook.jpg";
-		SEO.set({
-			
-			description: seo_description,
-			title: seo_title,
-			image: seo_image,
-			separator: '-',
-
-			meta: {
-				keywords: ['skyrooms', 'virtual', 'office'], 
-			},
-
-			twitter: {
-				card: seo_title+" - "+seo_description,
-				creator: '@skyrooms'
-				// etc.
-			},
-
-			og: {
-				site_name: 'SkyRooms',
-				title: seo_title,
-				description: seo_description,
-				image: seo_image,
-				type:"article",
-				url:"https://www.skyrooms.io",
-				'fb:app_id':"726835877472962",
-			}
-			
-		});
 		
 	},
 	template: 'landing',
@@ -47,6 +16,31 @@ Router.route('/', {
 	},
 	onAfterAction: function() {
 
+		var seo_title 		=  "SkyRooms Virtual Offices for Business";
+		var seo_description = "SkyRooms is a Freemium based Professionals Social Network and Business Management suite. Start with any module for free, grow your organization!";
+		var seo_image 		= "https://www.skyrooms.io/images/og_facebook.jpg";
+		
+		SEO.set({
+			
+			description: seo_description,
+			title: seo_title,
+			
+			// separator: '-',
+
+			meta: {
+				description: seo_description,
+				keywords: ['skyrooms', 'virtual', 'office'], 
+			},
+
+			og: {
+				site_name: 'SkyRooms',
+				image: seo_image,
+				type:"article",
+				url:"https://www.skyrooms.io/",
+				'fb:app_id':"726835877472962",
+			}
+			
+		});
 	
 	}
 	

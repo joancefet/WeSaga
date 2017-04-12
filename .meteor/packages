@@ -52,12 +52,9 @@ mdg:geolocation
 mizzao:bootstrap-3
 dburles:collection-helpers
 lepozepo:cloudinary
-dferber:prerender
-manuelschoebel:ms-seo
 email
 joshdellay:meteor-ladda-bootstrap
 chart:chart
 http
-raix:push
-spiderable
-lookback:seo
+dferber:prerender
+manuelschoebel:ms-seo

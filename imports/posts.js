@@ -51,6 +51,26 @@ if (Meteor.isServer) {
 			return Posts.find({type:"resume_experience", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
 		}
 		
+		if(PARAM_1 == "resume_education_date1"){
+			return Posts.find({type:"resume_education_date1", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(PARAM_1 == "resume_education_date2"){
+			return Posts.find({type:"resume_education_date2", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(PARAM_1 == "resume_education_type"){
+			return Posts.find({type:"resume_education_type", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(PARAM_1 == "resume_experience_group"){
+			return Posts.find({type:"resume_experience_group", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		if(PARAM_1 == "resume_experience_date1"){
+			return Posts.find({type:"resume_experience_date1", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(PARAM_1 == "resume_experience_date2"){
+			return Posts.find({type:"resume_experience_date2", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}	
+		
 		
 		
 		// PEOPLE

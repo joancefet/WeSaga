@@ -14,14 +14,14 @@ Router.route('/desk/edit',{
 		
 		Meteor.subscribe('posts', "resume_skill", Meteor.user().profile.username ); 
 		Meteor.subscribe('posts', "resume_education", Meteor.user().profile.username ); 
-			Meteor.subscribe('postsmeta', "resume_education_date1", Meteor.user().profile.username );
-			Meteor.subscribe('postsmeta', "resume_education_date2", Meteor.user().profile.username );	
-			Meteor.subscribe('postsmeta', "resume_education_type", Meteor.user().profile.username );
+			Meteor.subscribe('posts', "resume_education_date1", Meteor.user().profile.username );
+			Meteor.subscribe('posts', "resume_education_date2", Meteor.user().profile.username );	
+			Meteor.subscribe('posts', "resume_education_type", Meteor.user().profile.username );
 		Meteor.subscribe('posts', "resume_experience", Meteor.user().profile.username ); 
-			Meteor.subscribe('postsmeta', "resume_experience_group", Meteor.user().profile.username );
-			Meteor.subscribe('postsmeta', "resume_experience_date1", Meteor.user().profile.username );
-			Meteor.subscribe('postsmeta', "resume_experience_date2", Meteor.user().profile.username );	
-			Meteor.subscribe('postsmeta', "resume_experience_type", Meteor.user().profile.username );
+			Meteor.subscribe('posts', "resume_experience_group", Meteor.user().profile.username );
+			Meteor.subscribe('posts', "resume_experience_date1", Meteor.user().profile.username );
+			Meteor.subscribe('posts', "resume_experience_date2", Meteor.user().profile.username );	
+			Meteor.subscribe('posts', "resume_experience_type", Meteor.user().profile.username );
 		return;
 	},
 	template:'screen',
@@ -38,7 +38,6 @@ Template.deskedit.rendered = function() {
 	
 	//Load Google Map
 	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
-	
 	
 };
 
@@ -84,7 +83,9 @@ Template.deskedit.events({
 			
 		});
 		
-		console.log("COMPLETE");
+		toastr["success"]("Please wait for it to display", "New Profile Image Uploaded");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	
@@ -121,15 +122,9 @@ Template.deskedit.events({
 			}
 		});
 		
-		swal({
-			title: "Profile Updated",
-			text: "",
-			type: "success",
-			showCancelButton: false,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Close",
-			closeOnConfirm: true
-		});
+		toastr["success"]("", "Business Card Updated");
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	
@@ -148,16 +143,9 @@ Template.deskedit.events({
 				"profile.resume_privacy": $('.update_resume_privacy').val(),
 			}
 		});
-		
-		swal({
-			title: "Updated",
-			text: "Your profile has been updated.",
-			type: "success",
-			showCancelButton: false,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Close",
-			closeOnConfirm: true
-		});
+		toastr["success"]("", "Contact Info Updated");
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	
@@ -168,16 +156,9 @@ Template.deskedit.events({
 				"profile.resume_objective": tinyMCE.get('resume_objective').getContent(),
 			}
 		});
-		
-		swal({
-			title: "Objective Updated",
-			text: "Your resume has been updated.",
-			type: "success",
-			showCancelButton: false,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Close",
-			closeOnConfirm: true
-		});
+		toastr["success"]("", "Objective Updated");
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	
@@ -193,6 +174,10 @@ Template.deskedit.events({
 			Meteor.userId(),
 			"publish",
 		);
+		
+		toastr["info"]("Please enter your skill and click Save Skills", "Skill Added");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 	
 	},
 	'click .save_skill': function(event){
@@ -213,15 +198,9 @@ Template.deskedit.events({
 			
 		});
 		
-		swal({
-			title: "Skills Updated",
-			text: "Your resume has been updated.",
-			type: "success",
-			showCancelButton: false,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Close",
-			closeOnConfirm: true
-		});
+		toastr["success"]("", "Skills Updated");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	'submit .skill_delete':function(event){
@@ -232,6 +211,20 @@ Template.deskedit.events({
 		Meteor.call('posts.remove',
 			target.skill_id.value
 		);
+		
+		swal({
+			title: "Delete this entry?",
+			text: "",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "DELETE",
+		}).then(function (result) {
+			toastr["error"]("", "Deleted");
+			var audio = new Audio('/sounds/pop.mp3');
+			audio.play();
+		});
+		
 		
 	},
 	
@@ -248,7 +241,7 @@ Template.deskedit.events({
 			"publish",
 			function(error, parent_post_id){
 				
-				Meteor.call('postsmeta.update',
+				Meteor.call('posts.update',
 					"new",
 					"me",
 					"",
@@ -257,7 +250,7 @@ Template.deskedit.events({
 					parent_post_id,
 					"publish",
 				);
-				Meteor.call('postsmeta.update',
+				Meteor.call('posts.update',
 					"new",
 					"me",
 					"",
@@ -266,7 +259,7 @@ Template.deskedit.events({
 					parent_post_id,
 					"publish",
 				);
-				Meteor.call('postsmeta.update',
+				Meteor.call('posts.update',
 					"new",
 					"me",
 					"",
@@ -279,20 +272,16 @@ Template.deskedit.events({
 			}
 		);
 		
+		toastr["info"]("Please fill it out and click Update", "Education Field Added");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
+		
 	},
 	'submit .form_resume_education': function(event){
 		
 		event.preventDefault();
 		const target = event.target;
-			
-		console.log(target.resume_id.value);
-		console.log(target.resume_education_title.value);
-		console.log(target.resume_education_content.value);
-		console.log(target.resume_education_date1.value);
-		console.log(target.resume_education_date2.value);
-		console.log(target.resume_education_type.value);
 		
-			
 		Meteor.call('posts.update',
 			target.resume_id.value,
 			"me",
@@ -304,8 +293,15 @@ Template.deskedit.events({
 		);
 		
 		// META
-		Meteor.call('postsmeta.update',
-			target.resume_id.value,
+		// resume_education_date1_id
+		var POST_ID = "unset";
+		if(target.resume_education_date1.value){
+			POST_ID = target.resume_education_date1_id.value;
+		} else {
+			POST_ID = "new";
+		}
+		Meteor.call('posts.update',
+			POST_ID,
 			"me",
 			target.resume_education_date1.value,
 			"", 
@@ -314,8 +310,16 @@ Template.deskedit.events({
 			"publish",
 			"method_2",
 		);
-		Meteor.call('postsmeta.update',
-			target.resume_id.value, 
+		
+		// resume_education_date2
+		var POST_ID = "unset";
+		if(target.resume_education_date2.value){
+			POST_ID = target.resume_education_date2_id.value;
+		} else {
+			POST_ID = "new";
+		}
+		Meteor.call('posts.update',
+			POST_ID,
 			"me",
 			target.resume_education_date2.value,
 			"", 
@@ -324,8 +328,16 @@ Template.deskedit.events({
 			"publish",
 			"method_2",
 		);
-		Meteor.call('postsmeta.update',
-			target.resume_id.value,
+		
+		// resume_education_type
+		var POST_ID = "unset";
+		if(target.resume_education_type.value){
+			POST_ID = target.resume_education_type_id.value;
+		} else {
+			POST_ID = "new";
+		}
+		Meteor.call('posts.update',
+			POST_ID,
 			"me",
 			target.resume_education_type.value,
 			"", 
@@ -334,16 +346,10 @@ Template.deskedit.events({
 			"publish",
 			"method_2",
 		);
-			
-		swal({
-			title: "Education Updated",
-			text: "Your resume has been updated.",
-			type: "success",
-			showCancelButton: false,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Close",
-			closeOnConfirm: true
-		});
+		
+		toastr["success"]("", "Education Updated");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	
@@ -360,7 +366,7 @@ Template.deskedit.events({
 			"publish",
 			function(error, parent_post_id){
 				
-				Meteor.call('postsmeta.update',
+				Meteor.call('posts.update',
 					"new",
 					"me",
 					"",
@@ -369,7 +375,7 @@ Template.deskedit.events({
 					parent_post_id,
 					"publish",
 				);
-				Meteor.call('postsmeta.update',
+				Meteor.call('posts.update',
 					"new",
 					"me",
 					"",
@@ -378,7 +384,7 @@ Template.deskedit.events({
 					parent_post_id,
 					"publish",
 				);
-				Meteor.call('postsmeta.update',
+				Meteor.call('posts.update',
 					"new",
 					"me",
 					"",
@@ -390,19 +396,16 @@ Template.deskedit.events({
 				
 			}
 		);
+		
+		toastr["info"]("Please fill it out and click Update", "Experience Field Added");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 	
 	},
 	'submit .form_resume_experience': function(event){
 		
 		event.preventDefault();
 		const target = event.target;
-			
-		console.log(target.resume_id.value);
-		console.log(target.resume_experience_title.value);
-		console.log(target.resume_experience_content.value);
-		console.log(target.resume_experience_date1.value);
-		console.log(target.resume_experience_date2.value);
-		
 		
 		Meteor.call('posts.update',
 			target.resume_id.value,
@@ -415,8 +418,15 @@ Template.deskedit.events({
 		);
 		
 		// META
-		Meteor.call('postsmeta.update',
-			target.resume_id.value,
+		// resume_experience_group
+		var POST_ID = "unset";
+		if(target.resume_experience_group.value){
+			POST_ID = target.resume_experience_group_id.value;
+		} else {
+			POST_ID = "new";
+		}
+		Meteor.call('posts.update',
+			POST_ID,
 			"me",
 			target.resume_experience_group.value,
 			"", 
@@ -425,8 +435,16 @@ Template.deskedit.events({
 			"publish",
 			"method_2",
 		);
-		Meteor.call('postsmeta.update',
-			target.resume_id.value,
+		
+		// resume_experience_date1
+		var POST_ID = "unset";
+		if(target.resume_experience_date1.value){
+			POST_ID = target.resume_experience_date1_id.value;
+		} else {
+			POST_ID = "new";
+		}
+		Meteor.call('posts.update',
+			POST_ID,
 			"me",
 			target.resume_experience_date1.value,
 			"", 
@@ -435,8 +453,15 @@ Template.deskedit.events({
 			"publish",
 			"method_2",
 		);
-		Meteor.call('postsmeta.update',
-			target.resume_id.value, 
+		// resume_experience_date2
+		var POST_ID = "unset";
+		if(target.resume_experience_date2.value){
+			POST_ID = target.resume_experience_date2_id.value;
+		} else {
+			POST_ID = "new";
+		}
+		Meteor.call('posts.update',
+			POST_ID,
 			"me",
 			target.resume_experience_date2.value,
 			"", 
@@ -446,16 +471,9 @@ Template.deskedit.events({
 			"method_2",
 		);
 		
-			
-		swal({
-			title: "experience Updated",
-			text: "Your resume has been updated.",
-			type: "success",
-			showCancelButton: false,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Close",
-			closeOnConfirm: true
-		});
+		toastr["success"]("", "Experience Updated");	
+		var audio = new Audio('/sounds/pop.mp3');
+		audio.play();
 		
 	},
 	
@@ -493,26 +511,26 @@ Template.deskedit.helpers({
 		return Posts.find({type:"resume_education"});
 	},
 	resume_education_date1(){
-		return Postsmeta.find({type:"resume_education_date1", parent_id:this._id});
+		return Posts.find({type:"resume_education_date1", parent_id:this._id});
 	},
 	resume_education_date2(){
-		return Postsmeta.find({type:"resume_education_date2", parent_id:this._id});
+		return Posts.find({type:"resume_education_date2", parent_id:this._id});
 	},
 	resume_education_type(){
-		return Postsmeta.find({type:"resume_education_type", parent_id:this._id});
+		return Posts.find({type:"resume_education_type", parent_id:this._id});
 	},
 	
 	resume_experience(){
 		return Posts.find({type:"resume_experience"});
 	},
 	resume_experience_group(){
-		return Postsmeta.find({type:"resume_experience_group", parent_id:this._id});
+		return Posts.find({type:"resume_experience_group", parent_id:this._id});
 	},
 	resume_experience_date1(){
-		return Postsmeta.find({type:"resume_experience_date1", parent_id:this._id});
+		return Posts.find({type:"resume_experience_date1", parent_id:this._id});
 	},
 	resume_experience_date2(){
-		return Postsmeta.find({type:"resume_experience_date2", parent_id:this._id});
+		return Posts.find({type:"resume_experience_date2", parent_id:this._id});
 	},
 	
 	  
