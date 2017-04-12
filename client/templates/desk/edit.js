@@ -9,6 +9,8 @@ Router.route('/desk/edit',{
 		if( !Meteor.user()){
 			Router.go('/');
 		}
+		
+		
 	},
 	waitOn: function(){
 		
@@ -38,7 +40,7 @@ Template.deskedit.rendered = function() {
 	
 	//Load Google Map
 	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
-	
+
 };
 
 
@@ -208,10 +210,6 @@ Template.deskedit.events({
 		event.preventDefault();
 		const target = event.target;
 		
-		Meteor.call('posts.remove',
-			target.skill_id.value
-		);
-		
 		swal({
 			title: "Delete this entry?",
 			text: "",
@@ -219,7 +217,12 @@ Template.deskedit.events({
 			showCancelButton: true,
 			confirmButtonColor: "#DD6B55",
 			confirmButtonText: "DELETE",
-		}).then(function (result) {
+		}).then(function () {
+			
+			Meteor.call('posts.remove',
+				target.skill_id.value
+			);
+			
 			toastr["error"]("", "Deleted");
 			var audio = new Audio('/sounds/pop.mp3');
 			audio.play();

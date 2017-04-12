@@ -7,9 +7,15 @@ import { Postsmeta } 				from '../../../imports/postsmeta.js';
 Router.route('/people/:user_slug',{
 
 	data:function(){
-		
+	
 	},
 	waitOn: function(){
+		
+		// Cannot view yourself here
+		if(Meteor.user().profile.username == ToSeoUrl(Router.current().params.user_slug) ){
+			Router.go("/desk");
+		}
+		
 		Meteor.subscribe('posts', 'people_desk',  ToSeoUrl(Router.current().params.user_slug) );
 		Meteor.subscribe('posts', "people_desk_posts", ToSeoUrl(Router.current().params.user_slug) ); 
 	},

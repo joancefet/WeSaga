@@ -21,6 +21,7 @@
     "prerender-node": "^2.7.0",
     "request": "^2.81.0",
     "spin.js": "^2.3.2",
+    "sweetalert2": "^6.6.0",
     "time-grunt": "^1.4.0"
   },
   "devDependencies": {}

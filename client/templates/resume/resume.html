@@ -24,11 +24,11 @@
 								<div class="hpanel hgreen hide-for-print">
 									<div class="panel-body">
 										<a href="/people/{{profile.username}}" class="btn btn-primary">
-											View Profile
+											<i class="fa fa-eye" aria-hidden="true"></i> View Desk
 										</a>
 										{{#if my_resume}}
 										<a href="/desk/edit" class="btn btn-success">
-											Edit Resume
+											<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Resume
 										</a>
 										{{/if}}
 										<a href="" class="btn btn-primary pull-right" onClick="window.print();">
@@ -42,7 +42,7 @@
 								</div>
 								
 								<!-- USER CARD  -->
-								<div class="hpanel hgreen user_resume">
+								<div class="hpanel hblue user_resume">
 									<div class="panel-body">
 										
 										<div class="row">
@@ -136,13 +136,7 @@
 																		<div class="col-sm-12">
 																			<h4>
 																				
-																				<span class="text-primary">
-																					{{title}}
-																				</span>
-																				
-																				{{#each resume_education_type}}
-																					<h5 style="display:inline">, {{title}}</h5>
-																				{{/each}}
+																				<span class="text-primary">{{title}}</span>{{#each resume_education_type}}<h5 style="display:inline">, {{title}}</h5>{{/each}}
 																				<br />
 																				<small>
 																				{{#each resume_education_date1}}
