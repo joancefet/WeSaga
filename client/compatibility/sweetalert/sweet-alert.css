@@ -1,5 +1,5 @@
 body.swal2-shown {
-  overflow-y: hidden; }
+  overflow-y: none !important; }
 
 body.swal2-iosfix {
   position: fixed;

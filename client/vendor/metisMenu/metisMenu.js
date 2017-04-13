@@ -6,9 +6,6 @@
  * Made by Osman Nuri Okumuş <onokumus@gmail.com> (https://github.com/onokumus)
  * Under MIT License
  */
- 
- console.log("Metis Menu Loaded");
-
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);

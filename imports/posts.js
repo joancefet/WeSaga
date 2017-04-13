@@ -12,6 +12,10 @@ if (Meteor.isServer) {
 		check(PARAM_1, String);		
 		//if(PARAM_3){ check(PARAM_3, String); }
 		
+		if(PARAM_1 == "empty"){
+			return "";
+		}
+		
 		if(PARAM_1 == "notify"){
 			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, {sort: { createdAt: -1 }, limit:20 });
 		}
@@ -50,6 +54,26 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "resume_experience"){
 			return Posts.find({type:"resume_experience", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
 		}
+		
+		if(PARAM_1 == "resume_education_date1"){
+			return Posts.find({type:"resume_education_date1", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(PARAM_1 == "resume_education_date2"){
+			return Posts.find({type:"resume_education_date2", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(PARAM_1 == "resume_education_type"){
+			return Posts.find({type:"resume_education_type", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		
+		if(PARAM_1 == "resume_experience_group"){
+			return Posts.find({type:"resume_experience_group", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}
+		if(PARAM_1 == "resume_experience_date1"){
+			return Posts.find({type:"resume_experience_date1", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}		
+		if(PARAM_1 == "resume_experience_date2"){
+			return Posts.find({type:"resume_experience_date2", owner_username:PARAM_2},{ sort: { createdAt: 1 }, limit:10 }); //
+		}	
 		
 		
 		

@@ -39,11 +39,11 @@
 										
 											<hr />
 										
-											<div class="desk_save_all btn btn-lg btn-block btn-success">
-												<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Profile
+											<div class="desk_save_all btn btn-block btn-success">
+												<i class="fa fa-floppy-o" aria-hidden="true"></i> Update Business Card
 											</div>
 											<a href="/resume/{{currentUser.profile.username}}" class="btn btn-block btn-primary">
-												<i class="fa fa-times-circle-o" aria-hidden="true"></i> View Resume
+												<i class="fa fa-eye" aria-hidden="true"></i> View Resume
 											</a>
 											<a href="/desk" class="btn btn-block btn-danger">
 												<i class="fa fa-times-circle-o" aria-hidden="true"></i> Cancel Changes
@@ -110,7 +110,7 @@
 									<div class="col-md-12">
 										<h2><b>Contact Information</b></h2>
 										<div class="save_contact btn btn-success">
-											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Update
 										</div>
 										<hr />
 										
@@ -150,7 +150,7 @@
 									<div class="col-md-12">
 										<h2><b>Career Objective</b></h2>
 										<div class="save_objective btn btn-success">
-											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Objective
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Update Objective
 										</div>
 										<hr />
 											
@@ -191,11 +191,11 @@
 										<h2><b>Skills and Key Strengths</b></h2>
 										<hr />
 										
-										<div class="add_skill btn btn-warning">
+										<div class="add_skill btn btn-warning  pull-right">
 											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add New
 										</div>
-										<div class="save_skill btn btn-success pull-right">
-											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Skills
+										<div class="save_skill btn btn-success">
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Update Skills
 										</div>
 										<hr />
 										
@@ -230,13 +230,18 @@
 										<h2><b>Education, Certification and Training</b></h2>
 										<hr />
 										
-										<div class="add_education btn btn-warning">
+										
+										<div class="btn">
+											&nbsp;
+										</div>
+										<div class="add_education btn btn-warning pull-right">
 											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Education
 										</div>
+										
 										<hr />
 										
 										{{#each resume_education}}
-											<div class="row well ">
+											<div class="row well">
 												<div class="col-md-11">
 												
 													<form class="form_resume_education">
@@ -249,6 +254,9 @@
 														
 														<h5>Education Type:</h5>
 														{{#each resume_education_type}}
+														
+															<input type="hidden" name="resume_education_type_id" value="{{_id}}" />
+														
 															<select required  class="form-control m-b" id="{{_id}}" name="resume_education_type">
 																<option value="">Select Education Type</option>
 																<optgroup label="Degree">
@@ -295,6 +303,7 @@
 														
 														<h5>Start Date:</h5>
 														{{#each resume_education_date1}}
+															<input type="hidden" name="resume_education_date1_id" value="{{_id}}" />
 															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_education_date1" name="resume_education_date1" value="{{title}}" placeholder="MM/DD/YYYY" />
 															<script>
 																$('#{{_id}}_datepicker').datepicker({});
@@ -304,6 +313,7 @@
 														
 														<h5>Completion Date:</h5>
 														{{#each resume_education_date2}}
+															<input type="hidden" name="resume_education_date2_id" value="{{_id}}" />
 															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_education_date2" name="resume_education_date2" value="{{title}}" placeholder="MM/DD/YYYY" />
 															<script>
 																$('#{{_id}}_datepicker').datepicker({});
@@ -311,7 +321,7 @@
 														{{/each}}
 														<hr />
 														
-														<button type="submit" class="btn btn-success pull-right">Update</button>
+														<button type="submit" class="btn btn-success "><i class="fa fa-floppy-o" aria-hidden="true"></i> Update Education</button>
 														
 													</form>
 													
@@ -343,11 +353,11 @@
 										<h2><b>Professional Work Experience</b></h2>
 										<hr />
 										
-										<div class="add_experience btn btn-warning">
+										<div class="add_experience btn btn-warning  pull-right">
 											<i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Experience
 										</div>
-										<div class="save_experience btn btn-success pull-right">
-											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save Experience
+										<div class="btn">
+											&nbsp;
 										</div>
 										<hr />
 										
@@ -365,6 +375,7 @@
 														
 														<h5>Group, Company or Organization:</h5>
 														{{#each resume_experience_group}}
+															<input type="hidden" name="resume_experience_group_id" value="{{_id}}" />
 															<input required type="text" class="form-control resume_experience_group" name="resume_experience_group" value="{{title}}" placeholder="" />
 															<hr />
 														{{/each}}
@@ -395,6 +406,7 @@
 														
 														<h5>Start Date:</h5>
 														{{#each resume_experience_date1}}
+															<input type="hidden" name="resume_experience_date1_id" value="{{_id}}" />
 															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_experience_date1" name="resume_experience_date1" value="{{title}}" placeholder="MM/DD/YYYY" />
 															<script>
 																$('#{{_id}}_datepicker').datepicker({});
@@ -404,6 +416,7 @@
 														
 														<h5>End Date:</h5>
 														{{#each resume_experience_date2}}
+															<input type="hidden" name="resume_experience_date2_id" value="{{_id}}" />
 															<input required type="text" id="{{_id}}_datepicker" class="form-control resume_experience_date2" name="resume_experience_date2" value="{{title}}" placeholder="MM/DD/YYYY" />
 															<script>
 																$('#{{_id}}_datepicker').datepicker({});

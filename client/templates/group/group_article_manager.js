@@ -13,6 +13,8 @@ Router.route('/group/:group_slug/articles/manager',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		// group_by_slug
 		Meteor.subscribe('posts', 'group_by_slug',  ToSeoUrl(Router.current().params.group_slug) );
 		
@@ -34,6 +36,8 @@ Router.route('/group/:group_slug/articles/manager/:articleId',{
 		
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
 		// group_by_slug
 		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );

@@ -12,6 +12,8 @@ Router.route('/meetings',{
 		}
 	},
 	waitOn: function(){
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		Meteor.subscribe('posts', 'meetings', Meteor.userId()); 
 	},
 	template:'screen',

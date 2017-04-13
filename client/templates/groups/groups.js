@@ -12,6 +12,8 @@ Router.route('/groups',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		// Clear any search filters from /groups/all
 		if(window.subscription_group_search){ 
 			window.subscription_group_search.stop(); 

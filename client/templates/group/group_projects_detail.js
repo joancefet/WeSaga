@@ -9,6 +9,8 @@ Router.route('/group/:group_slug/projects/details/:groupsProjectId',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		// MAIN SETTINGS
 		// ==========
 		// group_by_slug

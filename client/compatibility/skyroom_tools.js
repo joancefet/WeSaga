@@ -1,5 +1,3 @@
-console.log("Skyroom Tools Loaded");
-
 
 // SEO URL
 function ToSeoUrl(url) { 
@@ -33,3 +31,9 @@ function guid() {
   return s4() + s4();
 }
 
+
+function meta_description(text){
+	
+	return (text.replace(/<\/?[^>]+(>|$)/g, "").slice(0,170));
+	
+} 

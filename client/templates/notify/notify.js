@@ -23,6 +23,9 @@ Router.route('/notify',{
 
 // Render
 Template.notify.rendered = function() {
+	
+	Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+	Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
 
 	// Mark all notification as read
 	Meteor.call('posts.updateNotificationsRead', Meteor.userId());
