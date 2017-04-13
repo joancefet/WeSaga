@@ -8,6 +8,9 @@ Router.route('/group/:group_slug/people',{
 		
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );
 		window.subscription_group_people_search = "";
 		//window.subscription_group_people = Meteor.subscribe('posts', 'group_people_all', Router.current().params.group_slug);

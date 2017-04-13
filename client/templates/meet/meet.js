@@ -17,7 +17,7 @@ Router.route('/meet/:user_slug', {
 	},
 	waitOn: function(){
 		
-		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
 	},
 	template:'screen',
@@ -34,6 +34,8 @@ Router.route('/meet/:user_slug/:requested_room_slug', {
 	data:function(){
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
 		// Set Password from URL: /join/room-name?password=______
 		// if(this.params.query.password){

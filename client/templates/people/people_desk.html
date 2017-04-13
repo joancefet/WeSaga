@@ -94,6 +94,21 @@
 										</div>
 										
 										<div id="aboutUser" class="col-md-4">
+										
+											{{#each resume_experience}}
+												
+												<h3>{{title}}</h3>
+												
+												{{#each resume_experience_group}}
+													<b>{{title}}</b>
+												{{/each}}
+												since 
+												{{#each resume_experience_date1}}
+													{{title}}
+												{{/each}}
+											{{/each}}
+											
+											<hr />
 											{{{profile.about}}}
 										</div>
 										
@@ -105,7 +120,7 @@
 													{{profile.location_name}}
 												</div>
 												<div class="map-container">
-													{{> googleMap name="profileMap2" options=mapOptions2}}
+													{{> googleMap name="profileMap" options=mapOptions}}
 												</div>
 												
 											</section>

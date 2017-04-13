@@ -8,6 +8,9 @@ Router.route('/group/:group_slug/people/pending',{
 		
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		Meteor.subscribe('posts', 'group_by_slug',  ToSeoUrl(Router.current().params.group_slug) );
 		window.subscription_group_people_pending_search = "";
 		//window.subscription_group_people_pending = Meteor.subscribe('posts', 'group_people_pending_all', Router.current().params.group_slug);

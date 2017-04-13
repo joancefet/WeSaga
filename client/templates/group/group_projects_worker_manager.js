@@ -12,7 +12,7 @@ Router.route('/group/:group_slug/projects/worker_manager',{
 		}
 	},
 	waitOn: function(){
-		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 	},
 	template:'screen',
 	yieldTemplates: {

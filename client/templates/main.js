@@ -13,7 +13,7 @@ import { Postsmeta } 				from '../../imports/postsmeta.js';
 // STARTUP / SUBSCRIPTIONS
 // ====================================
 Meteor.startup(function(){
-	
+
 	toastr.options = {
 		"closeButton": true,
 		"debug": false,
@@ -83,8 +83,7 @@ Template.sidebar_right.helpers({
 
 // Account Navigation Helper
 Template.account_navigation_list.rendered = function() {
-	Meteor.subscribe('posts', "notify", Meteor.userId() ); 
-	Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
+
 };
 
 // Account Navigation Helper
@@ -133,7 +132,6 @@ Template.account_navigation.events({
 
 // ALL SCREENS RENDER (with extension)
 Template.onRendered(function () {
-	console.log("RENDER: Template.onRendered");
 
 	$('body').addClass("fixed-sidebar");
 	
@@ -157,19 +155,10 @@ Template.onRendered(function () {
 // AFTER GLOBAL RENDER?
 Router.onAfterAction(function(){
 	
-	console.log("RENDER: Router.onAfterAction");
-	
-	
 });
 
 Template.screen.rendered = function() {
-	
-	console.log("RENDER: Template.screen.rendered");
-	
 
-	// This is SUPER broken don't use it	
-
-	
 	// HOMER THEME
 	// ===========
 	
@@ -191,7 +180,6 @@ Template.screen.rendered = function() {
 	});
 	
 	$('.animate-panel').animatePanel();
-	
 	
 }
 

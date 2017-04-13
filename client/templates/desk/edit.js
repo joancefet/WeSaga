@@ -13,6 +13,8 @@ Router.route('/desk/edit',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		Meteor.subscribe('posts', "resume_skill", Meteor.user().profile.username ); 
 		Meteor.subscribe('posts', "resume_education", Meteor.user().profile.username ); 
 			Meteor.subscribe('posts', "resume_education_date1", Meteor.user().profile.username );
@@ -37,6 +39,16 @@ Router.route('/desk/edit',{
 // ------------------
 Template.deskedit.rendered = function() {
 	
+  //Place Marker on User Location.
+  GoogleMaps.ready('editMap', function(map) {
+    // Add a marker to the map once it's ready
+    var marker = new google.maps.Marker({
+      position: map.options.center,
+      map: map.instance
+    });
+  });
+  
+  
 	//Load Google Map
 	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
 
@@ -48,14 +60,6 @@ Template.deskedit.rendered = function() {
 // ========================
 Template.deskedit.onCreated(function () {
   
-  //Place Marker on User Location.
-  GoogleMaps.ready('editMap', function(map) {
-    // Add a marker to the map once it's ready
-    var marker = new google.maps.Marker({
-      position: map.options.center,
-      map: map.instance
-    });
-  });
   
 });
 

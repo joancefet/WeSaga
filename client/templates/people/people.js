@@ -12,6 +12,10 @@ Router.route('/people',{
 		}
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
+		
 		window.subscription_people_search = "";
 		window.subscription_people = Meteor.subscribe('posts', 'people_all'); 		
 	},

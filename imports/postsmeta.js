@@ -12,10 +12,6 @@ if (Meteor.isServer) {
 		check(action, String);
 		// if(parent_id){ check(parent_id, String); }
 		
-		if(action == "all"){
-			return Postsmeta.find({},{ sort: { createdAt: -1 }, limit:10 });
-		}
-		
 		if(action == "desk_comments"){
 			return Postsmeta.find({type:"post_comment", parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 });
 		}

@@ -1,5 +1,4 @@
 Router.route('/', {
-	path: '/',
 	data:function(){
 		
 		if( Meteor.user() ){
@@ -8,7 +7,7 @@ Router.route('/', {
 		
 	},
 	waitOn: function(){
-		
+		return;
 	},
 	template: 'landing',
 	yieldTemplates: {
@@ -16,7 +15,7 @@ Router.route('/', {
 	},
 	onAfterAction: function() {
 
-		var seo_title 		=  "SkyRooms Virtual Offices for Business";
+		var seo_title 		= "SkyRooms Virtual Offices for Business";
 		var seo_description = "SkyRooms is a Freemium based Professionals Social Network and Business Management suite. Start with any module for free, grow your organization!";
 		var seo_image 		= "https://www.skyrooms.io/images/og_facebook.jpg";
 		
@@ -24,8 +23,6 @@ Router.route('/', {
 			
 			description: seo_description,
 			title: seo_title,
-			
-			// separator: '-',
 
 			meta: {
 				description: seo_description,
@@ -55,8 +52,10 @@ Template.landing.rendered = function() {
 	equalize(".equalize");
 	$(".table td").css('border', 'none');
 	
+};
 
-	
+Template.landing.destroyed = function() {
+	$('body').removeClass("landing-page");
 };
 
 Template.landing.events({

@@ -11,6 +11,9 @@ Router.route('/people/:user_slug',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
+		
 		// Cannot view yourself here
 		if(Meteor.user().profile.username == ToSeoUrl(Router.current().params.user_slug) ){
 			Router.go("/desk");
@@ -18,6 +21,12 @@ Router.route('/people/:user_slug',{
 		
 		Meteor.subscribe('posts', 'people_desk',  ToSeoUrl(Router.current().params.user_slug) );
 		Meteor.subscribe('posts', "people_desk_posts", ToSeoUrl(Router.current().params.user_slug) ); 
+		
+		Meteor.subscribe('posts', "resume_experience", ToSeoUrl(Router.current().params.user_slug) ); 
+			Meteor.subscribe('posts', "resume_experience_group", ToSeoUrl(Router.current().params.user_slug) );
+			Meteor.subscribe('posts', "resume_experience_date1", ToSeoUrl(Router.current().params.user_slug) );
+			Meteor.subscribe('posts', "resume_experience_date2", ToSeoUrl(Router.current().params.user_slug) );	
+			Meteor.subscribe('posts', "resume_experience_type", ToSeoUrl(Router.current().params.user_slug) );
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -26,6 +35,26 @@ Router.route('/people/:user_slug',{
 	
 });
 
+// Render
+// ==============
+Template.people_desk.rendered = function() {
+	
+	//Load Google Map
+	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
+
+	//Place Marker on User Location.
+	GoogleMaps.ready('profileMap', function(map) {
+		var marker = new google.maps.Marker({
+			position: map.options.center,
+			map: map.instance
+		});
+	});
+
+	
+};
+
+// Events
+// ==============
 Template.people_desk.events({
 	
 	// Submit New Post
@@ -343,20 +372,37 @@ Template.people_desk.helpers({
 		return ToSeoUrl(string);
 	},
 	
-	// Google Map helper.
-	mapOptions2: function() {
-		console.log("mapOptions called.");
+	mapOptions: function() {
+		
+		// Find the map owner
+		var user = Meteor.users.findOne({"profile.username": ToSeoUrl(Router.current().params.user_slug) });
+				
 		if (GoogleMaps.loaded()) {
-		  return {
-			center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
-			zoom: 8,
-			disableDefaultUI: true, 
-			draggable: true,
-			scrollwheel: true,
-			disableDoubleClickZoom: true,
-		  };
-		  
+			return {
+				center: new google.maps.LatLng(user.profile.location_latitude, user.profile.location_longitude),
+				zoom: 8,
+				disableDefaultUI: true, 
+				draggable: false,
+				scrollwheel: false,
+				disableDoubleClickZoom: true,
+			};
+			console.log("There was NOT an error!");
+		} else {
+			console.log("There was an error!");
 		}
+	},
+	
+	resume_experience(){
+		return Posts.find({type:"resume_experience"}, {sort: { createdAt: 1 }, limit:1 });
+	},
+	resume_experience_group(){
+		return Posts.find({type:"resume_experience_group", parent_id:this._id});
+	},
+	resume_experience_date1(){
+		return Posts.find({type:"resume_experience_date1", parent_id:this._id});
+	},
+	resume_experience_date2(){
+		return Posts.find({type:"resume_experience_date2", parent_id:this._id});
 	},
 	
 });

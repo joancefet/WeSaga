@@ -9,6 +9,7 @@ Router.route('/groups/all',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
 		window.subscription_group_search = "";
 		window.subscription_group_all 	 = Meteor.subscribe('posts', 'groups_all');

@@ -12,7 +12,7 @@ Router.route('/groups/manage/',{
 		}
 	},
 	waitOn: function(){
-		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 	},
 	template:'screen',
 	yieldTemplates: {

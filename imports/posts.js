@@ -12,6 +12,10 @@ if (Meteor.isServer) {
 		check(PARAM_1, String);		
 		//if(PARAM_3){ check(PARAM_3, String); }
 		
+		if(PARAM_1 == "empty"){
+			return "";
+		}
+		
 		if(PARAM_1 == "notify"){
 			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, {sort: { createdAt: -1 }, limit:20 });
 		}

@@ -1,5 +1,3 @@
-console.log("Skyroom Tools Loaded: Client Compatibility");
-
 
 // SEO URL
 function ToSeoUrl(url) { 

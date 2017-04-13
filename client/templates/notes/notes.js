@@ -27,18 +27,18 @@ Template.notes.onRendered(function() {
 
 	clearInterval(window.autoSave);
 
-	window.autoSave = setInterval(function(){ 
-		// GET TINY MCE CONTENT
-		content = tinyMCE.get('notepad').getContent();
+	// window.autoSave = setInterval(function(){ 
+		// // GET TINY MCE CONTENT
+		// content = tinyMCE.get('notepad').getContent();
 		
-		// Update User Profile
-		Meteor.users.update(Meteor.userId(), {
-			$set: {
-				"profile.notes": content,
-			}
-		}); 
-		console.log("Notes Auto Save");
-	},5000);
+		// // Update User Profile
+		// Meteor.users.update(Meteor.userId(), {
+			// $set: {
+				// "profile.notes": content,
+			// }
+		// }); 
+		// console.log("Notes Auto Save");
+	// },5000);
 	
 });
 

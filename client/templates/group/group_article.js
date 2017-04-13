@@ -9,6 +9,8 @@ Router.route('/group/:group_slug/article/:articleSlug',{
 	},
 	waitOn: function(){
 		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		// Find articles
 		// Meteor.subscribe('posts', 'articles_by_group_slug',  ToSeoUrl(Router.current().params.group_slug) );
 		
