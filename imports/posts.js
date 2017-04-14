@@ -31,9 +31,15 @@ if (Meteor.isServer) {
 		// DESK
 		// =======
 		if(PARAM_1 == "desk_posts"){
-			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			return Posts.find({type:"desk_posts", owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+		}
+		if(PARAM_1 == "desk_posts_comments"){
+			return Posts.find({type:"desk_posts_comments", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
 		}
 		
+		if(PARAM_1 == "desk_posts_attachment"){
+			return Posts.find({type:"desk_posts_attachment", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+		}	
 		
 		
 		

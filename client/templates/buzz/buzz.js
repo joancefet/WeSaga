@@ -61,12 +61,12 @@ Template.buzz.events({
 					// Send to Cloudinary
 					Cloudinary.upload( file, function(error, result){
 						
-						Meteor.call('postsmeta.update',
+						Meteor.call('posts.update',
 							"new",
 							"me",
 							"",
 							"https://res.cloudinary.com/skyroomsio/image/upload/a_0/"+result.public_id+"."+result.format, 
-							"post_attachment",
+							"desk_posts_attachment",
 							parent_post_id,
 						);
 						console.log("ADDED post_attachment to:" +parent_post_id);
@@ -97,12 +97,12 @@ Template.buzz.events({
 		const target = event.target;
 		console.log(target);
 		
-		Meteor.call('postsmeta.update',
+		Meteor.call('posts.update',
 			"new",
 			"me",
 			"",
 			target.content.value,
-			"post_comment",
+			"desk_posts_comments",
 			target.parent_id.value,
 		);
 		
@@ -140,15 +140,15 @@ Template.buzz.helpers({
 		
 	},
 	
-	desk_comments(){
+	desk_posts_comments(){
 		// SUBSCRIBE TO POSTMETA: parent_id
-		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
-		return Postsmeta.find({type: "post_comment", parent_id:this._id});
+		Meteor.subscribe('posts', "desk_posts_comments", this._id); 
+		return Posts.find({type: "desk_posts_comments", parent_id:this._id});
 	},
 	
-	post_attachment(){
-		Meteor.subscribe('postsmeta', "post_attachment", this._id);
-		return Postsmeta.find({type: "post_attachment", parent_id:this._id});
+	desk_posts_attachment(){
+		Meteor.subscribe('posts', "desk_posts_attachment", this._id);
+		return Posts.find({type: "desk_posts_attachment", parent_id:this._id});
 	},
 	
 	HasOwnerAvatar(){

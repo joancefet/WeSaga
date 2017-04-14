@@ -16,7 +16,6 @@ Router.route('/desk',{
 		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
 		Meteor.subscribe('posts', "desk_posts", Meteor.userId() ); 
-		//Meteor.subscribe('postsmeta', "desk_comments"); // Need meta data in helpers
 		
 		Meteor.subscribe('posts', "resume_experience", Meteor.user().profile.username ); 
 			Meteor.subscribe('posts', "resume_experience_group", Meteor.user().profile.username );
@@ -91,12 +90,12 @@ Template.desk.events({
 					// Send to Cloudinary
 					Cloudinary.upload( file, function(error, result){
 						
-						Meteor.call('postsmeta.update',
+						Meteor.call('posts.update',
 							"new",
 							"me",
 							"",
 							"https://res.cloudinary.com/skyroomsio/image/upload/a_0/"+result.public_id+"."+result.format, 
-							"post_attachment",
+							"desk_posts_attachment",
 							parent_post_id,
 							"publish",
 						);
@@ -124,12 +123,12 @@ Template.desk.events({
 		
 		const target = event.target;
 		
-		Meteor.call('postsmeta.update',
+		Meteor.call('posts.update',
 			"new",
 			"me",
 			"",
 			target.content.value,
-			"post_comment",
+			"desk_posts_comments",
 			target.parent_id.value,
 		);
 		
@@ -161,10 +160,10 @@ Template.desk.helpers({
 		if (GoogleMaps.loaded()) {
 			return {
 				center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
-				zoom: 8,
+				zoom: 4,
 				disableDefaultUI: true, 
-				draggable: false,
-				scrollwheel: false,
+				draggable: true,
+				scrollwheel: true,
 				disableDoubleClickZoom: true,
 			};
 			console.log("There was NOT an error!");
@@ -176,17 +175,18 @@ Template.desk.helpers({
 	desk_posts() {
 		return Posts.find({type:"desk_posts"}, {sort: { createdAt: -1 } });
 	},
-	
-	post_attachment(){
-		Meteor.subscribe('postsmeta', "post_attachment", this._id);
-		return Postsmeta.find({type: "post_attachment", parent_id:this._id});
+	desk_posts_attachment(){
+		Meteor.subscribe('posts', "desk_posts_attachment", this._id);
+		return Posts.find({type: "desk_posts_attachment", parent_id:this._id});
 	},
-	
-	desk_comments(){
+	desk_posts_comments(){
 		// SUBSCRIBE TO POSTMETA: parent_id
-		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
-		return Postsmeta.find({parent_id:this._id});
+		Meteor.subscribe('posts', "desk_posts_comments", this._id); 
+		return Posts.find({type:"desk_posts_comments", parent_id:this._id});
 	},
+	
+	
+	
 	HasOwnerAvatar(){
 		if(this.owner_avatar != "/uploadFiles/undefined"){
 			return true;
