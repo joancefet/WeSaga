@@ -10,6 +10,9 @@ Router.route('/resume/:user_slug',{
 		
 	},
 	waitOn: function(){
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
 		Meteor.subscribe('posts', 'resume',  ToSeoUrl(Router.current().params.user_slug) );
 		Meteor.subscribe('posts', "resume_posts", ToSeoUrl(Router.current().params.user_slug) ); 
 		

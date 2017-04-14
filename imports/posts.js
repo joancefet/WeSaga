@@ -482,7 +482,6 @@ Meteor.methods({
 		
 	},
 	
-	
 
 });
 

@@ -48,7 +48,8 @@ Template.deskedit.rendered = function() {
     });
   });
   
-  
+	// https://maps.googleapis.com/maps/api/geocode/json?address=Toronto+Ontario+Canada&key=AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE
+    
 	//Load Google Map
 	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
 
@@ -96,28 +97,6 @@ Template.deskedit.events({
 	
 	'click .desk_save_all': function(event){
 		
-		// Update working location
-		// TODO: Change this to Google Maps API so user can enter data. This is quick and dirty.
-		$.getJSON('https://freegeoip.net/json/').done(function(location){
-			//$('#country').html(location.country_name);
-			//$('#country_code').html(location.country_code);
-			//$('#region').html(location.region_name);
-			//$('#region_code').html(location.region_code);
-			//$('#city').html(location.city);
-			//alert(location.city);
-			//$('#latitude').html(location.latitude);
-			//$('#longitude').html(location.longitude);
-			//$('#timezone').html(location.time_zone);
-			//$('#ip').html(location.ip);
-			Meteor.users.update(Meteor.userId(), {
-				$set: {
-					"profile.location_latitude": location.latitude,
-					"profile.location_longitude": location.longitude,
-					"profile.location_name": location.city + ", " + location.region_name + ", " + location.country_name,
-				}
-			});
-		});
-		
 		// Update profile data
 		Meteor.users.update(Meteor.userId(), {
 			$set: {
@@ -141,6 +120,35 @@ Template.deskedit.events({
 	
 	// save_contact
 	'click .save_contact': function(event){
+		
+		var address = $('.update_resume_location').val();
+		address = encodeURIComponent(address)
+		
+		$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key=AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE').done(function(google){
+			if(google.status != "ZERO_RESULTS"){
+				// console.log(google.results[0].geometry.location.lat);
+				// console.log(google.results[0].geometry.location.lng);
+				
+				Meteor.users.update(Meteor.userId(), {
+				$set: {
+					"profile.location_latitude": google.results[0].geometry.location.lat,
+					"profile.location_longitude": google.results[0].geometry.location.lng,
+					"profile.location_name": $('.update_resume_location').val(),
+				}
+			});
+				
+			}else{
+				swal({
+					title: "Address not found",
+					text: "Please check your address input and try again",
+					type: "error",
+					showCancelButton: false,
+					confirmButtonText: "Try Again",
+				});
+			}
+		});
+		
+		
 		Meteor.users.update(Meteor.userId(), {
 			$set: {
 				"profile.resume_phone": $('.update_resume_phone').val(),
