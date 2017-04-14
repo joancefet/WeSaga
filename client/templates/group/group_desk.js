@@ -17,6 +17,7 @@ Router.route('/group/:group_slug',{
 		
 		Meteor.subscribe('posts', 'group_desk',  ToSeoUrl(Router.current().params.group_slug) );
 		Meteor.subscribe('posts', "group_desk_posts", ToSeoUrl(Router.current().params.group_slug) ); 
+		Meteor.subscribe('posts', 'group_image_by_group_id', group._id );
 		
 	},
 	template:'screen',
@@ -44,6 +45,11 @@ Template.group_desk.rendered = function() {
 
 };
 
+// Events
+Template.group_desk.events({
+
+});
+
 
 // skyrooms Helper
 Template.group_desk.helpers({
@@ -57,6 +63,14 @@ Template.group_desk.helpers({
 		});
 		
 		return groups;
+	},
+	group_image(){
+		var image = Posts.findOne({title:"group_image", parent_id:this._id});
+		if(image){ 
+			return image.content;
+		}else{
+			return false;
+		}
 	},
 	
 	group_slug(){
@@ -81,8 +95,8 @@ Template.group_desk.helpers({
 		}else{
 			return false;
 		}
-	},
 	
+	},
 	the_group_title(){
 		var group = Posts.findOne({type:"groups"}); 
 		if(group){
@@ -103,14 +117,4 @@ Template.group_desk.helpers({
 	
 	
   
-});
-
-
-
-
-
-// Events
-Template.group_desk.events({
-
-
 });
