@@ -24,7 +24,7 @@
 						
 							<div class="col-xs-12 col-md-2">
 								<center>
-									<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
+									<img alt="logo" class="img-circle m-b img-responsive" src="{{currentUser.profile.avatar}}" width=100 height=100 />
 								</center>
 							</div>
 							
@@ -75,9 +75,9 @@
 										<center>
 											<a class="" href="/people/{{slug owner_username}}">
 												{{#if HasOwnerAvatar}}
-													<img alt="logo" class="img-circle" src="{{owner_avatar}}" width=100 height=100 />
+													<img alt="logo" class="img-circle img-responsive" src="{{owner_avatar}}" width=100 height=100 />
 												{{else}}
-													<img alt="logo" class="img-circle" src="/images/default.jpg" width=100 height=100 />
+													<img alt="logo" class="img-circle img-responsive" src="/images/default.jpg" width=100 height=100 />
 												{{/if}}
 											</a>
 											<br />
@@ -100,7 +100,7 @@
 										<div class="lightBoxGallery">
 											{{#each desk_posts_attachment}}
 												<a href="{{content}}" data-gallery >
-													<img src="{{content}}"  style="width:100%;"/>
+													<img src="{{content}}" class="img-responsive"  style="width:100%;"/>
 												</a>
 											{{/each}}
 										</div>

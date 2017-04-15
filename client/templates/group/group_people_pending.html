@@ -82,18 +82,18 @@
 						<div class="row search_container">
 							{{#if people}}
 								{{#each people}}
-								<div class="col-lg-3">
+								<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 									<div class="hpanel hgreen">
 										<div class="panel-body">
 											
 											<a href="/people/{{profile.username}}">
 												{{#if profile.avatar}}
 													<center>
-														<img alt="logo" class="img-circle m-b" src="{{profile.avatar}}" width="100%" style="width:100%; height:205px;"  />
+														<img alt="logo" class="img-circle m-b img-responsive" src="{{profile.avatar}}" width="100%" />
 													</center>
 												{{else}}
 													<center>
-														<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="100%" style="width:100%; height:205px;" />
+														<img alt="logo" class="img-circle m-b img-responsive" src="/images/default.jpg" width="100%" />
 													</center>
 												{{/if}}
 											</a>

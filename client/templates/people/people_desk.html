@@ -29,9 +29,9 @@
 											
 											<center>
 												{{#if profile.avatar}}
-													<img alt="logo" class="img-circle m-b" src="{{profile.avatar}}" width="300px" height="300px" />
+													<img alt="logo" class="img-circle m-b img-responsive" src="{{profile.avatar}}" width="300px" height="300px" />
 												{{else}}
-													<img alt="logo" class="img-circle m-b" src="/images/default.jpg" width="300px" height="300px" />
+													<img alt="logo" class="img-circle m-b img-responsive" src="/images/default.jpg" width="300px" height="300px" />
 												{{/if}}
 												<h3>
 													<a href="" class="">{{profile.name_first}} {{profile.name_last}}</a>
@@ -142,7 +142,7 @@
 											
 												<div class="col-xs-12 col-md-2">
 													<center>
-														<img alt="logo" class="img-circle m-b" src="{{currentUser.profile.avatar}}" width=100 height=100 />
+														<img alt="logo" class="img-circle m-b img-responsive" src="{{currentUser.profile.avatar}}" width=100 height=100 />
 													</center>
 												</div>
 												
@@ -193,9 +193,9 @@
 															<center>
 																<a class="" href="/people/{{slug owner_username}}">
 																	{{#if HasOwnerAvatar}}
-																		<img alt="logo" class="img-circle" src="{{owner_avatar}}" width=100 height=100 />
+																		<img alt="logo" class="img-circle img-responsive" src="{{owner_avatar}}" width=100 height=100 />
 																	{{else}}
-																		<img alt="logo" class="img-circle" src="/images/default.jpg" width=100 height=100 />
+																		<img alt="logo" class="img-circle img-responsive" src="/images/default.jpg" width=100 height=100 />
 																	{{/if}}
 																</a>
 																<br />
@@ -217,7 +217,7 @@
 															<div class="lightBoxGallery">
 																{{#each desk_posts_attachment}}
 																	<a href="{{content}}" data-gallery >
-																		<img src="{{content}}"  style="width:100%;"/>
+																		<img src="{{content}}" class="img-responsive" style="width:100%;"/>
 																	</a>
 																{{/each}}
 															</div>
@@ -232,7 +232,7 @@
 															<div class="social-talk">
 																<div class="media social-profile clearfix">
 																	<a class="pull-left" href="/people/{{slug owner_username}}">
-																		<img src="{{owner_avatar}}" alt="profile-picture">
+																		<img src="{{owner_avatar}}" class="img-responsive" alt="profile-picture">
 																	</a>
 																	<div class="media-body">
 																		<span class="font-bold">
