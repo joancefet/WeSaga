@@ -170,6 +170,22 @@ if (Meteor.isServer) {
 			if(PARAM_1 == "group_desk_posts_attachment"){
 				return Posts.find({type:"group_desk_posts_attachment", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
 			}	
+			
+			if(PARAM_1 == "group_location"){
+				return Posts.find({type:"group_location", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_location_lat"){
+				return Posts.find({type:"group_location_lat", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_location_lng"){
+				return Posts.find({type:"group_location_lng", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_phone"){
+				return Posts.find({type:"group_phone", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_email"){
+				return Posts.find({type:"group_email", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}
 		
 		
 		if(PARAM_1 == "group_member_by_group_id"){

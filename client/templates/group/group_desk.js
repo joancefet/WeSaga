@@ -19,6 +19,10 @@ Router.route('/group/:group_slug',{
 		Meteor.subscribe('posts', "group_desk_posts", group._id ); 
 		Meteor.subscribe('posts', 'group_image_by_group_id', group._id );
 		
+		Meteor.subscribe('posts', 'group_location',  group._id );
+		Meteor.subscribe('posts', 'group_phone',  group._id );
+		Meteor.subscribe('posts', 'group_email',  group._id );
+		
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -43,6 +47,17 @@ Router.route('/group/:group_slug/desk',{
 
 Template.group_desk.rendered = function() {
 
+	//Load Google Map
+	GoogleMaps.load({key: 'AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE'});
+
+	//Place Marker on User Location.
+	GoogleMaps.ready('profileMap', function(map) {
+		var marker = new google.maps.Marker({
+			position: map.options.center,
+			map: map.instance
+		});
+	});
+	
 };
 
 // Events
@@ -168,7 +183,14 @@ Template.group_desk.helpers({
 			return "not_found";
 		}
 	},
-	
+	the_group_title(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group.title;
+		} else {
+			return false;
+		}
+	},
 	the_group_content(){
 		var group = Posts.findOne({type:"groups"}); 
 		if(group){
@@ -178,6 +200,36 @@ Template.group_desk.helpers({
 		}
 	},
 	
+	the_group_location(){
+		var post = Posts.findOne({type:"group_location"}); 
+		return post.content; 
+	},
+	
+	the_group_phone(){
+		var post = Posts.findOne({type:"group_phone"}); 
+		return post.content; 
+	},
+	
+	the_group_email(){
+		var post = Posts.findOne({type:"group_email"}); 
+		return post.content; 
+	},
+	
+	mapOptions: function() {
+		if (GoogleMaps.loaded()) {
+			return {
+				center: new google.maps.LatLng(Meteor.user().profile.location_latitude, Meteor.user().profile.location_longitude),
+				zoom: 4,
+				disableDefaultUI: true, 
+				draggable: true,
+				scrollwheel: true,
+				disableDoubleClickZoom: true,
+			};
+			console.log("There was NOT an error!");
+		} else {
+			console.log("There was an error!");
+		}
+	},
 	
 	group_desk_posts() {
 		

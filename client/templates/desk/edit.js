@@ -122,7 +122,7 @@ Template.deskedit.events({
 	'click .save_contact': function(event){
 		
 		var address = $('.update_resume_location').val();
-		address = encodeURIComponent(address)
+		address = encodeURIComponent(address);
 		
 		$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key=AIzaSyATUzfjVr1TtxqBIvDJa2AKnNYdgu_XXKE').done(function(google){
 			if(google.status != "ZERO_RESULTS"){
@@ -134,8 +134,8 @@ Template.deskedit.events({
 					"profile.location_latitude": google.results[0].geometry.location.lat,
 					"profile.location_longitude": google.results[0].geometry.location.lng,
 					"profile.location_name": $('.update_resume_location').val(),
-				}
-			});
+					}
+				});
 				
 			}else{
 				swal({

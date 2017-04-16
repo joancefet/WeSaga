@@ -85,9 +85,8 @@
 												
 												<center>
 													<h1>
-														{{the_group_title}}
+														<b>{{the_group_title}}</b>
 													</h1>
-													
 												</center>
 												
 											</div>
@@ -98,9 +97,13 @@
 											
 											<div class="col-md-4">
 												
-												<section id="map">
-													
-												</section>
+												<div class="map-container">
+													{{> googleMap name="profileMap" options=mapOptions}}
+												</div>
+												
+												<h3>{{the_group_location}}</h3>
+												<h3>{{the_group_phone}}</h3>
+												<h3>{{the_group_email}}</h3>
 												
 											</div>
 												

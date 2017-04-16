@@ -32,7 +32,7 @@
 											<img alt="logo" class="img-circle m-b img-responsive" src="/images/default.jpg" width="300px" height="300px" />
 										{{/if}}
 										<h3>
-											<a href="" class="">{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}</a>
+											<b><a href="" class="">{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}</a></b>
 										</h3>
 										<a class="btn btn-success btn-block" onClick="Router.go('/desk/edit')">
 											<i class="fa fa-cog"></i> Update Card & Resume
@@ -48,7 +48,7 @@
 								
 									{{#each resume_experience}}
 										
-										<h3>{{title}}</h3>
+										<h3><b>{{title}}</b></h3>
 										
 										{{#each resume_experience_group}}
 											<b>{{title}}</b>
@@ -66,17 +66,13 @@
 								
 								<div class="col-md-4">
 									
-									<section id="map">
-										
-										<div class="pull-right text-muted font-bold m-b-xs">
-											{{currentUser.profile.location_name}}
-										</div>
-										<div class="map-container">
-											{{> googleMap name="profileMap" options=mapOptions}}
-										</div>
-										
-									</section>
-									
+									<div class="map-container">
+										{{> googleMap name="profileMap" options=mapOptions}}
+									</div>
+									<h3>
+										{{currentUser.profile.location_name}}
+									</h3>
+								
 								</div>
 								
 							</div>
