@@ -20,10 +20,6 @@ if (Meteor.isServer) {
 			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, {sort: { createdAt: -1 }, limit:20 });
 		}
 		
-		// if(PARAM_1 == "all"){
-			// return Posts.find({}, {sort: { createdAt: -1 }, limit:10 });
-		// }
-		
 		if(PARAM_1 == "notes"){
 			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10  });			
 		}
@@ -162,6 +158,19 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "group_by_slug"){
 			return Posts.find({type:"groups", slug: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
+			
+			// DESK
+			// ----
+			if(PARAM_1 == "group_desk_posts"){
+				return Posts.find({type:"group_desk_posts", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_desk_posts_comments"){
+				return Posts.find({type:"group_desk_posts_comments", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_desk_posts_attachment"){
+				return Posts.find({type:"group_desk_posts_attachment", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}	
+		
 		
 		if(PARAM_1 == "group_member_by_group_id"){
 			return Posts.find({type:"group_member", _id:PARAM_2}, { sort: { createdAt: -1 } });			

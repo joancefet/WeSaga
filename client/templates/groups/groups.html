@@ -68,24 +68,19 @@
 									<div class="hpanel hgreen contact-panel">
 										<div class="panel-body">
 											
-											<center>
-												<a href="/group/{{slug}}">
+											<a href="/group/{{slug}}">
+												<center>
 													{{#if group_image}}
 														<img alt="logo" class="img-circle m-b img-responsive" src="{{group_image}}" width="100%" />
 													{{else}}
 														<img alt="logo" class="img-circle m-b img-responsive" src="/images/meeting-default.jpg" width="100%" />
 													{{/if}}
-												</a>
-											</center>
-											
-											<h3>
-												<a href="/meet/{{owner_username}}/{{slug}}">
-													{{title}}
-												</a>
-											</h3>
-											<p>
-												{{content}}
-											</p>
+												
+													<h3>
+														<b>{{title}}</b>
+													</h3>
+												</center>
+											</a>
 											
 											{{#if groupsStatus "waiting"}}
 												<form class="btn-form">
