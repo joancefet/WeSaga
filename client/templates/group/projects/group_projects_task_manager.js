@@ -1,10 +1,9 @@
-import { Posts } 					from '../../../imports/posts.js';
-import { Postsmeta } 				from '../../../imports/postsmeta.js';
+import { Posts } 					from '../../../../imports/posts.js';
 
 // ROUTER
 //=========
 
-Router.route('/group/:group_slug/projects/details_manager',{
+Router.route('/group/:group_slug/projects/task_manager',{
 	data:function(){
 		
 		if( !Meteor.user()){
@@ -21,12 +20,12 @@ Router.route('/group/:group_slug/projects/details_manager',{
 	},
 	template:'screen',
 	yieldTemplates: {
-		'groups_project_detail_manager': {to: 'content'},
+		'group_projects_task_manager': {to: 'content'},
 	}
 	
 });
 
-Router.route('/group/:group_slug/projects/details_manager/:groupsProjectId',{
+Router.route('/group/:group_slug/projects/task_manager/:groupsProjectId/:taskListId',{
 	data:function(){
 		
 		if( !Meteor.user()){
@@ -41,21 +40,24 @@ Router.route('/group/:group_slug/projects/details_manager/:groupsProjectId',{
 		// groups_project_by_id
 		Meteor.subscribe('posts', 'groups_project_by_id', Router.current().params.groupsProjectId );
 		
+		// groups_task_list
+		Meteor.subscribe('posts', 'groups_task_list_by_id', Router.current().params.taskListId );
+		
 	},
 	template:'screen',
 	yieldTemplates: {
-		'groups_project_detail_manager': {to: 'content'},
+		'group_projects_task_manager': {to: 'content'},
 	}
 	
 });
 
-Template.groups_project_detail_manager.rendered = function() {
+Template.group_projects_task_manager.rendered = function() {
 	
 };
 
 
 // Events
-Template.groups_project_detail_manager.events({
+Template.group_projects_task_manager.events({
 	
 	// CREATE / UPDATE
 	'submit'(event) {
@@ -63,40 +65,39 @@ Template.groups_project_detail_manager.events({
 		event.preventDefault();
 		const target = event.target;
 		
-		var group_id = "unset";
-		if(target.the_group_id.value){
-			group_id = target.the_group_project_id.value;
+		var POST_ID = "unset";
+		if(target.the_group_task_list_id.value){
+			POST_ID = target.the_group_task_list_id.value;
 		} else {
-			group_id = "new";
+			POST_ID = "new";
 		}
 		
 		// UPDATE
 		Meteor.call('posts.update',
-			group_id,
+			POST_ID,
 			"me",
 			target.title.value,
 			target.content.value,
-			"groups_project",
-			target.the_group_id.value,
+			"groups_task_list",
+			target.the_group_project_id.value,
 			"publish"
 			,function(error, result, event){
 				
 				// All Done
 				Router.go("/group/"+target.group_slug.value+"/projects/details/"+target.the_group_project_id.value);
 				
-				if(group_id == "new"){
+				if(POST_ID == "new"){
 					swal({
-						title: "Group Project Category Created",
+						title: "Group Task List Created",
 						text: "",
 						type: "success",
 						showCancelButton: false,
 						cancelButtonText: "Cancel",
 						confirmButtonText: "Close",
-						
 					});
 				}else{
 					swal({
-						title: "Group Project Category Updated",
+						title: "Group Task List Updated",
 						text: "",
 						type: "success",
 						showCancelButton: false,
@@ -137,11 +138,15 @@ Template.groups_project_detail_manager.events({
 		
 	},
 	
+	'click .add_task'(event){
+		alert('click');
+	}
+	
 });
 
 
 // skyrooms Helper
-Template.groups_project_detail_manager.helpers({
+Template.group_projects_task_manager.helpers({
 	
 	slug(title){
 		return ToSeoUrl(title); 
@@ -149,14 +154,17 @@ Template.groups_project_detail_manager.helpers({
 	group_slug(){
 		return Router.current().params.group_slug; 
 	},
+	group_project_slug(){
+		return Router.current().params.groupsProjectId
+	},	
 	
-	groups_project() {
+	groups_task_list() {
 		
-		var groupIds = Posts.find({	type:"groups_project" }).map(function(group){	
+		var groupIds = Posts.find({	type:"groups_task_list" }).map(function(group){	
 			return group.parent_id; 
 		});
 		
-		return Posts.find({type:"groups_project", status:{$ne:"trash"}});
+		return Posts.find({type:"groups_task_list", status:{$ne:"trash"}});
 	},
 	
 	the_group_id(){
@@ -177,8 +185,17 @@ Template.groups_project_detail_manager.helpers({
 		}
 	},
 	
-	the_group_project_title(){
-		var group = Posts.findOne({type:"groups_project"}); 
+	the_group_task_list_id(){
+		var list = Posts.findOne({type:"groups_task_list"}); 
+		if(list){
+			return list._id;
+		} else {
+			return false;
+		}
+	},
+	
+	the_group_task_list_title(){
+		var group = Posts.findOne({type:"groups_task_list"}); 
 		if(group){
 			return group.title;
 		} else {
@@ -186,14 +203,18 @@ Template.groups_project_detail_manager.helpers({
 		}
 	},
 	
-	the_group_project_content(){
-		var group = Posts.findOne({type:"groups_project"}); 
+	the_group_task_list_content(){
+		var group = Posts.findOne({type:"groups_task_list"}); 
 		if(group){
 			return group.content;
 		} else {
 			return false;
 		}
 	},
+	
+	tasks(){
+		return Posts.find({type:"tasks"});
+	}
 	
   
 });

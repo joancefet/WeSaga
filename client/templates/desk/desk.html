@@ -26,15 +26,17 @@
 								<div class="col-md-4">
 									
 									<center>
+										<a href="/resume/{{currentUser.profile.username}}">
 										{{#if currentUser.profile.avatar}}
 											<img alt="logo" class="img-circle m-b img-responsive" src="{{currentUser.profile.avatar}}" width="300px" height="300px" />
 										{{else}}
 											<img alt="logo" class="img-circle m-b img-responsive" src="/images/default.jpg" width="300px" height="300px" />
 										{{/if}}
+										</a>
 										<h3>
 											<b><a href="" class="">{{currentUser.profile.name_first}} {{currentUser.profile.name_last}}</a></b>
 										</h3>
-										<a class="btn btn-success btn-block" onClick="Router.go('/desk/edit')">
+										<a href="/desk/edit" class="btn btn-success btn-block">
 											<i class="fa fa-cog"></i> Update Card & Resume
 										</a>
 										<a href="/resume/{{currentUser.profile.username}}" class="btn btn-primary btn-block">

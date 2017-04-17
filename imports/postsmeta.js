@@ -9,19 +9,9 @@ if (Meteor.isServer) {
 	
 	Meteor.publish('postsmeta', function(action, parent_id) {
 		
-		check(action, String);
-		// if(parent_id){ check(parent_id, String); }
+		// All data has been migrated.
 		
-			
-		
-		if(action == "notify_meta"){
-			return Postsmeta.find({parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //, 
-		}
-		
-		if(action == "meeting_meta"){
-			return Postsmeta.find({type:action, parent_id:parent_id},{ sort: { createdAt: -1 }, limit:10 }); //
-		}
-			
+		return;
 		
 	});
 	

@@ -40,21 +40,6 @@ Meteor.startup(function(){
 // ====================================	
 // Todo: Make a script that just grabs all .html files. Why this isn't auto already...?
 
-import './main.html';
-	import './account_navigation.html';
-import './landing/landing.html';
-import './meet/meet.html';
-import './desk/desk.html';
-	import './desk/edit.html';
-import './groups/groups.html';
-	import './groups/groups_manager.html';
-import './group/group_desk.html';
-	import './group/group_people_pending.html';
-import './chats/chats.html';
-import './people/people.html';
-import './register/register.html';
-import './login/login.html';
-
 Router.configure({
     trackPageView: true
 });

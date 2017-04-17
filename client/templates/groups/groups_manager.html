@@ -159,6 +159,7 @@
 															
 															setTimeout(function(){
 																// TinyMCE has to be done this way for compatibilty reasons. :/
+																tinymce.EditorManager.editors = []; //we need to remove the old instances. 
 																
 																//Set "About" section to a TinyMCE editor.
 																tinymce.init({

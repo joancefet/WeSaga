@@ -1,5 +1,4 @@
-import { Posts } 					from '../../../imports/posts.js';
-import { Postsmeta } 				from '../../../imports/postsmeta.js';
+import { Posts } 					from '../../../../imports/posts.js';
 
 // ROUTER
 //=========

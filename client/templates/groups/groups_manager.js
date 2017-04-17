@@ -327,12 +327,8 @@ Template.groups_manager.helpers({
 	
 	groups() {
 		
-		var groupIds = Posts.find({	type:"groups" }).map(function(group){
-			// Meteor.subscribe('posts', 'groups', group.parent_id ); 			
-			// Meteor.subscribe('posts', 'group_member_role', group.parent_id ); 			
-			Meteor.subscribe('postsmeta', 'group_meta', group._id ); 			
+		var groupIds = Posts.find({	type:"groups" }).map(function(group){	
 			return group.parent_id; 
-			
 		});
 		
 		return Posts.find({type:"groups", status:{$ne:"trash"}});

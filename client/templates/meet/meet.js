@@ -1,5 +1,4 @@
 import { Posts } 					from '../../../imports/posts.js';
-import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
 // ------------------
 // SKYROOM JOIN
@@ -43,7 +42,6 @@ Router.route('/meet/:user_slug/:requested_room_slug', {
 		// }
 		
 		Meteor.subscribe('posts', 'meetings_by_url', Router.current().params.requested_room_slug ); 
-		Meteor.subscribe('postsmeta', 'meeting_meta_by_url', Router.current().params.requested_room_slug ); 
 		
 		
 	},

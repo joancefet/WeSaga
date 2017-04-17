@@ -138,9 +138,14 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "meetings"){
 			return Posts.find({type:"meetings", owner_id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		
+		if(PARAM_1 == "meetings_by_id"){
+			return Posts.find({type:"meetings", _id: PARAM_2}, { sort: { createdAt: -1 } });			
+		}
 		if(PARAM_1 == "meetings_by_url"){
 			return Posts.find({type:"meetings", slug:PARAM_2}, { sort: { createdAt: -1 } }); // PARAM_2 is a slug in this exception... lazy...			
+		}
+		if(PARAM_1 == "meetings_image_by_group_id"){
+			return Posts.find({type:"meetings_image", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		
 		// GROUPS

@@ -28,11 +28,13 @@
 										<div class="col-md-4">
 											
 											<center>
+												<a href="/resume/{{profile.username}}">
 												{{#if profile.avatar}}
 													<img alt="logo" class="img-circle m-b img-responsive" src="{{profile.avatar}}" width="300px" height="300px" />
 												{{else}}
 													<img alt="logo" class="img-circle m-b img-responsive" src="/images/default.jpg" width="300px" height="300px" />
 												{{/if}}
+												</a>
 												<h3>
 													<a href="" class="">{{profile.name_first}} {{profile.name_last}}</a>
 												</h3>
