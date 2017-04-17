@@ -29,12 +29,12 @@
 										<a href="/people/andrewnormore817">										
 											<img class="img-circle m-b" src="{{owner_avatar}}" width="100px" height="100px">
 										</a>
-										<a href="/group/microsoft/">
-											<img class="img-circle m-b" src="/images/meeting-default.jpg" width="100px" height="100px">
+										<a href="/group/{{group_slug}}/">
+											<img class="img-circle m-b" src="{{group_image}}" width="100px" height="100px">
 										</a>
 										
 										<br />
-										Created by: <a href="/people/{{owner_username}}" class="text-info"><b>{{owner_fullname}}</b></a> in <a href="/group/microsoft/" class="text-info"><b>SkyRooms Dev</b></a>
+										Published by: <a href="/people/{{owner_username}}" class="text-info"><b>{{owner_fullname}}</b></a> in <a href="/group/{{group_slug}}/" class="text-info"><b>{{the_group_title}}</b></a>
 
 										<time class="text-muted timeago" datetime="{{timeAgo}}"> {{timeAgo}}</time>
 										<!-- <br />
@@ -67,34 +67,33 @@
 							<!-- CHATS -->
 							<div class="panel-footer">
 							
-								<div class="social-talk">
-									<div class="media social-profile clearfix">
-										<a class="pull-left" href="/people/{{slug owner_username}}">
-											<a href="/people/{{slug owner_username}}">
+								{{#each article_comments}}
+									<div class="social-talk">
+										<div class="media social-profile clearfix">
+											<a class="pull-left" href="/people/{{slug owner_username}}">
 												<img src="{{owner_avatar}}" alt="profile-picture">
 											</a>
-										</a>
-										<div class="media-body">
-											<span class="font-bold">
-												<span class="capitalize">
-													<a href="/people/{{slug owner_username}}">
-														{{owner_fullname}}
-													</a>
+											<div class="media-body">
+												<span class="font-bold">
+													<span class="capitalize">
+														<a href="/people/{{slug owner_username}}">
+															{{owner_fullname}}
+														</a>
+													</span>
 												</span>
-											</span>
-											<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
-											<div class="social-content">
-												{{content}}  
+												<small> <time class="text-muted timeago" datetime="{{timeAgo}}">{{timeAgo}}</time></small>
+												<div class="social-content">
+													{{content}}  
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								{{/each}}	
 								
 								<div class="social-form">
-									<form autocomplete="off">
-										<input type="hidden" name="the_group_project_id" value="{{the_group_project_id}}" />
-										<input type="hidden" name="action" value="comment" />
-										<input type="text"   name="content" class="form-control comment_container" placeholder="Your comment" />
+									<form name="comment" class="comment" autocomplete="off"> 
+										<input type="hidden" name="parent_id" value="{{_id}}" />
+										<input type="text"   name="content" class="form-control" placeholder="Your comment" />
 									</form>
 								</div>
 								

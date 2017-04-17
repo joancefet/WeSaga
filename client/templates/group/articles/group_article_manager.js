@@ -94,26 +94,23 @@ Template.group_article_manager.events({
 				// Image
 				if($("#fileInput").prop('files')){
 					
+					meeting_image_id = "new";
+					meeting = Posts.findOne({type:"article_image"}); 
+					if(meeting){
+						meeting_image_id = meeting._id;
+					}
+					
 					Cloudinary.upload( $("#fileInput").prop('files'), function(error, result){
-						
-						article_image_id = "new";
-						image = Posts.findOne({type:"article_image"}); 
-						if(image){
-							article_image_id = image._id;
-						}else{
-							return false;
-						}
 						
 						// meta_group_image	
 						Meteor.call('posts.update',
-							article_image_id,
+							meeting_image_id,
 							"me",
-							"article_image",
+							"",
 							"https://res.cloudinary.com/skyroomsio/image/upload/c_fill,g_faces,h_400,w_1085/v1489424858/"+result.public_id+"."+result.format,
 							"article_image",
 							parent_id,
 							"publish",
-							result,
 						);
 						
 					});

@@ -291,6 +291,9 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "article_image_by_article_id"){
 			return Posts.find({type:"article_image", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
+		if(PARAM_1 == "article_comments"){
+			return Posts.find({type:"article_comments", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+		}
 		
 		
 		// PROJECTS
