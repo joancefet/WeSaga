@@ -199,6 +199,9 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "group_member_role_by_group_id"){
 			return Posts.find({type:"group_member_role", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
+		if(PARAM_1 == "group_member_role_by_user_id"){
+			return Posts.find({type:"group_member_role", owner_id:PARAM_2}, { sort: { createdAt: -1 } });			
+		}
 		if(PARAM_1 == "group_listing_by_group_id"){
 			return Posts.find({type:"group_listing", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}

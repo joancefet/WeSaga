@@ -15,8 +15,10 @@ Router.route('/people/:user_slug',{
 		Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
 		
 		// Cannot view yourself here
-		if(Meteor.user().profile.username == ToSeoUrl(Router.current().params.user_slug) ){
-			Router.go("/desk");
+		if( Meteor.user() ){
+			if(Meteor.user().profile.username == ToSeoUrl(Router.current().params.user_slug) ){
+				Router.go("/desk");
+			}
 		}
 		
 		Meteor.subscribe('posts', 'people_desk',  ToSeoUrl(Router.current().params.user_slug) );
@@ -114,6 +116,17 @@ Template.people_desk.events({
 	'submit .comment'(event) {
 		event.preventDefault();
 		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms to comment",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
+		
 		const target = event.target;
 		console.log(target);
 		
@@ -134,6 +147,17 @@ Template.people_desk.events({
 	
 	'submit'(event) {
 		event.preventDefault();
+		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
 		
 		const target = event.target;
 		

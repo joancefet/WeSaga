@@ -28,12 +28,14 @@
 										<a href="/group/{{group_slug}}/" class="btn btn-info">
 											<i class="fa fa-id-card" aria-hidden="true"></i> Desk
 										</a>
+										{{#if user_role_is_member}}
 										<a href="/group/{{group_slug}}/projects" class="btn btn-primary">
 											<i class="fa fa-briefcase" aria-hidden="true"></i> Projects
 										</a>
 										<a href="/group/{{group_slug}}/people" class="btn btn-primary">
 											<i class="fa fa-address-book-o" aria-hidden="true"></i> People
 										</a>
+										{{/if}}
 										<a href="/group/{{group_slug}}/articles" class="btn btn-primary">
 											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
 										</a>
@@ -117,7 +119,7 @@
 									
 									
 									<!-- NEW POST -->				
-										{{#if isMember}}
+										{{#if user_role_is_member}}
 											<div class="hpanel hblue">
 												<div class="panel-body">
 												
@@ -250,7 +252,7 @@
 										
 										{{else}}
 										
-											To view this Group Desk you must be a colleague.
+											<h3 class="text-white">To view more details about this group you must be a member.</h3> 
 										
 										{{/if}}
 

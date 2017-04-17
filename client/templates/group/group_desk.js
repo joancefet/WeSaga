@@ -1,5 +1,4 @@
 import { Posts } 					from '../../../imports/posts.js';
-import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
 // ROUTER
 //=========
@@ -14,6 +13,8 @@ Router.route('/group/:group_slug',{
 		Meteor.subscribe('posts', 'group_by_slug', ToSeoUrl(Router.current().params.group_slug) );
 		var group = Posts.findOne({type:"groups"});
 		// console.log(group);
+		
+		Meteor.subscribe('posts', 'group_member_role_by_user_id', Meteor.userId() );
 		
 		Meteor.subscribe('posts', 'group_desk',  ToSeoUrl(Router.current().params.group_slug) );
 		Meteor.subscribe('posts', "group_desk_posts", group._id ); 
@@ -66,6 +67,17 @@ Template.group_desk.events({
 	// Submit New Post
 	'click .group_submit_new_post'(event) {
 		event.preventDefault();
+		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms to comment",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
 		
 		if( $(".newPostContent").val().length < 1 ){
 			return;
@@ -122,6 +134,17 @@ Template.group_desk.events({
 	'submit .comment'(event) {
 		event.preventDefault();
 		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms to comment",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
+		
 		const target = event.target;
 		console.log(target);
 		
@@ -171,9 +194,14 @@ Template.group_desk.helpers({
 		return ToSeoUrl(string);
 	},
 	
-	isMember(){
-		return true;
+	user_role_is_member(){
+		
+		membership = Posts.findOne({type:"group_member_role"});
+		if(membership.status == "member"){ return true; }
+		if(membership.status == "admin"){ return true; }
+		
 	},
+	
 	
 	the_group_id(){
 		var group = Posts.findOne({type:"groups"}); 
