@@ -15,6 +15,12 @@ Router.route('/meetings',{
 		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
 		Meteor.subscribe('posts', 'meetings', Meteor.userId()); 
+		var meetings = Posts.find({type:"meetings"});
+		
+		meetings.forEach(function(meeting){
+			Meteor.subscribe('posts', 'meetings_by_id', meeting._id ); 			
+			Meteor.subscribe('posts', 'meetings_image_by_group_id',  meeting._id  ); 
+		});
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -40,15 +46,22 @@ Template.meetings.helpers({
 	meetings() {
 		return Posts.find({type:"meetings", status:{$ne:"trash"}});
 	},
-	slug(title){
-		return ToSeoUrl(title); 
-	},
-	meta_meeting_image(){
-		Meteor.subscribe('postsmeta', "meeting_meta", this._id);
-		var meta = Postsmeta.findOne({title:"meta_meeting_image", parent_id:this._id});
-		if(meta){ 
-			return meta;
+	the_meeting_slug(){
+		var meeting = Posts.findOne({type:"meetings", _id:this._id});
+		if(meeting){ 
+			return meeting.slug;
+		}else{
+			return false;
 		}
 	},
+	meetings_image(){
+		var image = Posts.findOne({type:"meetings_image", parent_id:this._id});
+		if(image){ 
+			return image.content;
+		}else{
+			return false;
+		}
+	},
+	
 	
 });

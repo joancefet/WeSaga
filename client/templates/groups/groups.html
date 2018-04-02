@@ -64,28 +64,24 @@
 						<div class="row row_equalize_height">
 						
 							{{#each groups}}
-								<div class="col-lg-3">
+								<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 									<div class="hpanel hgreen contact-panel">
 										<div class="panel-body">
 											
-											<center>
-												<a href="/group/{{slug}}">
+											<a href="/group/{{slug}}">
+												<center>
 													{{#if group_image}}
-														<img alt="logo" class="img-circle m-b" src="{{group_image}}" width="100%" style="width:100%; height:205px;"/>
+														<img alt="logo" class="img-circle m-b img-responsive" src="{{group_image}}" width="100%" />
 													{{else}}
-														<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" style="width:100%; height:205px;"/>
+														<img alt="logo" class="img-circle m-b img-responsive" src="/images/meeting-default.jpg" width="100%" />
 													{{/if}}
-												</a>
-											</center>
-											
-											<h3>
-												<a href="/meet/{{owner_username}}/{{slug}}">
-													{{title}}
-												</a>
-											</h3>
-											<p>
-												{{content}}
-											</p>
+												
+													<h2>
+														<b>{{title}}</b>
+													</h2>
+												</center>
+											</a>
+											<hr />
 											
 											{{#if groupsStatus "waiting"}}
 												<form class="btn-form">

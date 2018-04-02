@@ -28,267 +28,159 @@
 						
 						<div class="row">
 						
-							<div class="col-lg-8">
+							<div class="col-lg-12">
 								<div class="hpanel hgreen ">
 									<div class="panel-body">
 										
-										<form class="form-horizontal create_skyroom" id="">
-										
-											<div class="form-group">
-												<label class="col-sm-2 control-label"></label>
-												<div class="col-sm-10">
-													
-													{{#if meta_meeting_image}}
-														{{#with meta_meeting_image}}
-															<div class="imageUploadPreview imageUploadPreview">
-																<img alt="logo" class="img-circle m-b m-t-md" src="{{content}}"  style="height:205px; width:205px;" />
-															</div>
-														{{/with}}
-													{{else}}
-													
-														<div class="imageUploadPreview imageUploadPreview">
-															<img alt="logo" class="img-circle m-b m-t-md" src="/images/meeting-default.jpg"  style="height:205px; width:205px;" />
-														</div>
-													
-													{{/if}}
-													
-												</div>
-											</div>
-											<div class="hr-line-dashed"></div>
+										{{#with meetings}}
+											<form class="form-horizontal create_skyroom" id="" autocomplete="off">
 											
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Meeting Image</label>
-												<div class="col-sm-10">
+												<div class="form-group">
+													<label class="col-sm-2 control-label"></label>
+													<div class="col-sm-10">
+														
+														{{#if meetings_image}}
+															<img alt="logo" class="img-circle m-b " src="{{meetings_image}}" style="width:205px; height:205px;"/>
+														{{else}}
+															<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" style="width:205px; height:205px;"/>
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
 												
-													<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
-													
-												</div>
-											</div>
-											<div class="hr-line-dashed"></div>
-										
-											<!-- Meeting ID -->
-											{{#if paramRoomId}}
-													{{#with paramRoomId}}
-														<div class="form-group">
-															<label class="col-sm-2 control-label">Meeting ID</label>
-															<div class="col-sm-10">
-																
-																<input type="text" name="the_meeting_id" class="form-control" required="" disabled value="{{_id}}" />
-																<small>Internal Meeting ID</small>
-																
-															</div>
-														</div>
-														<div class="hr-line-dashed"></div>
-													{{/with}}
-												{{else}}
-												<input type="hidden" name="the_meeting_id" class="form-control" required="" disabled value="new" />
-											{{/if}}
-											<!-- -->
-		
-											<!-- Meeting Name -->
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Meeting Title</label>
-												<div class="col-sm-10">
-													
-													{{#if paramRoomId}}
-														{{#with paramRoomId}}
-															<input type="text" name="title" class="form-control" placeholder="Example Room" required="" disabled value="{{title}}" />
-															<small>Found at /meet/{{currentUser.profile.username}}/{{slug title}}</small>
-														{{/with}}
-													{{else}}
-														<input type="text" name="title" class="form-control" placeholder="Example Room" required="" />
-														<small>Found at /meet/{{currentUser.profile.username}}/meeting-title</small>
-													{{/if}}
-													
-												</div>
-											</div>
-											<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<!-- Description -->
 												<div class="form-group">
-													<label class="col-sm-2 control-label">Description of Meeting</label>
+													<label class="col-sm-2 control-label">Meeting Logo</label>
 													<div class="col-sm-10">
-														
-														{{#if paramRoomId}}
-															{{#with paramRoomId}}
-																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" value="{{content}}" />
-															{{/with}}
-														{{else}}
-															<input type="text" name="content" class="form-control" placeholder="Example Room" required="" />
-														{{/if}}
+													
+														<input id="fileInput" name="fileInput" class="form-control input-md"  type="file" />
 														
 													</div>
 												</div>
 												<div class="hr-line-dashed"></div>
-											<!-- -->
 											
-											<!-- Password Required to Enter? -->
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Password Required to Enter?</label>
-													<div class="col-sm-10">
-														<select class="form-control m-b" name="meta_password_required" id="meta_password_required" required="">
-															<option value="no">No</option>
-															<option value="yes">Yes</option>
-														</select>
-														
-														{{#if meta_password_required}}
-															{{#with meta_password_required}}
-																<script>
-																	$("#meta_password_required").val('{{content}}');
-																</script>
-															{{/with}}
-														{{else}}
-														
-														{{/if}}
-														
-													</div>
-												</div>
-												<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<!-- Password -->
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Password</label>
-													<div class="col-sm-10">
-													
-														{{#if meta_password}}
-															{{#with meta_password}}
-																<input type="text" name="meta_password" class="form-control" placeholder="" value="{{content}}"/>
-																<small>(optional - can set or change later)</small>
-															{{/with}}
-														{{else}}
-															<input type="text" name="meta_password" class="form-control" placeholder="" />
-															<small>(optional - can set or change later)</small>
-														{{/if}}
-														
-													</div>
-												</div>
-												<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<!-- Type -->
-												<div class="form-group">
-													<label class="col-sm-2 control-label">SkyRoom Type</label>
-													<div class="col-sm-10">
-														<select class="form-control m-b" name="meta_type" id="meta_type" required="">
-														
-															<option value="video_conference">Video Conference Room</option>
-															<option value="webinar">Webinar</option>
+												<!-- Meeting ID -->
+												{{#if the_meeting_id}}
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Meeting ID</label>
+														<div class="col-sm-10">
 															
-														</select>
-														{{#if meta_type}}
-															{{#with meta_type}}
-																<script>
-																	$("#meta_type").val('{{content}}');
-																</script>
-															{{/with}}
-														{{else}}
+															<input type="text" name="the_meeting_id" class="form-control" required="" disabled value="{{the_meeting_id}}" />
+															<small>Internal Meeting ID</small>
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												{{else}}
+													<input type="hidden" name="the_meeting_id" class="form-control" required="" disabled value="new" />
+												{{/if}}
+												<!-- -->
+			
+												<!-- Meeting Title -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Meeting Title</label>
+													<div class="col-sm-10">
 														
+														{{#if the_meeting_title}}
+															<input type="text" name="title" class="form-control" placeholder="Example Meeting" required="" disabled value="{{the_meeting_title}}" />
+															<small>Found at /meet/{{currentUser.profile.username}}/{{the_meeting_title}}</small>
+														{{else}}
+															<input type="text" name="title" class="form-control" placeholder="Example Meeting" required="" />
+															<small>Found at /meet/{{currentUser.profile.username}}/new-meeting-title</small>
 														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Description -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">About this Meeting</label>
+													<div class="col-sm-10">
 													
 														
-													</div>
-												</div>
-												<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<!-- Type -->
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Public or Unlisted?</label>
-													<div class="col-sm-10">
-														<select class="form-control m-b" name="meta_listing" id="meta_listing" required="">
-															<option value="public">Public</option>
-															<option value="private">Unlisted</option>
-														</select>
-														
-														{{#if meta_listing}}
-															{{#with meta_listing}}
-																<script>
-																	$("#meta_listing").val('{{content}}');
-																</script>
-															{{/with}}
+														{{#if the_meeting_content}}
+															<textarea id="meeting_description" cols="40" rows="22" style="width:100%;" >{{the_meeting_content}}</textarea>
 														{{else}}
-														
+														<textarea id="meeting_description" cols="40" rows="22" style="width:100%;" ></textarea>
 														{{/if}}
 														
-													</div>
-												</div>
-												<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<!-- Type -->
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Users must belong to my Group to enter?</label>
-													<div class="col-sm-10">
-														<select class="form-control m-b" name="meta_groups_only" id="meta_groups_only" required="">
-															<option value="no">No</option>
-															<option value="yes">Yes</option>
-														</select>
-														
-														{{#if meta_groups_only}}
-															{{#with meta_groups_only}}
-																<script>
-																	$("#meta_groups_only").val('{{content}}');
-																</script>
-															{{/with}}
-														{{else}}
-														
-														{{/if}}
+														<script>
+															
+															setTimeout(function(){
+																// TinyMCE has to be done this way for compatibilty reasons. :/
+																tinymce.EditorManager.editors = []; //we need to remove the old instances. 
+																
+																//Set "About" section to a TinyMCE editor.
+																tinymce.init({
+																  selector: 'textarea#meeting_description',
+																  element_format: "html",
+																  remove_linebreaks : true,
+																  convert_newlines_to_brs: true,
+																  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+																  menubar: false,
+																  statusbar: false,
+																  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+																  maxLength : 600
+																});
+															},1000);
+															
+														</script>
 														
 													</div>
 												</div>
 												<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<!-- Type -->
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Users must a Colleague of mine?</label>
-													<div class="col-sm-10">
-														<select class="form-control m-b" name="meta_colleague_only" id="meta_colleague_only" required="">
-															<option value="no">No</option>
-															<option value="yes">Yes</option>
-														</select>
-														
-														{{#if meta_colleague_only}}
-															{{#with meta_colleague_only}}
-																<script>
-																	$("#meta_colleague_only").val('{{content}}');
-																</script>
-															{{/with}}
-														{{else}}
-														
-														{{/if}}
-														
-													</div>
-												</div>
-												<div class="hr-line-dashed"></div>
-											<!-- -->
-											
-											<div class="form-group">
-												<div class="col-sm-10 col-sm-offset-2">														
+												<!-- -->
 												
-													{{#if paramRoomId}}
-														{{#with paramRoomId}}
+												
+												<!-- Type -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Public or Unlisted?</label>
+														<div class="col-sm-10">
+															<select class="form-control m-b" name="meeting_listing" id="meeting_listing" required="">
+																<option value="public">Public</option>
+																<option value="private">Unlisted</option>
+															</select>
+															
+															{{#if meeting_listing}}
+																{{#with meeting_listing}}
+																	<script>
+																		$("#meeting_listing").val('{{content}}');
+																	</script>
+																{{/with}}
+															{{else}}
+															
+															{{/if}}
+															
+														</div>
+													</div>
+													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<div class="form-group">
+													<div class="col-sm-10 col-sm-offset-2">														
+													
+														{{#if the_meeting_id}}
 															<button type="submit" class="btn btn-success">
 																<i class="fa fa-check-square-o" aria-hidden="true"></i> Update Meeting
 															</button>
-															<div id="meetings_delete" class="btn btn-danger">
+															<div id="groups_delete" class="btn btn-danger">
 																<i class="fa fa-trash" aria-hidden="true"></i> Delete Meeting
 															</div>
-														{{/with}}
-													{{else}}
-														<button type="submit" class="btn btn-success">
-															<i class="fa fa-check-square-o" aria-hidden="true"></i> Create Meeting
-														</button>
-													{{/if}}
-													
-													<a href="/meetings" class="btn btn-danger2 pull-right" type="submit"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
-													
+														{{else}}
+															<button type="submit" class="btn btn-success">
+																<i class="fa fa-check-square-o" aria-hidden="true"></i> Create Meeting
+															</button>
+														{{/if}}
+														
+														<a href="/meetings" class="btn btn-danger2 pull-right" type="submit"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
+														
+													</div>
 												</div>
-											</div>
-										
-										</form>
+											
+											</form>
+										{{/with}}
 										
 									</div>
 									

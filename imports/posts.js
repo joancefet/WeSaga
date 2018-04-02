@@ -20,10 +20,6 @@ if (Meteor.isServer) {
 			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, {sort: { createdAt: -1 }, limit:20 });
 		}
 		
-		// if(PARAM_1 == "all"){
-			// return Posts.find({}, {sort: { createdAt: -1 }, limit:10 });
-		// }
-		
 		if(PARAM_1 == "notes"){
 			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10  });			
 		}
@@ -31,9 +27,15 @@ if (Meteor.isServer) {
 		// DESK
 		// =======
 		if(PARAM_1 == "desk_posts"){
-			return Posts.find({type:PARAM_1, owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			return Posts.find({type:"desk_posts", owner_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+		}
+		if(PARAM_1 == "desk_posts_comments"){
+			return Posts.find({type:"desk_posts_comments", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
 		}
 		
+		if(PARAM_1 == "desk_posts_attachment"){
+			return Posts.find({type:"desk_posts_attachment", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+		}	
 		
 		
 		
@@ -136,9 +138,14 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "meetings"){
 			return Posts.find({type:"meetings", owner_id: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
-		
+		if(PARAM_1 == "meetings_by_id"){
+			return Posts.find({type:"meetings", _id: PARAM_2}, { sort: { createdAt: -1 } });			
+		}
 		if(PARAM_1 == "meetings_by_url"){
 			return Posts.find({type:"meetings", slug:PARAM_2}, { sort: { createdAt: -1 } }); // PARAM_2 is a slug in this exception... lazy...			
+		}
+		if(PARAM_1 == "meetings_image_by_group_id"){
+			return Posts.find({type:"meetings_image", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		
 		// GROUPS
@@ -156,12 +163,44 @@ if (Meteor.isServer) {
 		if(PARAM_1 == "group_by_slug"){
 			return Posts.find({type:"groups", slug: PARAM_2}, { sort: { createdAt: -1 } });			
 		}
+			
+			// DESK
+			// ----
+			if(PARAM_1 == "group_desk_posts"){
+				return Posts.find({type:"group_desk_posts", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_desk_posts_comments"){
+				return Posts.find({type:"group_desk_posts_comments", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_desk_posts_attachment"){
+				return Posts.find({type:"group_desk_posts_attachment", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}	
+			
+			if(PARAM_1 == "group_location"){
+				return Posts.find({type:"group_location", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_location_lat"){
+				return Posts.find({type:"group_location_lat", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_location_lng"){
+				return Posts.find({type:"group_location_lng", parent_id:PARAM_2}, { sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_phone"){
+				return Posts.find({type:"group_phone", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}
+			if(PARAM_1 == "group_email"){
+				return Posts.find({type:"group_email", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
+			}
+		
 		
 		if(PARAM_1 == "group_member_by_group_id"){
 			return Posts.find({type:"group_member", _id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		if(PARAM_1 == "group_member_role_by_group_id"){
 			return Posts.find({type:"group_member_role", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
+		}
+		if(PARAM_1 == "group_member_role_by_user_id"){
+			return Posts.find({type:"group_member_role", owner_id:PARAM_2}, { sort: { createdAt: -1 } });			
 		}
 		if(PARAM_1 == "group_listing_by_group_id"){
 			return Posts.find({type:"group_listing", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
@@ -254,6 +293,9 @@ if (Meteor.isServer) {
 		}
 		if(PARAM_1 == "article_image_by_article_id"){
 			return Posts.find({type:"article_image", parent_id:PARAM_2}, { sort: { createdAt: -1 } });			
+		}
+		if(PARAM_1 == "article_comments"){
+			return Posts.find({type:"article_comments", parent_id:PARAM_2},{ sort: { createdAt: -1 }, limit:10 });
 		}
 		
 		
@@ -481,7 +523,6 @@ Meteor.methods({
 		Posts.remove({owner_id:PARAM_2, parent_id:group_parent_id});
 		
 	},
-	
 	
 
 });

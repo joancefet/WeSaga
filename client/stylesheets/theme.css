@@ -608,8 +608,8 @@ body.blank {
   margin-bottom: 0;
 }
 .contact-panel img {
-  width: 76px;
-  height: 76px;
+  width: 100%;
+  height: auto;
 }
 .contact-footer {
   padding: 0 15px;

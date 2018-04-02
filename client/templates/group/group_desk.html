@@ -28,12 +28,14 @@
 										<a href="/group/{{group_slug}}/" class="btn btn-info">
 											<i class="fa fa-id-card" aria-hidden="true"></i> Desk
 										</a>
+										{{#if user_role_is_member}}
 										<a href="/group/{{group_slug}}/projects" class="btn btn-primary">
 											<i class="fa fa-briefcase" aria-hidden="true"></i> Projects
 										</a>
 										<a href="/group/{{group_slug}}/people" class="btn btn-primary">
 											<i class="fa fa-address-book-o" aria-hidden="true"></i> People
 										</a>
+										{{/if}}
 										<a href="/group/{{group_slug}}/articles" class="btn btn-primary">
 											<i class="fa fa-file-text-o" aria-hidden="true"></i> Articles
 										</a>
@@ -76,31 +78,36 @@
 											<div class="col-md-4">
 												
 												<center>
-													{{#if meta_group_image}}
-														<img alt="logo" class="img-circle m-b" src="{{meta_group_image}}" width="100%" style="width:100%; height:300px;"/>
+													{{#if group_image}}
+														<img alt="logo" class="img-circle m-b img-responsive" src="{{group_image}}" width="100%" />
 													{{else}}
-														<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" style="width:100%; height:300px;"/>
+														<img alt="logo" class="img-circle m-b img-responsive" src="/images/meeting-default.jpg" width="100%" />
 													{{/if}}
-												</center>
-												
-												<center>
-													<h1>
-														{{the_group_title}}
-													</h1>
-													
 												</center>
 												
 											</div>
 											
 											<div id="aboutUser" class="col-md-4">
+												
+												<center>
+													<h1>
+														<b>{{the_group_title}}</b>
+													</h1>
+												</center>
+												<hr />
+											
 												{{{the_group_content}}}
 											</div>
 											
 											<div class="col-md-4">
 												
-												<section id="map">
-													
-												</section>
+												<div class="map-container">
+													{{> googleMap name="profileMap" options=mapOptions}}
+												</div>
+												
+												<h3>{{the_group_location}}</h3>
+												<h3>{{the_group_phone}}</h3>
+												<h3>{{the_group_email}}</h3>
 												
 											</div>
 												
@@ -112,7 +119,7 @@
 									
 									
 									<!-- NEW POST -->				
-										{{#if isMember}}
+										{{#if user_role_is_member}}
 											<div class="hpanel hblue">
 												<div class="panel-body">
 												
@@ -123,8 +130,8 @@
 													</div>
 													
 													<div class="col-xs-12 col-md-10">
-													
-														<input type="hidden" name="owner_id" id="owner_id" value="{{../_id}}" />
+													 
+														<input type="hidden" name="group_id" id="group_id" value="{{the_group_id}}" />
 															
 														<textarea required class="form-control newPostContent" name="newPostContent" placeholder="Leave something on this desk" style="width:100%; resize: none; font-size:22px;"></textarea>
 														
@@ -134,7 +141,7 @@
 															<i class="fa fa-camera" aria-hidden="true"></i>
 														</div>											
 														
-														<button type="submit" class="btn btn-success people_submit_new_post">
+														<button type="submit" class="btn btn-success group_submit_new_post">
 															<i class="fa fa-file" aria-hidden="true"></i> Post
 														</button>
 														
@@ -160,7 +167,7 @@
 											<!-- POSTS BY GROUP -->
 											<div id="posts">
 											
-												{{#each group_posts}}
+												{{#each group_desk_posts}}
 													
 													<div class="hpanel hblue">
 														<div class="panel-body">
@@ -191,7 +198,7 @@
 															
 															<div class="col-xs-12 col-md-10" style="font-size:22px;">
 																<div class="lightBoxGallery">
-																	{{#each post_attachment}}
+																	{{#each group_desk_posts_attachment}}
 																		<a href="{{content}}" data-gallery >
 																			<img src="{{content}}"  style="width:100%;"/>
 																		</a>
@@ -204,7 +211,7 @@
 														<!-- CHATS -->
 														<div class="panel-footer">
 														
-															{{#each desk_comments}}
+															{{#each group_desk_posts_comments}}
 																<div class="social-talk">
 																	<div class="media social-profile clearfix">
 																		<a class="pull-left" href="/people/{{slug owner_username}}">
@@ -245,7 +252,7 @@
 										
 										{{else}}
 										
-											To view this Group Desk you must be a colleague.
+											<h3 class="text-white">To view more details about this group you must be a member.</h3> 
 										
 										{{/if}}
 

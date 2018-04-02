@@ -15,8 +15,10 @@ Router.route('/people/:user_slug',{
 		Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
 		
 		// Cannot view yourself here
-		if(Meteor.user().profile.username == ToSeoUrl(Router.current().params.user_slug) ){
-			Router.go("/desk");
+		if( Meteor.user() ){
+			if(Meteor.user().profile.username == ToSeoUrl(Router.current().params.user_slug) ){
+				Router.go("/desk");
+			}
 		}
 		
 		Meteor.subscribe('posts', 'people_desk',  ToSeoUrl(Router.current().params.user_slug) );
@@ -85,15 +87,15 @@ Template.people_desk.events({
 					// Send to Cloudinary
 					Cloudinary.upload( file, function(error, result){
 						
-						Meteor.call('postsmeta.update',
+						Meteor.call('posts.update',
 							"new",
 							"me",
 							"",
 							"https://res.cloudinary.com/skyroomsio/image/upload/a_0/"+result.public_id+"."+result.format, 
-							"post_attachment",
+							"desk_posts_attachment",
 							parent_post_id,
 						);
-						console.log("ADDED post_attachment to:" +parent_post_id);
+						console.log("ADDED desk_posts_attachment to:" +parent_post_id);
 					});
 					
 					
@@ -114,35 +116,48 @@ Template.people_desk.events({
 	'submit .comment'(event) {
 		event.preventDefault();
 		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms to comment",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
+		
 		const target = event.target;
 		console.log(target);
 		
-		Meteor.call('postsmeta.update',
+		Meteor.call('posts.update',
 			"new",
 			"me",
 			"",
 			target.content.value,
-			"post_comment",
+			"desk_posts_comments",
 			target.parent_id.value,
 		);
 		
 		$('[name=content]').val('');
-		
-		// Notify Comment Author
-		  const data = {
-			contents: {
-			  en: 'Hey! Wazup? We miss you.',  
-			},
-		  };
-
-		  OneSignal.Notifications.create(["mYxzLdT4RWrCAR7m4"], data);
-		  // => returns OneSignal response.
+	
 	},
 	
 	
 	
 	'submit'(event) {
 		event.preventDefault();
+		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
 		
 		const target = event.target;
 		
@@ -326,23 +341,22 @@ Template.people_desk.events({
 Template.people_desk.helpers({
 	
 	people_desk() {
-		//Meteor.subscribe('postsmeta', "notify_meta", this._id); 
 		return Meteor.users.findOne({ "profile.username":Router.current().params.user_slug }); 
 	},
 	desk_posts() {
 		return Posts.find({type:"desk_posts"}, {sort: { createdAt: -1 } });
 	},
-	
-	post_attachment(){
-		Meteor.subscribe('postsmeta', "post_attachment", this._id);
-		return Postsmeta.find({type: "post_attachment", parent_id:this._id});
+	desk_posts_attachment(){
+		Meteor.subscribe('posts', "desk_posts_attachment", this._id);
+		return Posts.find({type: "desk_posts_attachment", parent_id:this._id});
 	},
-	
-	desk_comments(){
+	desk_posts_comments(){
 		// SUBSCRIBE TO POSTMETA: parent_id
-		Meteor.subscribe('postsmeta', "desk_comments", this._id); 
-		return Postsmeta.find({parent_id:this._id});
+		Meteor.subscribe('posts', "desk_posts_comments", this._id); 
+		return Posts.find({parent_id:this._id});
 	},
+	
+	
 	HasOwnerAvatar(){
 		if(this.owner_avatar != "undefined"){
 			return true;

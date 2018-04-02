@@ -43,10 +43,10 @@
 												<i class="fa fa-floppy-o" aria-hidden="true"></i> Update Business Card
 											</div>
 											<a href="/resume/{{currentUser.profile.username}}" class="btn btn-block btn-primary">
-												<i class="fa fa-eye" aria-hidden="true"></i> View Resume
+												<i class="fa fa-file-text-o" aria-hidden="true"></i> View Resume
 											</a>
-											<a href="/desk" class="btn btn-block btn-danger">
-												<i class="fa fa-times-circle-o" aria-hidden="true"></i> Cancel Changes
+											<a href="/desk" class="btn btn-block btn-primary">
+												<i class="fa fa-id-card" aria-hidden="true"></i> View Desk
 											</a>
 											
 											
@@ -113,6 +113,8 @@
 											<i class="fa fa-floppy-o" aria-hidden="true"></i> Update
 										</div>
 										<hr />
+										
+										<input type="text" class="form-control update_resume_location" name="resume_location" value="{{currentUser.profile.location_name}}" placeholder="Work Location">
 										
 										<input type="text" class="form-control update_resume_phone" name="resume_phone" value="{{currentUser.profile.resume_phone}}" placeholder="Phone Number">
 										

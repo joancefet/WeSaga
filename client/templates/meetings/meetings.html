@@ -59,36 +59,29 @@
 						<div class="row">
 						
 							{{#each meetings}}
-								<div class="col-lg-3">
+								<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 									<div class="hpanel hgreen">
 										<div class="panel-body">
 											
 											<center>
-												{{#if meta_meeting_image}}
-													{{#with meta_meeting_image}}
-														<div class="imageUploadPreview imageUploadPreview">
-															<img alt="logo" class="img-circle m-b m-t-md" src="{{content}}"  style="height:205px; width:205px;" />
-														</div>
-													{{/with}}
-												{{else}}
 												
-													<div class="imageUploadPreview imageUploadPreview">
-														<img alt="logo" class="img-circle m-b m-t-md" src="/images/meeting-default.jpg"  style="height:205px; width:205px;" />
-													</div>
-												
-												{{/if}}
-											</center>
-											
-											<h3>
-												<a href="/meet/{{owner_username}}/{{slug title}}">
-													{{title}}
+												<a href="/meet/{{owner_username}}/{{the_meeting_slug}}">
+													{{#if meetings_image}}
+														<img alt="logo" class="img-circle m-b " src="{{meetings_image}}" width="100%" />
+													{{else}}
+														<img alt="logo" class="img-circle m-b" src="/images/meeting-default.jpg" width="100%" />
+													{{/if}}
 												</a>
-											</h3>
-											<p>
-												{{content}}
-											</p>
+												
+												<h2>
+													<a href="/meet/{{owner_username}}/{{the_meeting_slug}}">
+														<b>{{title}}</b>
+													</a>
+												</h2>
+											</center>
+											<hr />
 											
-											<a href="/meet/{{owner_username}}/{{slug title}}" class="btn btn-info btn-block btn-sm">
+											<a href="/meet/{{owner_username}}/{{the_meeting_slug}}" class="btn btn-info btn-block btn-sm">
 												<i class="fa fa-handshake-o" aria-hidden="true"></i> Enter Meeting Room
 											</a>
 											
@@ -96,7 +89,7 @@
 												<i class="fa fa-handshake-o" aria-hidden="true"></i> Edit Meeting
 											</a>
 											
-											<div class="btn btn-primary btn-sm btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/meet/{{owner_username}}/{{slug title}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
+											<div class="btn btn-primary btn-sm btn-block a2a_dd" data-a2a-url="https://www.skyrooms.io/meet/{{owner_username}}/{{the_meeting_slug}}" data-a2a-title="{{currentUser.profile.username}} - SkyRooms">
 												<i class="fa fa-share-alt" aria-hidden="true"></i> Share
 											</div>
 											<script async src="https://static.addtoany.com/menu/page.js"></script>

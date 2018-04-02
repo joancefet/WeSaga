@@ -28,7 +28,7 @@
 						
 						<div class="row">
 						
-							<div class="col-lg-8">
+							<div class="col-lg-12">
 								<div class="hpanel hgreen ">
 									<div class="panel-body">
 										
@@ -94,20 +94,92 @@
 												<div class="hr-line-dashed"></div>
 												<!-- -->
 												
-												<!-- Description -->
+												<!-- Address or Business Location -->
 													<div class="form-group">
-														<label class="col-sm-2 control-label">Description of Group</label>
+														<label class="col-sm-2 control-label">Address or Business Location</label>
 														<div class="col-sm-10">
 															
-															{{#if the_group_content}}
-																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" value="{{the_group_content}}" />
+															{{#if the_group_location}}
+																<input type="text" class="form-control the_group_location" name="the_group_location" value="{{the_group_location}}" placeholder="Work Location">
 															{{else}}
-																<input type="text" name="content" class="form-control" placeholder="Example Room" required="" />
+																<input type="text" class="form-control the_group_location" name="the_group_location" value="" placeholder="Work Location">
 															{{/if}}
 															
 														</div>
+														<p>{{the_group_location_lat}},{{the_group_location_lng}}</p>
 													</div>
 													<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Public Phone -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Public Phone Number (1800, etc)</label>
+													<div class="col-sm-10">
+														
+														{{#if the_group_phone}}
+															<input type="text" class="form-control the_group_phone" name="the_group_phone" value="{{the_group_phone}}" placeholder="Phone Number">
+														{{else}}
+															<input type="text" class="form-control the_group_phone" name="the_group_phone" value="" placeholder="Phone Number">
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Public Email Address -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Public Email Address</label>
+													<div class="col-sm-10">
+														
+														{{#if the_group_email}}
+															<input type="text" class="form-control the_group_email" name="the_group_email" value="{{the_group_email}}" placeholder="Email Address">
+														{{else}}
+															<input type="text" class="form-control the_group_email" name="the_group_email" value="" placeholder="Email Address">
+														{{/if}}
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<!-- -->
+												
+												<!-- Description -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">About this Group</label>
+													<div class="col-sm-10">
+													
+														
+														{{#if the_group_content}}
+															<textarea id="group_description" cols="40" rows="22" style="width:100%;" >{{the_group_content}}</textarea>
+														{{else}}
+														<textarea id="group_description" cols="40" rows="22" style="width:100%;" ></textarea>
+														{{/if}}
+														
+														<script>
+															
+															setTimeout(function(){
+																// TinyMCE has to be done this way for compatibilty reasons. :/
+																tinymce.EditorManager.editors = []; //we need to remove the old instances. 
+																
+																//Set "About" section to a TinyMCE editor.
+																tinymce.init({
+																  selector: 'textarea#group_description',
+																  element_format: "html",
+																  remove_linebreaks : true,
+																  convert_newlines_to_brs: true,
+																  skin_url: '/packages/teamon_tinymce/skins/lightgray',
+																  menubar: false,
+																  statusbar: false,
+																  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist',
+																  maxLength : 600
+																});
+															},1000);
+															
+														</script>
+														
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
 												<!-- -->
 												
 												

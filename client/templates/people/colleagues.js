@@ -19,9 +19,7 @@ Router.route('/colleagues',{
 		Meteor.subscribe('posts', "colleagues", Meteor.userId() ); 
 		
 		Meteor.subscribe('posts', 'people_colleagues'); 
-		if(!Router.current().params.user_slug){
-			Meteor.subscribe('posts', 'people_all'); 		
-		}
+		Meteor.subscribe('posts', 'people_all'); 	
 	},
 	template:'screen',
 	yieldTemplates: {

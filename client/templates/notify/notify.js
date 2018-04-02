@@ -1,6 +1,5 @@
 // Route
 import { Posts } 					from '../../../imports/posts.js';
-import { Postsmeta } 				from '../../../imports/postsmeta.js';
 
 // Route
 Router.route('/notify',{

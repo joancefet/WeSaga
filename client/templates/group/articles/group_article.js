@@ -1,5 +1,4 @@
-import { Posts } 					from '../../../imports/posts.js';
-import { Postsmeta } 				from '../../../imports/postsmeta.js';
+import { Posts } 					from '../../../../imports/posts.js';
 
 // ROUTER
 //=========
@@ -11,14 +10,18 @@ Router.route('/group/:group_slug/article/:articleSlug',{
 		
 		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
 		
-		// Find articles
-		// Meteor.subscribe('posts', 'articles_by_group_slug',  ToSeoUrl(Router.current().params.group_slug) );
+		Meteor.subscribe('posts', 'group_by_slug',  ToSeoUrl(Router.current().params.group_slug) );
+		var group = Posts.findOne({type:"groups"});
+		
+		Meteor.subscribe('posts', 'group_image_by_group_id', group._id ); 
 		
 		Meteor.subscribe('posts', 'articles_by_slug', ToSeoUrl(Router.current().params.articleSlug) );
 		var article = Posts.findOne ({type:"article"}); 
 
 		Meteor.subscribe('posts', 'article_content_by_article_id', article._id );
 		Meteor.subscribe('posts', 'article_image_by_article_id', article._id );
+		
+		Meteor.subscribe('posts', 'article_comments', article._id );
 		
 	},
 	template:'screen',
@@ -33,16 +36,40 @@ Template.group_article.rendered = function() {
 };
 
 
-
-
-
 // Events
 Template.group_article.events({
 	
-
+	// Comment
+	'submit .comment'(event) {
+		event.preventDefault();
+		
+		if( !Meteor.user() ){
+			swal({
+				title: "Please sign in to SkyRooms to comment",
+				text: "",
+				type: "warning",
+				showCancelButton: false,
+				confirmButtonText: "Close",
+			});
+			return;
+		}
+		
+		const target = event.target;
+		console.log(target);
+		
+		Meteor.call('posts.update',
+			"new",
+			"me",
+			"",
+			target.content.value,
+			"article_comments",
+			target.parent_id.value,
+		);
+		
+		$('[name=content]').val('');
+	},
+	
 });
-
-
 
 
 // skyrooms Helper
@@ -54,6 +81,23 @@ Template.group_article.helpers({
 	},
 	group_slug(){
 		return Router.current().params.group_slug; 
+	},
+	
+	the_group_title(){
+		var group = Posts.findOne({type:"groups"}); 
+		if(group){
+			return group.title;
+		} else {
+			return false;
+		}
+	},
+	group_image(){
+		var image = Posts.findOne({title:"group_image"});
+		if(image){ 
+			return image.content;
+		}else{
+			return false;
+		}
 	},
 	
 	article(){
@@ -79,8 +123,8 @@ Template.group_article.helpers({
 		return Posts.find({type:"article_content"}); 
 	},
 	
-	project_comments(){
-		return Posts.find({type: "group_projects_comment"}, { sort: { createdAt: 1 } }, {limit:8} );
-	},
+	article_comments(){
+		return Posts.find({type: "article_comments"});
+	}, 
   
 });

@@ -13,8 +13,6 @@ Router.route('/meetings/manage/',{
 	},
 	waitOn: function(){
 		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
-		
-		Meteor.subscribe('posts', 'meetings', Meteor.userId() ); 
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -33,8 +31,13 @@ Router.route('/meetings/manage/:roomId',{
 		}
 	},
 	waitOn: function(){
-		Meteor.subscribe('posts', 'meetings', Meteor.userId() ); 
-		Meteor.subscribe('postsmeta', 'meeting_meta', Router.current().params.roomId ); 
+		
+		Meteor.subscribe('posts', "notify", Meteor.userId() ); 
+		
+		Meteor.subscribe('posts', 'meetings_by_id', Router.current().params.roomId ); 
+		
+		Meteor.subscribe('posts', 'meetings_image_by_group_id',  Router.current().params.roomId ); 
+		
 	},
 	template:'screen',
 	yieldTemplates: {
@@ -72,118 +75,113 @@ Template.meetings_manage.events({
 			meeting_id,
 			"me",
 			target.title.value,
-			target.content.value,
+			tinyMCE.get('meeting_description').getContent(),
 			"meetings",
 			"",
 			"publish"
-			,function(error, result, event){
+			,function(error, parent_id, event){
 				
 				// Meeting Meta Data
 				// -----------------
 				
-				returned_meeting_id = result; 
-				
-				var update_meta_by_parent = false;
-				if(meeting_id != "new"){ 
-					update_meta_by_parent = true; 
-				}
-				
 				// Image
 				if($("#fileInput").prop('files')){
 					
-					console.log("Starting Upload");
+					meeting_image_id = "new";
+					meeting = Posts.findOne({type:"meetings_image"}); 
+					if(meeting){
+						meeting_image_id = meeting._id;
+					}
 					
 					Cloudinary.upload( $("#fileInput").prop('files'), function(error, result){
 						
-						// meta_meeting_image	
-						Meteor.call('postsmeta.update',
-							meeting_id,
+						// meta_group_image	
+						Meteor.call('posts.update',
+							meeting_image_id,
 							"me",
-							"meta_meeting_image",
+							"",
 							"https://res.cloudinary.com/skyroomsio/image/upload/c_thumb,h_256,w_256/v1489424858/"+result.public_id+"."+result.format,
-							"meeting_meta",
-							returned_meeting_id,
+							"meetings_image",
+							parent_id,
 							"publish",
-							update_meta_by_parent
 						);
-						
-						console.log("Upload Complete: "+meeting_id);
 						
 					});
 				}
 				
-				// meta_password	
-				Meteor.call('postsmeta.update',
-					meeting_id,
-					"me",
-					"meta_password",
-					target.meta_password.value,
-					"meeting_meta",
-					returned_meeting_id,
-					"publish",
-					update_meta_by_parent
-				);
 				
-				// meta_password_required	
-				Meteor.call('postsmeta.update',
-					meeting_id,
-					"me",
-					"meta_password_required",
-					target.meta_password_required.value,
-					"meeting_meta",
-					returned_meeting_id,
-					"publish",
-					update_meta_by_parent
-				);
-				
-				// meta_type	
-				Meteor.call('postsmeta.update',
-					meeting_id,
-					"me",
-					"meta_type",
-					target.meta_type.value,
-					"meeting_meta",
-					returned_meeting_id,
-					"publish",
-					update_meta_by_parent
-				);
-				
-				// meta_listing	
-				Meteor.call('postsmeta.update',
-					meeting_id,
-					"me",
-					"meta_listing",
-					target.meta_listing.value,
-					"meeting_meta",
-					returned_meeting_id,
-					"publish",
-					update_meta_by_parent
-				);
+				// // meeting_password	
+				// meeting_password_id = "new";
+				// var meeting_password = Posts.findOne({type:"meeting_password"}); 
+				// if(meeting_password){
+					// meeting_password_id =  meeting_password._id;
+				// }
+				// Meteor.call('posts.update',
+					// meeting_password_id,
+					// "me",
+					// "",
+					// target.meeting_password.value,
+					// "meeting_password",
+					// parent_id,
+					// "publish",
+				// );
 				
 				
-				// meta_groups_only	
-				Meteor.call('postsmeta.update',
-					meeting_id,
-					"me",
-					"meta_groups_only",
-					target.meta_groups_only.value,
-					"meeting_meta",
-					returned_meeting_id,
-					"publish",
-					update_meta_by_parent
-				);
+				// // meeting_password_required	
+				// Meteor.call('posts.update',
+					// meeting_id,
+					// "me",
+					// "",
+					// target.meta_password_required.value,
+					// "meeting_password_required",
+					// returned_meeting_id,
+					// "publish",
+				// );
 				
-				// meta_colleague_only	
-				Meteor.call('postsmeta.update',
-					meeting_id,
-					"me",
-					"meta_colleague_only",
-					target.meta_colleague_only.value,
-					"meeting_meta",
-					returned_meeting_id,
-					"publish",
-					update_meta_by_parent
-				);				
+				// // meeting_type	
+				// Meteor.call('posts.update',
+					// meeting_id,
+					// "me",
+					// "",
+					// target.meta_type.value,
+					// "meeting_type",
+					// returned_meeting_id,
+					// "publish",
+				// );
+				
+				// // meeting_listing	
+				// Meteor.call('posts.update',
+					// meeting_id,
+					// "me",
+					// "",
+					// target.meta_listing.value,
+					// "meeting_listing",
+					// returned_meeting_id,
+					// "publish",
+				// );
+				
+				
+				// // meeting_group_members_only	
+				// Meteor.call('posts.update',
+					// meeting_id,
+					// "me",
+					// "",
+					// target.meta_groups_only.value,
+					// "meeting_group_members_only",
+					// returned_meeting_id,
+					// "publish",
+				// );
+				
+				// // meeting_colleagues_only	
+				// Meteor.call('posts.update',
+					// meeting_id,
+					// "me",
+					// "",
+					// target.meta_colleague_only.value,
+					// "meeting_colleagues_only",
+					// returned_meeting_id,
+					// "publish",
+				// );				
 				
 				// All Done
 				Router.go("/meetings");
@@ -248,34 +246,67 @@ Template.meetings_manage.events({
 // Events
 Template.meetings_manage.helpers({
 	
-	paramRoomId() {
-		return Posts.findOne({"_id":Router.current().params.roomId});
-	},
 	slug(title){
 		return ToSeoUrl(title); 
 	},
 	
-	// Meta Data
-	meta_meeting_image(){
-		return Postsmeta.findOne({title:"meta_meeting_image"});
+	meetings() {
+		return Posts.find({type:"meetings"});
 	},
-	meta_password(){
-		return Postsmeta.findOne({title:"meta_password"});
+	
+	meetings_image(){
+		var image = Posts.findOne({type:"meetings_image"});
+		if(image){ 
+			return image.content;
+		}else{
+			return false;
+		}
 	},
-	meta_password_required(){
-		return Postsmeta.findOne({title:"meta_password_required"});
+	
+	the_meeting_id(){
+		var meeting = Posts.findOne({type:"meetings"}); 
+		if(meeting){
+			return meeting._id;
+		} else {
+			return false;
+		}
 	},
-	meta_type(){
-		return Postsmeta.findOne({title:"meta_type"});
+	
+	the_meeting_title(){
+		var meeting = Posts.findOne({type:"meetings"}); 
+		if(meeting){
+			return meeting.title;
+		} else {
+			return false;
+		}
 	},
-	meta_listing(){
-		return Postsmeta.findOne({title:"meta_listing"});
+	
+	the_meeting_content(){
+		var meeting = Posts.findOne({type:"meetings"}); 
+		if(meeting){
+			return meeting.content;
+		} else {
+			return false;
+		}
 	},
-	meta_groups_only(){
-		return Postsmeta.findOne({title:"meta_groups_only"});
-	},
-	meta_colleague_only(){
-		return Postsmeta.findOne({title:"meta_colleague_only"});
-	},
+	
+	// meta_password(){
+		// return Postsmeta.findOne({title:"meta_password"});
+	// },
+	// meta_password_required(){
+		// return Postsmeta.findOne({title:"meta_password_required"});
+	// },
+	// meta_type(){
+		// return Postsmeta.findOne({title:"meta_type"});
+	// },
+	// meta_listing(){
+		// return Postsmeta.findOne({title:"meta_listing"});
+	// },
+	// meta_groups_only(){
+		// return Postsmeta.findOne({title:"meta_groups_only"});
+	// },
+	// meta_colleague_only(){
+		// return Postsmeta.findOne({title:"meta_colleague_only"});
+	// },
 	
 });
